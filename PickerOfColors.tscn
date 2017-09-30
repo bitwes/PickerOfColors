@@ -1,6 +1,6 @@
 [gd_scene load_steps=2 format=1]
 
-[ext_resource path="res://color_picker.gd" type="Script" id=1]
+[ext_resource path="res://picker_of_colors.gd" type="Script" id=1]
 
 [node name="Picker" type="Panel"]
 

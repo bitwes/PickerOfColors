@@ -1,26 +1,24 @@
 extends "res://addons/gut/test.gd"
 
-var PickerOfColors = load('res://ColorPicker.tscn')
+var PickerOfColor = load('res://picker_of_color.gd')
 
-var gr = {}
+var gr = {
+	poc = null
+}
 
 
 # #############
 # Seutp/Teardown
 # #############
-func prerun_setup():
-	pass
-
 func setup():
-	pass
+	gr.poc = PickerOfColor.new()
+	add_child(gr.poc)
 
 func teardown():
-	pass
+	remove_child(gr.poc)
 
 # #############
 # Tests
 # #############
 func test_pending():
-	var p = PickerOfColors.instance()
-	add_child(p)
 	pending()
