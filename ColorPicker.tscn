@@ -4,16 +4,14 @@
 
 [node name="Picker" type="Panel"]
 
-focus/ignore_mouse = false
-focus/stop_mouse = true
+focus/ignore_mouse = true
+focus/stop_mouse = false
 size_flags/horizontal = 2
 size_flags/vertical = 2
-margin/left = 0.0
-margin/top = 0.0
-margin/right = 676.0
-margin/bottom = 591.0
+margin/left = 39.0
+margin/top = 24.0
+margin/right = 790.0
+margin/bottom = 535.0
 script/script = ExtResource( 1 )
-
-[connection signal="input_event" from="." to="." method="_on_Picker_input_event"]
 
 
