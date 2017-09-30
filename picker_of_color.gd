@@ -3,8 +3,10 @@ extends Control
 var _cell_size = Vector2(30, 30)
 var _row_width = 1
 var _colors = []
-var _selected_index = 30
+var _selected_index = -1
 var _selected_top_left = Vector2(400, 50)
+
+signal selected
 
 func _draw():
 	draw_rect(Rect2(Vector2(0,0), get_size()), Color(.5, .5, .5))
@@ -48,14 +50,18 @@ func _get_color_at_location(loc):
 		to_return = idx
 	return int(to_return)
 
+func _handle_click(ev):
+	if(ev.x < _cell_size.x * _row_width):
+		var idx = _get_color_at_location(ev)
+		if(idx != -1):
+			_selected_index = idx
+			emit_signal('selected', _colors[idx])
+			update()
+
 func _input_event( ev ):
 	if ev.type == InputEvent.MOUSE_BUTTON:
 		if ev.button_index == BUTTON_LEFT and ev.pressed:
-			if(ev.x < _cell_size.x * _row_width):
-				var idx = _get_color_at_location(ev)
-				if(idx != -1):
-					_selected_index = idx
-					update()
+			_handle_click(ev)
 
 func set_size(s):
 	_row_width = int(int(s.x) / _cell_size.x)
@@ -64,9 +70,55 @@ func set_size(s):
 	.set_size(s)
 	update()
 
-func add_color(r, g, b):
-	_colors.append(Color(r, g, b))
+func add_color(r, g=-1, b=-1):
+	if(g == -1):
+		_colors.append(r)
+	else:
+		_colors.append(Color(r, g, b))
 
 func add_unique_color(r, g, b):
 	if(!_colors.has(Color(r, g, b))):
 		add_color(r, g, b)
+
+func get_cell_size():
+	return _cell_size
+
+func set_cell_size(cell_size):
+	_cell_size = cell_size
+
+func get_selected_index():
+	return _selected_index
+
+func set_selected_index(selected_index):
+	if(selected_index < _colors.size()):
+		_selected_index = selected_index
+		update()
+
+func get_selected_color():
+	var c = null
+	if(_selected_index != -1):
+		c = _colors[_selected_index]
+	return c
+
+func set_selected_color(c):
+	var idx = _colors.find(c)
+	if(idx != -1):
+		_selected_index = idx
+		update()
+
+func get_colors():
+	return _colors
+
+func clear():
+	_colors.clear()
+	update()
+
+func saveit(path):
+	var f = ConfigFile.new()
+	f.set_value('colors', 'all_colors', _colors)
+	f.save(path)
+
+func loadit(path):
+	var f = ConfigFile.new()
+	f.load(path)
+	_colors = f.get_value('colors', 'all_colors', [])

@@ -1,12 +1,12 @@
 
-var _asdf = null
+var _presets = null
 
 func _ready():
-	_asdf = load('res://picker_of_color.gd').new()
-	add_child(_asdf)
-	_asdf.set_size(Vector2(315, 1000))
-	_init_colors()
-	_asdf.update()
+	_presets = load('res://picker_of_color.gd').new()
+	add_child(_presets)
+	_presets.set_size(Vector2(315, 1000))
+	load_defaults()
+	_presets.update()
 
 func add_range(r, g, b):
 	var lr = r
@@ -22,9 +22,9 @@ func add_range(r, g, b):
 			lb = v
 		if(g == -1):
 			lg = v
-		_asdf.add_unique_color(lr, lg, lb)
+		_presets.add_unique_color(lr, lg, lb)
 
-func _init_colors():
+func load_defaults():
 	#_colors.clear()
 	add_range(1, 0, -1)
 	add_range(1, 1, -1)
@@ -47,5 +47,5 @@ func _init_colors():
 
 	add_range(-1, -1, -1)
 
-	_asdf.add_unique_color(1,1,1)
-	_asdf.add_unique_color(0, 0, 0)
+	_presets.add_unique_color(1,1,1)
+	_presets.add_unique_color(0, 0, 0)
