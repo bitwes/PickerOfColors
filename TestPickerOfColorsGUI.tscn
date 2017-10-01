@@ -13,9 +13,9 @@ focus/ignore_mouse = false
 focus/stop_mouse = true
 size_flags/horizontal = 2
 size_flags/vertical = 2
-margin/left = 695.0
+margin/left = 694.0
 margin/top = 38.0
-margin/right = 1007.0
+margin/right = 1006.0
 margin/bottom = 470.0
 
 [node name="txtSelectedIndex" type="TextEdit" parent="Controls"]
@@ -82,11 +82,29 @@ percent_visible = 1.0
 lines_skipped = 0
 max_lines_visible = -1
 
+[node name="Add10Colors" type="Button" parent="Controls"]
+
+focus/ignore_mouse = false
+focus/stop_mouse = true
+size_flags/horizontal = 2
+size_flags/vertical = 2
+margin/left = 1.0
+margin/top = 135.0
+margin/right = 137.0
+margin/bottom = 172.0
+toggle_mode = false
+enabled_focus_mode = 2
+shortcut = null
+text = "Add 10 Colors"
+flat = false
+
 [node name="Picker" parent="." instance=ExtResource( 2 )]
 
-margin/left = 33.0
+margin/left = 32.0
 margin/top = 41.0
-margin/right = 635.0
-margin/bottom = 456.0
+margin/right = 675.0
+margin/bottom = -413.0
+
+[connection signal="pressed" from="Controls/Add10Colors" to="." method="_on_Add10Colors_pressed"]
 
 

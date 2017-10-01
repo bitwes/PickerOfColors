@@ -1,6 +1,7 @@
 var _presets = null
 var _custom = null
 var _custom_slots = 0
+var _cur_picker = null
 
 signal selected
 
@@ -15,17 +16,18 @@ onready var _ctrls = {
 
 func _ready():
 	_presets = _ctrls.preset_scroll.get_node("PickerOfColor")
-	_ctrls.preset_scroll.add_child(_presets)
-	_presets.set_size(Vector2(_ctrls.preset_tab.get_size().x -15, 500))
+	_presets.set_size(Vector2(_ctrls.preset_tab.get_size().x -15, 300))
 	_presets.set_custom_minimum_size(_presets.get_size())
 	_presets.connect('selected', self, '_on_preset_selected')
-	_ctrls.preset_scroll.queue_sort()
+	#_ctrls.preset_scroll.queue_sort()
 
 	_custom = _ctrls.custom_scroll.get_node("PickerOfColor")
-	_custom.set_size(_ctrls.custom_tab.get_size() - Vector2(0, _ctrls.custom_maker.get_pos().y + 50))
-	_ctrls.custom_tab.add_child(_custom)
+	_custom.set_size(Vector2(_ctrls.custom_tab.get_size().x -15, 200))
+	_custom.set_custom_minimum_size(_custom.get_size())
 	_custom.connect('selected', self, '_on_custom_selected')
-	_ctrls.custom_scroll.queue_sort()
+	#_ctrls.custom_scroll.queue_sort()
+
+	_cur_picker = _presets
 
 func _on_preset_selected(color):
 	emit_signal('selected', color)
@@ -48,9 +50,23 @@ func set_custom_slots(custom_slots):
 		_custom.add_color(null)
 	_custom.update()
 
+func get_cell_size():
+	return _presets.get_cell_size()
 
+func set_cell_size(cell_size):
+	_presets.set_cell_size(cell_size)
+	_custom.set_cell_size(cell_size)
+	#_ctrls.custom_scroll.queue_sort()
+	#_ctrls.preset_scroll.queue_sort()
 
+func get_presets_picker():
+	return _presets
 
+func get_custom_picker():
+	return _custom
+
+func get_active_picker():
+	return _cur_picker
 
 
 
@@ -121,3 +137,10 @@ func load_default_presets():
 	_presets.add_unique_color(1,1,1)
 	_presets.add_unique_color(0, 0, 0)
 	_presets.update()
+
+
+func _on_TabContainer_tab_changed( tab ):
+	if(tab == 0):
+		_cur_picker = _presets
+	elif(tab == 1):
+		_cur_picker = _custom

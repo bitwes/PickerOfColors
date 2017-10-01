@@ -58,6 +58,22 @@ func test_can_set_color_for_index():
 	gr.poc.set_color(0, Color(3,3,3))
 	assert_eq(gr.poc.get_colors()[0], Color(3,3,3))
 
+func test_setting_cell_size_causes_vertical_resize():
+	gr.poc.set_size(Vector2(100,100))
+	gr.poc.add_color(1,1,1)
+	gr.poc.add_color(2,2,2)
+	gr.poc.add_color(3,3,3)
+	# This size should cause one per line for a total size of 300
+	gr.poc.set_cell_size(Vector2(75, 100))
+	assert_eq(gr.poc.get_size().y, 400)
+
+func test_adding_colors_causes_vertical_resize():
+	gr.poc.set_size(Vector2(100, 50))
+	gr.poc.set_cell_size(Vector2(75, 100))
+	gr.poc.add_color(1,1,1)
+	gr.poc.add_color(2,2,2)
+	assert_eq(gr.poc.get_size().y, 300)
+
 # ########
 # Selecting things
 # ########

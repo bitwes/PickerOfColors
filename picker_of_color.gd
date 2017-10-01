@@ -76,17 +76,26 @@ func _recalc_num_per_row():
 		_num_per_row = 1
 	update()
 
+func _fit_vertically():
+	var new_y = int(int(_colors.size()) / _num_per_row) * _cell_size.y + _cell_size.y
+	if(get_size().y < new_y):
+		set_size(Vector2(get_size().x, new_y))
+	update()
 
 func set_size(s):
 	.set_size(s)
 	_recalc_num_per_row()
+	set_custom_minimum_size(get_size())
+	# if(get_parent() and get_parent().has_method('queue_sort')):
+	# 	get_parent().queue_sort()
+	update()
 
 func add_color(r, g=-1, b=-1):
 	if(g == -1):
 		_colors.append(r)
 	else:
 		_colors.append(Color(r, g, b))
-
+	_fit_vertically()
 
 func add_unique_color(r, g, b):
 	if(!_colors.has(Color(r, g, b))):
@@ -98,7 +107,7 @@ func get_cell_size():
 func set_cell_size(cell_size):
 	_cell_size = cell_size
 	_recalc_num_per_row()
-
+	_fit_vertically()
 
 func get_selected_index():
 	return _selected_index

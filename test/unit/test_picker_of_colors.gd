@@ -15,7 +15,7 @@ func setup():
 	add_child(gr.poc)
 
 func teardown():
-	remove_child(gr.poc)
+	gr.poc.queue_free()
 	gut.file_delete(TEMP_FILE)
 
 # #############
@@ -37,4 +37,8 @@ func test_has_selected_signal():
 	assert_has_signal(gr.poc, 'selected')
 
 func test_can_get_set_cell_size():
-	pending()
+	assert_get_set_methods(gr.poc, 'cell_size', Vector2(30,30), Vector2(50, 50))
+
+func test_setting_cell_size_sets_custom_cell_size():
+	gr.poc.set_cell_size(Vector2(100, 100))
+	assert_eq(gr.poc.get_custom_picker().get_cell_size(), Vector2(100, 100))
