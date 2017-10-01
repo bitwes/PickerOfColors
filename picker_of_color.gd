@@ -116,9 +116,11 @@ func clear():
 func saveit(path):
 	var f = ConfigFile.new()
 	f.set_value('colors', 'all_colors', _colors)
+	f.set_value('colors', 'selected', _selected_index)
 	f.save(path)
 
 func loadit(path):
 	var f = ConfigFile.new()
 	f.load(path)
 	_colors = f.get_value('colors', 'all_colors', [])
+	_selected_index = f.get_value('colors', 'selected', -1)

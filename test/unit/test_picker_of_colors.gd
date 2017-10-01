@@ -18,5 +18,17 @@ func teardown():
 	remove_child(gr.poc)
 	gut.file_delete(TEMP_FILE)
 
+# #############
+# Tests
+# #############
 func test_can_get_selected_color():
 	pending()
+
+func test_can_get_presets():
+	pending()
+
+func test_can_get_customs():
+	pending()
+
+func test_has_selected_signal():
+	assert_has_signal(gr.poc, 'selected')
