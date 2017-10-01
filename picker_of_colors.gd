@@ -4,19 +4,23 @@ var _custom = null
 
 signal selected
 
+onready var _ctrls = {
+	preset_tab = get_node("Preset"),
+	custom_tab = get_node("Custom")
+}
+
 func _ready():
 	_presets = load('res://picker_of_color.gd').new()
-	add_child(_presets)
-	_presets.set_size(self.get_size())
+	_ctrls.preset_tab.add_child(_presets)
+	_presets.set_size(_ctrls.preset_tab.get_size())
 	_presets.connect('selected', self, '_on_preset_selected')
+
+	_custom = load('res://picker_of_color.gd').new()
+	get_node("Custom").add_child(_custom)
+	_custom.set_size(_ctrls.custom_tab.get_size() - Vector2(100, 0))
 
 func _on_preset_selected(color):
 	emit_signal('selected', color)
-
-
-
-
-
 
 
 

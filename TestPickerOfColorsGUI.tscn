@@ -85,8 +85,8 @@ max_lines_visible = -1
 [node name="Picker" parent="." instance=ExtResource( 2 )]
 
 margin/left = 35.0
-margin/top = 41.0
+margin/top = 42.0
 margin/right = 652.0
-margin/bottom = 460.0
+margin/bottom = 461.0
 
 

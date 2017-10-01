@@ -21,6 +21,9 @@ func teardown():
 # #############
 # Tests
 # #############
+func test_can_get_set_custom_slots():
+	assert_get_set_methods(gr.poc, 'custom_slots', 0, 10)
+
 func test_can_get_selected_color():
 	pending()
 

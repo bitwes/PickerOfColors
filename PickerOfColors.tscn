@@ -2,16 +2,45 @@
 
 [ext_resource path="res://picker_of_colors.gd" type="Script" id=1]
 
-[node name="Picker" type="Panel"]
+[node name="TabContainer" type="TabContainer"]
 
-focus/ignore_mouse = true
-focus/stop_mouse = false
+focus/ignore_mouse = false
+focus/stop_mouse = true
 size_flags/horizontal = 2
 size_flags/vertical = 2
-margin/left = 39.0
-margin/top = 24.0
-margin/right = 790.0
-margin/bottom = 535.0
+margin/left = 181.0
+margin/top = 115.0
+margin/right = 801.0
+margin/bottom = 516.0
+tab_align = 1
+tabs_visible = true
 script/script = ExtResource( 1 )
+
+[node name="Preset" type="Tabs" parent="."]
+
+anchor/right = 1
+anchor/bottom = 1
+focus/ignore_mouse = false
+focus/stop_mouse = true
+size_flags/horizontal = 2
+size_flags/vertical = 2
+margin/left = 4.0
+margin/top = 32.0
+margin/right = 576.0
+margin/bottom = 348.0
+
+[node name="Custom" type="Tabs" parent="."]
+
+visibility/visible = false
+anchor/right = 1
+anchor/bottom = 1
+focus/ignore_mouse = false
+focus/stop_mouse = true
+size_flags/horizontal = 2
+size_flags/vertical = 2
+margin/left = 4.0
+margin/top = 32.0
+margin/right = 576.0
+margin/bottom = 348.0
 
 
