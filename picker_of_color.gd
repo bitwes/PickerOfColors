@@ -22,7 +22,11 @@ func _draw_color(x, y, color, selected=false):
 	# draw outline
 	draw_line(Vector2(x - outline_extra / 2, y), Vector2(x + _cell_size.x + outline_extra / 2, y), outline_color, _cell_size.x + outline_extra)
 	# draw color
-	draw_line(Vector2(x + 1, y), Vector2(x + _cell_size.x -1, y), color, _cell_size.x -2)
+	if(color != null):
+		draw_line(Vector2(x + 1, y), Vector2(x + _cell_size.x -1, y), color, _cell_size.x -2)
+	else:
+		draw_line(Vector2(x + 1, y), Vector2(x + _cell_size.x -1, y), Color(1,1,1), _cell_size.x -2)
+
 
 func _draw_colors(colors):
 	var row_width = int(int(get_size().x) / _cell_size.x)
