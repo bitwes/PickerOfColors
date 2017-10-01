@@ -35,3 +35,6 @@ func test_can_get_customs():
 
 func test_has_selected_signal():
 	assert_has_signal(gr.poc, 'selected')
+
+func test_can_get_set_cell_size():
+	pending()

@@ -1,7 +1,8 @@
-[gd_scene load_steps=3 format=1]
+[gd_scene load_steps=4 format=1]
 
 [ext_resource path="res://picker_of_colors.gd" type="Script" id=1]
-[ext_resource path="res://CustomColor.tscn" type="PackedScene" id=2]
+[ext_resource path="res://picker_of_color.gd" type="Script" id=2]
+[ext_resource path="res://CustomColor.tscn" type="PackedScene" id=3]
 
 [node name="TabContainer" type="TabContainer"]
 
@@ -11,9 +12,9 @@ size_flags/horizontal = 2
 size_flags/vertical = 2
 margin/left = 181.0
 margin/top = 115.0
-margin/right = 801.0
-margin/bottom = 516.0
-tab_align = 1
+margin/right = 809.0
+margin/bottom = 498.0
+tab_align = 0
 tabs_visible = true
 script/script = ExtResource( 1 )
 
@@ -31,6 +32,35 @@ margin/top = 32.0
 margin/right = 4.0
 margin/bottom = 4.0
 
+[node name="ScrollContainer" type="ScrollContainer" parent="Preset"]
+
+anchor/right = 1
+anchor/bottom = 1
+focus/ignore_mouse = false
+focus/stop_mouse = false
+size_flags/horizontal = 2
+size_flags/vertical = 2
+margin/left = 0.0
+margin/top = 1.0
+margin/right = 7.0
+margin/bottom = 3.0
+scroll/horizontal = false
+scroll/vertical = true
+
+[node name="PickerOfColor" type="Control" parent="Preset/ScrollContainer"]
+
+visibility/behind_parent = true
+rect/min_size = Vector2( 10, 50 )
+focus/ignore_mouse = false
+focus/stop_mouse = true
+size_flags/horizontal = 2
+size_flags/vertical = 2
+margin/left = 0.0
+margin/top = 0.0
+margin/right = 10.0
+margin/bottom = 50.0
+script/script = ExtResource( 2 )
+
 [node name="Custom" type="Tabs" parent="."]
 
 anchor/right = 1
@@ -42,9 +72,35 @@ size_flags/vertical = 2
 margin/left = 4.0
 margin/top = 32.0
 margin/right = 4.0
-margin/bottom = 4.0
+margin/bottom = 5.0
 
-[node name="CustomColor" parent="Custom" instance=ExtResource( 2 )]
+[node name="ScrollContainer" type="ScrollContainer" parent="Custom"]
+
+focus/ignore_mouse = false
+focus/stop_mouse = true
+size_flags/horizontal = 2
+size_flags/vertical = 2
+margin/left = 0.0
+margin/top = 0.0
+margin/right = 616.0
+margin/bottom = 144.0
+scroll/horizontal = true
+scroll/vertical = true
+
+[node name="PickerOfColor" type="Control" parent="Custom/ScrollContainer"]
+
+rect/min_size = Vector2( 100, 100 )
+focus/ignore_mouse = false
+focus/stop_mouse = true
+size_flags/horizontal = 2
+size_flags/vertical = 2
+margin/left = 0.0
+margin/top = 0.0
+margin/right = 100.0
+margin/bottom = 100.0
+script/script = ExtResource( 2 )
+
+[node name="CustomColor" parent="Custom" instance=ExtResource( 3 )]
 
 margin/left = 10.0
 margin/top = 154.0

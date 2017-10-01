@@ -1,7 +1,7 @@
 extends Control
 
 var _cell_size = Vector2(30, 30)
-var _row_width = 1
+var _num_per_row = 1
 var _colors = []
 var _selected_index = -1
 var _selected_top_left = Vector2(400, 50)
@@ -9,7 +9,7 @@ var _selected_top_left = Vector2(400, 50)
 signal selected
 
 func _draw():
-	draw_rect(Rect2(Vector2(0,0), get_size()), Color(.5, .5, .5))
+	#draw_rect(Rect2(Vector2(0,0), get_size()), Color(.5, .5, .5))
 	_draw_colors(_colors)
 
 func _draw_color(x, y, color, selected=false):
@@ -20,13 +20,12 @@ func _draw_color(x, y, color, selected=false):
 		outline_extra = 5
 
 	# draw outline
-	#draw_line(Vector2(x - outline_extra / 2, y), Vector2(x + _cell_size.x + outline_extra / 2, y), outline_color, _cell_size.x + outline_extra)
 	draw_rect(Rect2(x - outline_extra, y - outline_extra, _cell_size.x + outline_extra * 2, _cell_size.y + outline_extra * 2), outline_color)
 	# draw color
 	if(color != null):
 		draw_rect(Rect2(x + 1, y + 1, _cell_size.x -1, _cell_size.y -1), color)
-		#draw_line(Vector2(x + 1, y), Vector2(x + _cell_size.x -1, y), color, _cell_size.x -2)
 	else:
+		# draw a black box with a white X in it.
 		var tl = Vector2(x + 1, y + 1)
 		var br = Vector2(x + _cell_size.x -1, y +_cell_size.y -1)
 		draw_rect(Rect2(tl, Vector2(_cell_size.x -1, _cell_size.y -1)), Color(0,0,0))
@@ -45,22 +44,21 @@ func _draw_colors(colors):
 
 func _get_color_location(index):
 	var to_return = Vector2(0, 0)
-	#var row_width = int(int(get_size().x) / _size)
-	to_return.x = fmod(index, _row_width) * _cell_size.x #+ int(_size/2)
-	to_return.y = int(index/_row_width) * _cell_size.y
+	to_return.x = fmod(index, _num_per_row) * _cell_size.x #+ int(_size/2)
+	to_return.y = int(index/_num_per_row) * _cell_size.y
 	return to_return
 
 func _get_color_at_location(loc):
 	var to_return = -1
 	var x = int(int(loc.x) / int(_cell_size.x))
 	var y = int(int(loc.y) / int(_cell_size.y))
-	var idx = x + y * _row_width
+	var idx = x + y * _num_per_row
 	if(idx > -1 and idx < _colors.size()):
 		to_return = idx
 	return int(to_return)
 
 func _handle_click(ev):
-	if(ev.x < _cell_size.x * _row_width):
+	if(ev.x < _cell_size.x * _num_per_row):
 		var idx = _get_color_at_location(ev)
 		if(idx != -1):
 			_selected_index = idx
@@ -72,18 +70,23 @@ func _input_event( ev ):
 		if ev.button_index == BUTTON_LEFT and ev.pressed:
 			_handle_click(ev)
 
-func set_size(s):
-	_row_width = int(int(s.x) / _cell_size.x)
-	if(_row_width < 1):
-		_row_width = 1
-	.set_size(s)
+func _recalc_num_per_row():
+	_num_per_row = int(int(get_size().x) / _cell_size.x)
+	if(_num_per_row < 1):
+		_num_per_row = 1
 	update()
+
+
+func set_size(s):
+	.set_size(s)
+	_recalc_num_per_row()
 
 func add_color(r, g=-1, b=-1):
 	if(g == -1):
 		_colors.append(r)
 	else:
 		_colors.append(Color(r, g, b))
+
 
 func add_unique_color(r, g, b):
 	if(!_colors.has(Color(r, g, b))):
@@ -94,6 +97,8 @@ func get_cell_size():
 
 func set_cell_size(cell_size):
 	_cell_size = cell_size
+	_recalc_num_per_row()
+
 
 func get_selected_index():
 	return _selected_index
