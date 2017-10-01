@@ -28,8 +28,8 @@ size_flags/horizontal = 2
 size_flags/vertical = 2
 margin/left = 4.0
 margin/top = 32.0
-margin/right = 576.0
-margin/bottom = 348.0
+margin/right = 4.0
+margin/bottom = 4.0
 
 [node name="Custom" type="Tabs" parent="."]
 
@@ -41,8 +41,8 @@ size_flags/horizontal = 2
 size_flags/vertical = 2
 margin/left = 4.0
 margin/top = 32.0
-margin/right = 8.0
-margin/bottom = 18.0
+margin/right = 4.0
+margin/bottom = 4.0
 
 [node name="CustomColor" parent="Custom" instance=ExtResource( 2 )]
 
@@ -51,7 +51,7 @@ margin/top = 154.0
 margin/right = 430.0
 margin/bottom = 339.0
 
-[node name="Set" type="Button" parent="Custom"]
+[node name="SetButton" type="Button" parent="Custom"]
 
 focus/ignore_mouse = false
 focus/stop_mouse = true
@@ -61,10 +61,13 @@ margin/left = 440.0
 margin/top = 203.0
 margin/right = 599.0
 margin/bottom = 264.0
+disabled = true
 toggle_mode = false
 enabled_focus_mode = 2
 shortcut = null
 text = "Set"
 flat = false
+
+[connection signal="pressed" from="Custom/SetButton" to="." method="_on_Set_pressed"]
 
 

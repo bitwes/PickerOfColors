@@ -51,6 +51,13 @@ func test_add_unique_color_filters_out_duplicates():
 func test_can_add_null_colors():
 	gr.poc.add_color(null)
 	assert_eq(gr.poc.get_colors()[0], null)
+
+func test_can_set_color_for_index():
+	gr.poc.add_color(1,1,1)
+	gr.poc.add_color(2,2,2)
+	gr.poc.set_color(0, Color(3,3,3))
+	assert_eq(gr.poc.get_colors()[0], Color(3,3,3))
+
 # ########
 # Selecting things
 # ########

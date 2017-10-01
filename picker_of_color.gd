@@ -118,6 +118,10 @@ func set_selected_color(c):
 func get_colors():
 	return _colors
 
+func set_color(index, color):
+	_colors[index] = color
+	update()
+
 func clear():
 	_colors.clear()
 	update()

@@ -8,7 +8,8 @@ signal selected
 onready var _ctrls = {
 	preset_tab = get_node("Preset"),
 	custom_tab = get_node("Custom"),
-	custom_maker = get_node("Custom/CustomColor")
+	custom_maker = get_node("Custom/CustomColor"),
+	set_button = get_node("Custom/SetButton")
 }
 
 func _ready():
@@ -20,10 +21,19 @@ func _ready():
 	_custom = load('res://picker_of_color.gd').new()
 	_custom.set_size(_ctrls.custom_tab.get_size() - Vector2(0, _ctrls.custom_maker.get_pos().y + 50))
 	get_node("Custom").add_child(_custom)
+	_custom.connect('selected', self, '_on_custom_selected')
 
 func _on_preset_selected(color):
 	emit_signal('selected', color)
 
+func _on_custom_selected(color):
+	if(color != null):
+		_ctrls.custom_maker.set_color(color)
+		emit_signal('selected', color)
+	_ctrls.set_button.set_disabled(false)
+
+func _on_Set_pressed():
+	_custom.set_color(_custom.get_selected_index(), _ctrls.custom_maker.get_color())
 
 func get_custom_slots():
 	return _custom_slots
