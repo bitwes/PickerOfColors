@@ -14,19 +14,24 @@ func _draw():
 
 func _draw_color(x, y, color, selected=false):
 	var outline_color = Color(1,1,1)
-	var outline_extra = 1
+	var outline_extra = 0
 	if(selected):
 		outline_color = Color(0, 0, 0)
-		outline_extra = 10
+		outline_extra = 5
 
 	# draw outline
-	draw_line(Vector2(x - outline_extra / 2, y), Vector2(x + _cell_size.x + outline_extra / 2, y), outline_color, _cell_size.x + outline_extra)
+	#draw_line(Vector2(x - outline_extra / 2, y), Vector2(x + _cell_size.x + outline_extra / 2, y), outline_color, _cell_size.x + outline_extra)
+	draw_rect(Rect2(x - outline_extra, y - outline_extra, _cell_size.x + outline_extra * 2, _cell_size.y + outline_extra * 2), outline_color)
 	# draw color
 	if(color != null):
-		draw_line(Vector2(x + 1, y), Vector2(x + _cell_size.x -1, y), color, _cell_size.x -2)
+		draw_rect(Rect2(x + 1, y + 1, _cell_size.x -1, _cell_size.y -1), color)
+		#draw_line(Vector2(x + 1, y), Vector2(x + _cell_size.x -1, y), color, _cell_size.x -2)
 	else:
-		draw_line(Vector2(x + 1, y), Vector2(x + _cell_size.x -1, y), Color(1,1,1), _cell_size.x -2)
-
+		var tl = Vector2(x + 1, y + 1)
+		var br = Vector2(x + _cell_size.x -1, y +_cell_size.y -1)
+		draw_rect(Rect2(tl, Vector2(_cell_size.x -1, _cell_size.y -1)), Color(0,0,0))
+		draw_line(tl, br, Color(1,1,1))
+		draw_line(Vector2(br.x, tl.y), Vector2(tl.x, br.y), Color(1,1,1))
 
 func _draw_colors(colors):
 	var row_width = int(int(get_size().x) / _cell_size.x)
@@ -42,7 +47,7 @@ func _get_color_location(index):
 	var to_return = Vector2(0, 0)
 	#var row_width = int(int(get_size().x) / _size)
 	to_return.x = fmod(index, _row_width) * _cell_size.x #+ int(_size/2)
-	to_return.y = int(index/_row_width) * _cell_size.y + int(_cell_size.y/2)
+	to_return.y = int(index/_row_width) * _cell_size.y
 	return to_return
 
 func _get_color_at_location(loc):

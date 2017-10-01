@@ -19,8 +19,6 @@ func _ready():
 
 	_custom = load('res://picker_of_color.gd').new()
 	_custom.set_size(_ctrls.custom_tab.get_size() - Vector2(0, _ctrls.custom_maker.get_pos().y + 50))
-	for i in range(_custom_slots):
-		_custom.add_color(null)
 	get_node("Custom").add_child(_custom)
 
 func _on_preset_selected(color):
@@ -32,6 +30,9 @@ func get_custom_slots():
 
 func set_custom_slots(custom_slots):
 	_custom_slots = custom_slots
+	for i in range(_custom_slots):
+		_custom.add_color(null)
+	_custom.update()
 
 
 
@@ -103,4 +104,6 @@ func load_default_presets():
 
 	_presets.add_unique_color(1,1,1)
 	_presets.add_unique_color(0, 0, 0)
+	_presets.add_color(null)
+	_presets.add_color(null)
 	_presets.update()

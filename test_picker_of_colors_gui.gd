@@ -12,13 +12,14 @@ func _on_panel_draw():
 		_ctrls.panel.draw_rect(Rect2(233, 30, 30, 30), _color)
 
 func _ready():
+	_picker.set_custom_slots(10)
 	_picker.load_default_presets()
 	_picker.connect('selected', self, '_on_picker_selected')
-
 	_ctrls.panel.connect('draw', self, '_on_panel_draw')
 
 func _on_picker_selected(color):
-	var txt = str('r = ', color.r, "\ng = ", color.g, "\nb = ", color.b, "\n", color.to_html())
-	_ctrls.lbl_color_info.set_text(txt)
-	_color = color
-	_ctrls.panel.update()
+	if(color != null):
+		var txt = str('r = ', color.r, "\ng = ", color.g, "\nb = ", color.b, "\n", color.to_html())
+		_ctrls.lbl_color_info.set_text(txt)
+		_color = color
+		_ctrls.panel.update()
