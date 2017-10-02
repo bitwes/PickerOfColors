@@ -68,74 +68,42 @@ func get_custom_picker():
 func get_active_picker():
 	return _cur_picker
 
+func _get_val(dir, x, step=.1):
+	var val = 0
+	if(dir == 'u'):
+		val = step * x
+	if(dir == 'd'):
+		val = 1 - step * x
+	return val
 
+func _is_dir(val):
+	return str(val) == 'u' or str(val) == 'd'
 
-
-
-
-
-
-func add_range(r, g, b):
+func add_range(r, g, b, step=.05):
 	var lr = r
 	var lg = g
 	var lb = b
 
-	var v = 0
-	for i in range(10):
-		v = .1 * i
-		if(r == -1):
-			lr = v
-		if(b == -1):
-			lb = v
-		if(g == -1):
-			lg = v
+	for i in range(int(1.0/step) + 1):
+		if(_is_dir(r)):
+			lr = _get_val(r, i, step)
+		if(_is_dir(b)):
+			lb = _get_val(b, i, step)
+		if(_is_dir(g)):
+			lg = _get_val(g, i, step)
 		_presets.add_unique_color(lr, lg, lb)
 
-func load_default_presets():
-	# red
-	add_range(1, 0, -1)
-	add_range(.75, 0, -1)
-	add_range(.5, 0, -1)
-	add_range(.25, 0, -1)
-	add_range(1, -1, 0)
+func load_default_presets(step=.05):
+	var U = 'u'
+	var D = 'd'
+	add_range(1, U, 0, step)
+	add_range(D, 1, 0, step)
+	add_range(0, 1, U, step)
+	add_range(0, D, 1, step)
+	add_range(U, 0, 1, step)
+	add_range(1, 0, D, step)
 
-	# yellow
-	add_range(1, 1, -1)
-	add_range(.75, .75, -1)
-	add_range(.5, .5, -1)
-
-
-	# green
-	add_range(0, 1, -1)
-	add_range(0, .75, -1)
-	add_range(0, .5, -1)
-
-	# blue
-	add_range(0, -1, 1)
-	add_range(-1, -1, .75)
-	add_range(.5, -1, .5)
-
-	# grey
-	add_range(-1, -1, -1)
-
-	# add_range(-1, 0, 1)
-	# add_range(-1, -1, 1)
-
-
-	# ?
-	# add_range(-1, 1, 0)
-	# add_range(-1, 1, -1)
-	#
-	#
-	# add_range(1, -1, 1)
-	# add_range(1, -1, -1)
-	# add_range(1, -1, 1)
-	#
-	#
-	#
-
-	_presets.add_unique_color(1,1,1)
-	_presets.add_unique_color(0, 0, 0)
+	add_range(U, U, U, step)
 	_presets.update()
 
 
