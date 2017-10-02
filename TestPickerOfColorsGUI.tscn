@@ -120,10 +120,10 @@ focus/ignore_mouse = false
 focus/stop_mouse = true
 size_flags/horizontal = 2
 size_flags/vertical = 2
-margin/left = 154.0
-margin/top = 343.0
-margin/right = 307.0
-margin/bottom = 377.0
+margin/left = -2.0
+margin/top = 389.0
+margin/right = 151.0
+margin/bottom = 423.0
 toggle_mode = false
 enabled_focus_mode = 2
 shortcut = null
@@ -137,9 +137,9 @@ focus/stop_mouse = true
 size_flags/horizontal = 2
 size_flags/vertical = 0
 margin/left = 155.0
-margin/top = 289.0
+margin/top = 290.0
 margin/right = 305.0
-margin/bottom = 306.0
+margin/bottom = 307.0
 range/min = 5.0
 range/max = 100.0
 range/step = 1.0
@@ -172,40 +172,40 @@ tick_count = 0
 ticks_on_borders = true
 focus_mode = 2
 
-[node name="PresetStepSlider" type="VSlider" parent="Controls"]
-
-focus/ignore_mouse = false
-focus/stop_mouse = true
-size_flags/horizontal = 0
-size_flags/vertical = 2
-margin/left = 284.0
-margin/top = 157.0
-margin/right = 300.0
-margin/bottom = 279.0
-range/min = 0.001
-range/max = 0.25
-range/step = 0.01
-range/page = 0.0
-range/value = 0.1
-range/exp_edit = false
-range/rounded = false
-tick_count = 0
-ticks_on_borders = true
-focus_mode = 2
-
 [node name="ConfigInfoLabel" type="Label" parent="Controls"]
 
 focus/ignore_mouse = true
 focus/stop_mouse = true
 size_flags/horizontal = 2
 size_flags/vertical = 0
-margin/left = 13.0
-margin/top = 223.0
-margin/right = 104.0
-margin/bottom = 414.0
+margin/left = 8.0
+margin/top = 325.0
+margin/right = 302.0
+margin/bottom = 381.0
 percent_visible = 1.0
 lines_skipped = 0
 max_lines_visible = -1
+
+[node name="StepSpinBox" type="SpinBox" parent="Controls"]
+
+focus/ignore_mouse = false
+focus/stop_mouse = true
+size_flags/horizontal = 2
+size_flags/vertical = 2
+margin/left = 227.0
+margin/top = 252.0
+margin/right = 301.0
+margin/bottom = 276.0
+range/min = 0.01
+range/max = 1.0
+range/step = 0.01
+range/page = 0.0
+range/value = 0.1
+range/exp_edit = false
+range/rounded = false
+editable = true
+prefix = ""
+suffix = ""
 
 [node name="Picker" parent="." instance=ExtResource( 2 )]
 
@@ -214,16 +214,14 @@ margin/top = 41.0
 margin/right = 675.0
 margin/bottom = -413.0
 
+[connection signal="pressed" from="Controls/btnSetSelected" to="." method="_on_btnSetSelected_pressed"]
+
 [connection signal="pressed" from="Controls/Add10Colors" to="." method="_on_Add10Colors_pressed"]
 
 [connection signal="pressed" from="Controls/SaveCustom" to="." method="_on_SaveCustom_pressed"]
 
 [connection signal="pressed" from="Controls/LoadCustom" to="." method="_on_LoadCustom_pressed"]
 
-[connection signal="value_changed" from="Controls/CellWidthSlider" to="." method="_on_CellWidthSlider_value_changed"]
-
-[connection signal="value_changed" from="Controls/CellHeightSlider" to="." method="_on_CellHeightSlider_value_changed"]
-
-[connection signal="value_changed" from="Controls/PresetStepSlider" to="." method="_on_PresetStepSlider_value_changed"]
+[connection signal="value_changed" from="Controls/StepSpinBox" to="." method="_on_StepSpinBox_value_changed"]
 
 

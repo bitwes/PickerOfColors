@@ -2,6 +2,7 @@ var _presets = null
 var _custom = null
 var _custom_slots = 0
 var _cur_picker = null
+var _cur_color = null
 
 signal selected
 
@@ -31,12 +32,16 @@ func _ready():
 
 func _on_preset_selected(color):
 	emit_signal('selected', color)
+	_custom.set_selected_index(-1)
+	_cur_color = color
 
 func _on_custom_selected(color):
 	if(color != null):
 		_ctrls.custom_maker.set_color(color)
 		emit_signal('selected', color)
+		_presets.set_selected_index(-1)
 	_ctrls.set_button.set_disabled(false)
+	_cur_color = color
 
 func _on_Set_pressed():
 	_custom.set_color(_custom.get_selected_index(), _ctrls.custom_maker.get_color())
@@ -56,8 +61,6 @@ func get_cell_size():
 func set_cell_size(cell_size):
 	_presets.set_cell_size(cell_size)
 	_custom.set_cell_size(cell_size)
-	#_ctrls.custom_scroll.queue_sort()
-	#_ctrls.preset_scroll.queue_sort()
 
 func get_presets_picker():
 	return _presets
@@ -106,9 +109,11 @@ func load_default_presets(step=.05):
 	add_range(U, U, U, step)
 	_presets.update()
 
-
 func _on_TabContainer_tab_changed( tab ):
 	if(tab == 0):
 		_cur_picker = _presets
 	elif(tab == 1):
 		_cur_picker = _custom
+
+func get_color():
+ 	return _cur_color

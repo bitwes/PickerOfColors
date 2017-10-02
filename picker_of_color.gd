@@ -38,7 +38,7 @@ func _draw_colors(colors):
 		var l = _get_color_location(i)
 		_draw_color(l.x, l.y, colors[i])
 
-	if(_selected_index != -1):
+	if(_selected_index != -1 and _selected_index < colors.size()):
 		var l = _get_color_location(_selected_index)
 		_draw_color(l.x, l.y, colors[_selected_index], true)
 
