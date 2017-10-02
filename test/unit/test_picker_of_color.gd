@@ -1,6 +1,6 @@
 extends "res://addons/gut/test.gd"
 
-var PickerOfColor = load('res://picker_of_color.gd')
+var PickerOfColor = load('res://addons/PickerOfColors/picker_of_color.gd')
 const TEMP_FILE = 'user://__test_picker_of_color__.txt'
 var gr = {
 	poc = null

@@ -1,3 +1,6 @@
+tool
+extends TabContainer
+
 var _presets = null
 var _custom = null
 var _custom_slots = 0
@@ -5,6 +8,8 @@ var _cur_picker = null
 var _cur_color = null
 
 signal selected
+
+export(Vector2) var cell_size setget set_cell_size,get_cell_size
 
 onready var _ctrls = {
 	preset_tab = get_node("Preset"),
@@ -58,9 +63,9 @@ func set_custom_slots(custom_slots):
 func get_cell_size():
 	return _presets.get_cell_size()
 
-func set_cell_size(cell_size):
-	_presets.set_cell_size(cell_size)
-	_custom.set_cell_size(cell_size)
+func set_cell_size(cs):
+	_presets.set_cell_size(cs)
+	_custom.set_cell_size(cs)
 
 func get_presets_picker():
 	return _presets
