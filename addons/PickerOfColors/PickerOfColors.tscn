@@ -4,7 +4,7 @@
 [ext_resource path="res://addons/PickerOfColors/picker_of_color.gd" type="Script" id=2]
 [ext_resource path="res://addons/PickerOfColors/CustomColor.tscn" type="PackedScene" id=3]
 
-[node name="PickerOfColors" type="TabContainer"]
+[node name="PickerOfColors" type="Control"]
 
 anchor/bottom = 1
 focus/ignore_mouse = false
@@ -13,16 +13,27 @@ size_flags/horizontal = 2
 size_flags/vertical = 2
 margin/left = 181.0
 margin/top = 115.0
-margin/right = 881.0
-margin/bottom = 19.0
-tab_align = 0
-tabs_visible = true
+margin/right = 784.0
+margin/bottom = 126.0
 script/script = ExtResource( 1 )
 
-[node name="Preset" type="Tabs" parent="."]
+[node name="Tabs" type="TabContainer" parent="."]
 
-editor/display_folded = true
-visibility/visible = false
+anchor/right = 1
+anchor/bottom = 1
+focus/ignore_mouse = false
+focus/stop_mouse = true
+size_flags/horizontal = 2
+size_flags/vertical = 2
+margin/left = 0.0
+margin/top = 0.0
+margin/right = -72.0
+margin/bottom = 2.0
+tab_align = 0
+tabs_visible = true
+
+[node name="Preset" type="Tabs" parent="Tabs"]
+
 anchor/right = 1
 anchor/bottom = 1
 focus/ignore_mouse = false
@@ -34,7 +45,7 @@ margin/top = 32.0
 margin/right = 4.0
 margin/bottom = 4.0
 
-[node name="ScrollContainer" type="ScrollContainer" parent="Preset"]
+[node name="ScrollContainer" type="ScrollContainer" parent="Tabs/Preset"]
 
 anchor/right = 1
 anchor/bottom = 1
@@ -44,28 +55,27 @@ size_flags/horizontal = 2
 size_flags/vertical = 2
 margin/left = 0.0
 margin/top = 1.0
-margin/right = 7.0
-margin/bottom = 3.0
+margin/right = 9.0
+margin/bottom = 8.0
 scroll/horizontal = false
 scroll/vertical = true
 
-[node name="PickerOfColor" type="Control" parent="Preset/ScrollContainer"]
+[node name="PickerOfColor" type="Control" parent="Tabs/Preset/ScrollContainer"]
 
 visibility/behind_parent = true
-rect/min_size = Vector2( 677, 300 )
+rect/min_size = Vector2( 652, 300 )
 focus/ignore_mouse = false
 focus/stop_mouse = true
 size_flags/horizontal = 2
 size_flags/vertical = 2
 margin/left = 0.0
 margin/top = 0.0
-margin/right = 677.0
+margin/right = 652.0
 margin/bottom = 300.0
 script/script = ExtResource( 2 )
 
-[node name="Custom" type="Tabs" parent="."]
+[node name="Custom" type="Tabs" parent="Tabs"]
 
-editor/display_folded = true
 visibility/visible = false
 anchor/right = 1
 anchor/bottom = 1
@@ -78,7 +88,7 @@ margin/top = 32.0
 margin/right = 4.0
 margin/bottom = 4.0
 
-[node name="ScrollContainer" type="ScrollContainer" parent="Custom"]
+[node name="ScrollContainer" type="ScrollContainer" parent="Tabs/Custom"]
 
 anchor/right = 1
 anchor/bottom = 1
@@ -93,20 +103,20 @@ margin/bottom = 198.0
 scroll/horizontal = true
 scroll/vertical = true
 
-[node name="PickerOfColor" type="Control" parent="Custom/ScrollContainer"]
+[node name="PickerOfColor" type="Control" parent="Tabs/Custom/ScrollContainer"]
 
-rect/min_size = Vector2( 677, 200 )
+rect/min_size = Vector2( 652, 200 )
 focus/ignore_mouse = false
 focus/stop_mouse = true
 size_flags/horizontal = 2
 size_flags/vertical = 2
 margin/left = 0.0
 margin/top = 0.0
-margin/right = 677.0
+margin/right = 652.0
 margin/bottom = 200.0
 script/script = ExtResource( 2 )
 
-[node name="CustomColor" parent="Custom" instance=ExtResource( 3 )]
+[node name="CustomColor" parent="Tabs/Custom" instance=ExtResource( 3 )]
 
 anchor/top = 1
 anchor/bottom = 1
@@ -115,16 +125,16 @@ margin/top = 186.0
 margin/right = 425.0
 margin/bottom = 12.0
 
-[node name="SetButton" type="Button" parent="Custom"]
+[node name="SetButton" type="Button" parent="Tabs/Custom"]
 
 focus/ignore_mouse = false
 focus/stop_mouse = true
 size_flags/horizontal = 2
 size_flags/vertical = 2
 margin/left = 433.0
-margin/top = 259.0
+margin/top = 180.0
 margin/right = 592.0
-margin/bottom = 320.0
+margin/bottom = 241.0
 disabled = true
 toggle_mode = false
 enabled_focus_mode = 2
@@ -132,8 +142,6 @@ shortcut = null
 text = "Set"
 flat = false
 
-[connection signal="tab_changed" from="." to="." method="_on_TabContainer_tab_changed"]
-
-[connection signal="pressed" from="Custom/SetButton" to="." method="_on_Set_pressed"]
+[connection signal="pressed" from="Tabs/Custom/SetButton" to="." method="_on_Set_pressed"]
 
 

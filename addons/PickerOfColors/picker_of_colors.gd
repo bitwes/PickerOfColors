@@ -1,5 +1,5 @@
 tool
-extends TabContainer
+extends Control
 
 var _presets = null
 var _custom = null
@@ -9,15 +9,15 @@ var _cur_color = null
 
 signal selected
 
-export(Vector2) var cell_size setget set_cell_size,get_cell_size
+#export (Vector2) var cell_size setget set_cell_size,get_cell_size
 
 onready var _ctrls = {
-	preset_tab = get_node("Preset"),
-	custom_tab = get_node("Custom"),
-	custom_maker = get_node("Custom/CustomColor"),
-	set_button = get_node("Custom/SetButton"),
-	preset_scroll = get_node("Preset/ScrollContainer"),
-	custom_scroll = get_node("Custom/ScrollContainer")
+	preset_tab = get_node("Tabs/Preset"),
+	custom_tab = get_node("Tabs/Custom"),
+	custom_maker = get_node("Tabs/Custom/CustomColor"),
+	set_button = get_node("Tabs/Custom/SetButton"),
+	preset_scroll = get_node("Tabs/Preset/ScrollContainer"),
+	custom_scroll = get_node("Tabs/Custom/ScrollContainer")
 }
 
 func _ready():

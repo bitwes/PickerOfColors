@@ -210,10 +210,10 @@ suffix = ""
 
 [node name="Picker" parent="." instance=ExtResource( 2 )]
 
-margin/left = 31.0
-margin/top = 53.0
-margin/right = 662.0
-margin/bottom = -397.0
+margin/left = 69.0
+margin/top = 77.0
+margin/right = 530.0
+margin/bottom = -297.0
 
 [connection signal="pressed" from="Controls/btnSetSelected" to="." method="_on_btnSetSelected_pressed"]
 
