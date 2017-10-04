@@ -17,8 +17,10 @@ onready var _ctrls = {}
 func _ready():
 	_gui = Gui.instance()
 	add_child(_gui)
-	if(get_tree().is_editor_hint()):
-		return
+	_gui.set_anchor(MARGIN_LEFT, ANCHOR_BEGIN)
+	_gui.set_anchor(MARGIN_TOP, ANCHOR_BEGIN)
+	_gui.set_anchor(MARGIN_BOTTOM, ANCHOR_END)
+	_gui.set_anchor(MARGIN_RIGHT, ANCHOR_END)
 
 	_ctrls = {
 		preset_tab = _gui.get_node("Tabs/Preset"),
@@ -28,6 +30,9 @@ func _ready():
 		preset_scroll = _gui.get_node("Tabs/Preset/ScrollContainer"),
 		custom_scroll = _gui.get_node("Tabs/Custom/ScrollContainer")
 	}
+
+	if(get_tree().is_editor_hint()):
+		return
 
 	_presets = _ctrls.preset_scroll.get_node("PickerOfColor")
 	_presets.set_size(Vector2(_ctrls.preset_tab.get_size().x -15, 300))
