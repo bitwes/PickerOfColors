@@ -217,8 +217,8 @@ size_flags/horizontal = 2
 size_flags/vertical = 2
 margin/left = 0.0
 margin/top = 0.0
-margin/right = 530.0
-margin/bottom = 284.0
+margin/right = 617.0
+margin/bottom = 308.0
 script/script = ExtResource( 2 )
 __meta__ = { "_editor_icon":ExtResource( 3 ) }
 
@@ -231,5 +231,3 @@ __meta__ = { "_editor_icon":ExtResource( 3 ) }
 [connection signal="pressed" from="Controls/LoadCustom" to="." method="_on_LoadCustom_pressed"]
 
 [connection signal="value_changed" from="Controls/StepSpinBox" to="." method="_on_StepSpinBox_value_changed"]
-
-
