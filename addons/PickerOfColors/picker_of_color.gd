@@ -12,6 +12,12 @@ func _draw():
 	#draw_rect(Rect2(Vector2(0,0), get_size()), Color(.5, .5, .5))
 	_draw_colors(_colors)
 
+func _is_in_editor():
+	var to_return = false
+	if(get_parent() and get_tree().is_editor_hint()):
+		to_return = true
+	return to_return
+
 func _draw_color(x, y, color, selected=false):
 	var outline_color = Color(1,1,1)
 	var outline_extra = 0
@@ -86,7 +92,7 @@ func set_size(s):
 	.set_size(s)
 	# if the minimum size is set in the editor then you can never make it
 	# smaller.
-	if(!get_tree().is_editor_hint()):
+	if(!_is_in_editor()):
 		_recalc_num_per_row()
 		# The minimum size has to be set so that the scroll bars on the scroll
 		# container work as expected.  This has the side effect that you

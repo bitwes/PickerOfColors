@@ -1,6 +1,6 @@
 extends "res://addons/gut/test.gd"
 
-var PickerOfColors = load('res://addons/PickerOfColors/PickerOfColors.tscn')
+var PickerOfColors = load('res://addons/PickerOfColors/picker_of_colors.gd')
 const TEMP_FILE = 'user://__test_picker_of_color__.txt'
 var gr = {
 	poc = null
@@ -10,7 +10,7 @@ var gr = {
 # Seutp/Teardown
 # #############
 func setup():
-	gr.poc = PickerOfColors.instance()
+	gr.poc = PickerOfColors.new()
 	gr.poc.set_size(Vector2(300, 300))
 	add_child(gr.poc)
 
