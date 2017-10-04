@@ -1,4 +1,4 @@
-onready var _picker = get_node("Picker")
+onready var _picker = get_node("PickerOfColors")
 const CUSTOM_FILE = 'user://test_custom_colors.txt'
 onready var _ctrls = {
 	panel = get_node("Controls"),

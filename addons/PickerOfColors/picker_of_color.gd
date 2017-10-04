@@ -84,10 +84,14 @@ func _fit_vertically():
 
 func set_size(s):
 	.set_size(s)
-	_recalc_num_per_row()
-	set_custom_minimum_size(get_size())
-	# if(get_parent() and get_parent().has_method('queue_sort')):
-	# 	get_parent().queue_sort()
+	# if the minimum size is set in the editor then you can never make it
+	# smaller.
+	if(!get_tree().is_editor_hint()):
+		_recalc_num_per_row()
+		# The minimum size has to be set so that the scroll bars on the scroll
+		# container work as expected.  This has the side effect that you
+		# probably cannot make it smaller at runtime.
+		set_custom_minimum_size(get_size())
 	update()
 
 func add_color(r, g=-1, b=-1):

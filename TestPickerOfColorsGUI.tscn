@@ -1,7 +1,8 @@
-[gd_scene load_steps=3 format=1]
+[gd_scene load_steps=4 format=1]
 
 [ext_resource path="res://test_picker_of_colors_gui.gd" type="Script" id=1]
-[ext_resource path="res://addons/PickerOfColors/PickerOfColors.tscn" type="PackedScene" id=2]
+[ext_resource path="res://addons/PickerOfColors/picker_of_colors.gd" type="Script" id=2]
+[ext_resource path="res://addons/PickerOfColors/icon.png" type="Texture" id=3]
 
 [node name="Node2D" type="Node2D"]
 
@@ -208,12 +209,18 @@ editable = true
 prefix = ""
 suffix = ""
 
-[node name="Picker" parent="." instance=ExtResource( 2 )]
+[node name="PickerOfColors" type="Control" parent="."]
 
-margin/left = 69.0
-margin/top = 77.0
-margin/right = 530.0
-margin/bottom = -297.0
+focus/ignore_mouse = false
+focus/stop_mouse = true
+size_flags/horizontal = 2
+size_flags/vertical = 2
+margin/left = 0.0
+margin/top = 0.0
+margin/right = 628.0
+margin/bottom = 346.0
+script/script = ExtResource( 2 )
+__meta__ = { "_editor_icon":ExtResource( 3 ) }
 
 [connection signal="pressed" from="Controls/btnSetSelected" to="." method="_on_btnSetSelected_pressed"]
 

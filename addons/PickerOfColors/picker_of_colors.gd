@@ -1,6 +1,7 @@
 tool
 extends Control
 
+
 var _presets = null
 var _custom = null
 var _custom_slots = 0
@@ -8,19 +9,26 @@ var _cur_picker = null
 var _cur_color = null
 
 signal selected
-
 #export (Vector2) var cell_size setget set_cell_size,get_cell_size
+var Gui = load('res://addons/PickerOfColors/PickerOfColors.tscn')
+var _gui = null
 
-onready var _ctrls = {
-	preset_tab = get_node("Tabs/Preset"),
-	custom_tab = get_node("Tabs/Custom"),
-	custom_maker = get_node("Tabs/Custom/CustomColor"),
-	set_button = get_node("Tabs/Custom/SetButton"),
-	preset_scroll = get_node("Tabs/Preset/ScrollContainer"),
-	custom_scroll = get_node("Tabs/Custom/ScrollContainer")
-}
-
+onready var _ctrls = {}
 func _ready():
+	_gui = Gui.instance()
+	add_child(_gui)
+	if(get_tree().is_editor_hint()):
+		return
+
+	_ctrls = {
+		preset_tab = _gui.get_node("Tabs/Preset"),
+		custom_tab = _gui.get_node("Tabs/Custom"),
+		custom_maker = _gui.get_node("Tabs/Custom/CustomColor"),
+		set_button = _gui.get_node("Tabs/Custom/SetButton"),
+		preset_scroll = _gui.get_node("Tabs/Preset/ScrollContainer"),
+		custom_scroll = _gui.get_node("Tabs/Custom/ScrollContainer")
+	}
+
 	_presets = _ctrls.preset_scroll.get_node("PickerOfColor")
 	_presets.set_size(Vector2(_ctrls.preset_tab.get_size().x -15, 300))
 	_presets.set_custom_minimum_size(_presets.get_size())
