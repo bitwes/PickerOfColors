@@ -4,7 +4,7 @@ var PickerOfColors = load('res://addons/PickerOfColors/picker_of_colors.gd')
 var PickerOfColor = load('res://addons/PickerOfColors/picker_of_color.gd')
 
 const TEMP_FILE = 'user://__test_picker_of_color__.txt'
-const TEMP_CUSTOM = 'user://__test_custom_picker__.txt'
+const TEMP_COLOR = 'user://__test_color_file__.txt'
 
 var gr = {
 	poc = null,
@@ -15,6 +15,14 @@ func simulate_select(picker, index):
 	picker.set_selected_index(index)
 	picker.emit_signal('selected', picker.get_colors()[index])
 	return picker.get_colors()[index]
+
+func create_color_file():
+	var p = PickerOfColor.new()
+	p.add_color(.23, .99, .03)
+	p.add_color(.1, .23, .45)
+	p.add_color(.54, .3, .21)
+	p.saveit(TEMP_COLOR)
+
 
 
 func save_load():
@@ -36,7 +44,7 @@ func setup():
 func teardown():
 	gr.poc.queue_free()
 	gut.file_delete(TEMP_FILE)
-	gut.file_delete(TEMP_CUSTOM)
+	gut.file_delete(TEMP_COLOR)
 	if(gr.other != null):
 		remove_child(gr.other)
 
@@ -74,11 +82,14 @@ func test_when_custom_selected_the_selected_signal_is_emitted():
 	assert_signal_emitted(gr.poc, 'selected')
 
 func test_can_load_custom_colors():
-	var custom = PickerOfColor.new()
-	custom.add_color(1,1,1)
-	custom.saveit(TEMP_CUSTOM)
-	gr.poc.load_custom_colors(TEMP_CUSTOM)
-	assert_eq(gr.poc.get_custom_picker().get_colors().size(), 1)
+	create_color_file()
+	gr.poc.load_custom_colors(TEMP_COLOR)
+	assert_eq(gr.poc.get_custom_picker().get_colors().size(), 3)
+
+func test_can_load_preset_colors():
+	create_color_file()
+	gr.poc.load_preset_colors(TEMP_COLOR)
+	assert_eq(gr.poc.get_presets_picker().get_colors().size(), 3)
 
 func test_can_get_set_cell_size():
 	assert_get_set_methods(gr.poc, 'cell_size', Vector2(30,30), Vector2(50, 50))
@@ -107,19 +118,21 @@ func test_can_save_load_selected_preset():
 	assert_eq(other.get_presets_picker().get_selected_color(), c, 'Color is selected')
 
 func test_can_save_load_custom_file():
-	var custom = PickerOfColor.new()
-	custom.add_color(1,1,1)
-	custom.saveit(TEMP_CUSTOM)
-	gr.poc.load_custom_colors(TEMP_CUSTOM)
+	create_color_file()
+	gr.poc.load_custom_colors(TEMP_COLOR)
 	var other = save_load()
-	assert_eq(other.get_custom_picker().get_colors().size(), 1)
+	assert_eq(other.get_custom_picker().get_colors().size(), 3)
 
 func test_can_save_load_selected_custom():
-	var custom = PickerOfColor.new()
-	custom.add_color(.23, .99, .03)
-	custom.saveit(TEMP_CUSTOM)
-	gr.poc.load_custom_colors(TEMP_CUSTOM)
+	create_color_file()
+	gr.poc.load_custom_colors(TEMP_COLOR)
 	var c = simulate_select(gr.poc.get_custom_picker(), 0)
 	var other = save_load()
 	assert_eq(other.get_color(), c, 'Color is set')
 	assert_eq(other.get_custom_picker().get_selected_color(), c, 'Color is selected')
+
+func test_can_save_load_preset_file():
+	create_color_file()
+	gr.poc.load_preset_colors(TEMP_COLOR)
+	var other = save_load()
+	assert_eq(other.get_presets_picker().get_colors().size(), 3)

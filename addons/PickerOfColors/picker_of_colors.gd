@@ -9,6 +9,7 @@ var _cur_picker = null
 var _cur_color = null
 var _default_step = -1.0
 var _customs_path = null
+var _presets_path = null
 
 const D = 'd'
 const U = 'u'
@@ -145,30 +146,44 @@ func load_custom_colors(path):
 	_custom.loadit(path)
 	_customs_path = path
 
+func load_preset_colors(path):
+	_presets.loadit(path)
+	_presets_path = path
+
 func saveit(path):
 	var f = ConfigFile.new()
 	f.set_value('settings', 'cell_size', get_cell_size())
 	f.set_value('settings', 'default_step', _default_step)
 	f.set_value('settings', 'color', get_color())
 	f.set_value('settings', 'customs_path', _customs_path)
+	f.set_value('settings', 'presets_path', _presets_path)
+
 	if(_custom.get_selected_index() != -1):
 		f.set_value('settings', 'color_tab', 'custom')
 	elif(_presets.get_selected_index() != -1):
 		f.set_value('settings', 'color_tab', 'presets')
+
 	f.save(path)
 
 func loadit(path):
 	var f = ConfigFile.new()
 	f.load(path)
 	set_cell_size(f.get_value('settings', 'cell_size', get_cell_size()))
-	_default_step = float(f.get_value('settings', 'default_step', -1.0))
 	_cur_color = f.get_value('settings', 'color')
+
+	_default_step = float(f.get_value('settings', 'default_step', -1.0))
 	if(_default_step != -1.0):
 		_presets.clear()
 		load_default_presets(_default_step)
+
+	_presets_path = f.get_value('settings', 'presets_path')
+	if(_presets_path != null):
+		load_preset_colors(_presets_path)
+
 	_customs_path = f.get_value('settings', 'customs_path')
 	if(_customs_path != null):
 		load_custom_colors(_customs_path)
+
 	var tab = f.get_value('settings', 'color_tab', 'none')
 	if(tab == 'custom'):
 		_custom.set_selected_color(_cur_color)
