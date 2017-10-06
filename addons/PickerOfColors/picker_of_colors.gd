@@ -13,8 +13,8 @@ var _presets_path = null
 
 const D = 'd'
 const U = 'u'
-signal selected
-#export (Vector2) var cell_size setget set_cell_size,get_cell_size
+signal selected(color)
+
 var Gui = load('res://addons/PickerOfColors/PickerOfColors.tscn')
 var _gui = null
 
