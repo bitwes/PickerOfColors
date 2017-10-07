@@ -19,6 +19,7 @@ var Gui = load('res://addons/PickerOfColors/PickerOfColors.tscn')
 var _gui = null
 
 onready var _ctrls = {}
+
 func _ready():
 	_gui = Gui.instance()
 	add_child(_gui)
@@ -32,12 +33,20 @@ func _ready():
 		custom_tab = _gui.get_node("Tabs/Custom"),
 		custom_maker = _gui.get_node("Tabs/Custom/CustomColor"),
 		set_button = _gui.get_node("Tabs/Custom/SetButton"),
+		clear_button = _gui.get_node("Tabs/Custom/ClearButton"),
 		preset_scroll = _gui.get_node("Tabs/Preset/ScrollContainer"),
 		custom_scroll = _gui.get_node("Tabs/Custom/ScrollContainer")
 	}
 
 	if(get_tree().is_editor_hint()):
 		return
+
+	_gui.get_node("Tabs").connect('tab_changed', self, '_on_TabContainer_tab_changed')
+
+	_ctrls.custom_maker.connect('value_changed', self, '_on_custom_maker_changed')
+	_ctrls.set_button.connect('draw', self, '_on_set_button_draw')
+	_ctrls.set_button.connect('pressed', self, '_on_set_button_pressed')
+	_ctrls.clear_button.connect('pressed', self, '_on_clear_button_pressed')
 
 	_presets = _ctrls.preset_scroll.get_node("PickerOfColor")
 	_presets.set_size(Vector2(_ctrls.preset_tab.get_size().x -15, 300))
@@ -53,6 +62,10 @@ func _ready():
 
 	_cur_picker = _presets
 
+func _on_set_button_draw():
+	var s = _ctrls.set_button.get_size()
+	_ctrls.set_button.draw_rect(Rect2(5, 5, s.x-10, s.y-10), _ctrls.custom_maker.get_color())
+
 func _on_preset_selected(color):
 	emit_signal('selected', color)
 	_custom.set_selected_index(-1)
@@ -64,10 +77,18 @@ func _on_custom_selected(color):
 		emit_signal('selected', color)
 		_presets.set_selected_index(-1)
 	_ctrls.set_button.set_disabled(false)
+	_ctrls.clear_button.set_disabled(false)
 	_cur_color = color
 
-func _on_Set_pressed():
+func _on_set_button_pressed():
 	_custom.set_color(_custom.get_selected_index(), _ctrls.custom_maker.get_color())
+
+func _on_clear_button_pressed():
+	_custom.set_color(_custom.get_selected_index(), null)
+
+func _on_custom_maker_changed(color):
+	#_ctrls.set_button.add_color_override("font_color", color)
+	_ctrls.set_button.update()
 
 func get_custom_slots():
 	return _custom_slots

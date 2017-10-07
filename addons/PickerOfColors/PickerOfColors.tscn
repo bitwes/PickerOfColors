@@ -7,16 +7,15 @@
 
 anchor/right = 1
 anchor/bottom = 1
-rect/min_size = Vector2( 600, 300 )
+rect/min_size = Vector2( 490, 225 )
 focus/ignore_mouse = false
 focus/stop_mouse = true
 size_flags/horizontal = 2
 size_flags/vertical = 2
-margin/left = 0.0
-margin/top = 0.0
+margin/left = 2.0
+margin/top = 3.0
 margin/right = 0.0
-margin/bottom = 0.0
-__meta__ = { "_edit_group_":true }
+margin/bottom = -1.0
 
 [node name="Tabs" type="TabContainer" parent="."]
 
@@ -36,7 +35,6 @@ __meta__ = { "_edit_lock_":true }
 
 [node name="Preset" type="Tabs" parent="Tabs"]
 
-editor/display_folded = true
 anchor/right = 1
 anchor/bottom = 1
 focus/ignore_mouse = false
@@ -70,11 +68,11 @@ visibility/behind_parent = true
 rect/min_size = Vector2( 50, 50 )
 focus/ignore_mouse = false
 focus/stop_mouse = true
-size_flags/horizontal = 2
-size_flags/vertical = 2
+size_flags/horizontal = 3
+size_flags/vertical = 3
 margin/left = 0.0
 margin/top = 0.0
-margin/right = 50.0
+margin/right = 1005.0
 margin/bottom = 50.0
 script/script = ExtResource( 1 )
 
@@ -95,6 +93,7 @@ margin/bottom = 4.0
 
 [node name="ScrollContainer" type="ScrollContainer" parent="Tabs/Custom"]
 
+editor/display_folded = true
 anchor/right = 1
 anchor/bottom = 1
 focus/ignore_mouse = false
@@ -104,7 +103,7 @@ size_flags/vertical = 2
 margin/left = 0.0
 margin/top = 0.0
 margin/right = 0.0
-margin/bottom = 198.0
+margin/bottom = 127.0
 scroll/horizontal = true
 scroll/vertical = true
 
@@ -125,10 +124,10 @@ script/script = ExtResource( 1 )
 
 anchor/top = 1
 anchor/bottom = 1
-margin/left = 5.0
-margin/top = 186.0
-margin/right = 425.0
-margin/bottom = 12.0
+margin/left = -2.0
+margin/top = 118.0
+margin/right = 366.0
+margin/bottom = -5.0
 
 [node name="SetButton" type="Button" parent="Tabs/Custom"]
 
@@ -138,10 +137,10 @@ focus/ignore_mouse = false
 focus/stop_mouse = true
 size_flags/horizontal = 2
 size_flags/vertical = 2
-margin/left = 429.0
-margin/top = 75.0
-margin/right = 588.0
-margin/bottom = 14.0
+margin/left = 379.0
+margin/top = 117.0
+margin/right = 479.0
+margin/bottom = 77.0
 disabled = true
 toggle_mode = false
 enabled_focus_mode = 2
@@ -149,6 +148,23 @@ shortcut = null
 text = "Set"
 flat = false
 
-[connection signal="pressed" from="Tabs/Custom/SetButton" to="." method="_on_Set_pressed"]
+[node name="ClearButton" type="Button" parent="Tabs/Custom"]
+
+anchor/top = 1
+anchor/bottom = 1
+focus/ignore_mouse = false
+focus/stop_mouse = true
+size_flags/horizontal = 2
+size_flags/vertical = 2
+margin/left = 378.0
+margin/top = 72.0
+margin/right = 478.0
+margin/bottom = 32.0
+disabled = true
+toggle_mode = false
+enabled_focus_mode = 2
+shortcut = null
+text = "Clear"
+flat = false
 
 

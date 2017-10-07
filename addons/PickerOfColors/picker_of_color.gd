@@ -9,7 +9,7 @@ var _selected_top_left = Vector2(400, 50)
 signal selected
 
 func _draw():
-	#draw_rect(Rect2(Vector2(0,0), get_size()), Color(.5, .5, .5))
+	draw_rect(Rect2(Vector2(0,0), get_size()), Color(.5, .5, .5))
 	_draw_colors(_colors)
 
 func _is_in_editor():
@@ -31,10 +31,10 @@ func _draw_color(x, y, color, selected=false):
 	if(color != null):
 		draw_rect(Rect2(x + 1, y + 1, _cell_size.x -1, _cell_size.y -1), color)
 	else:
-		# draw a black box with a white X in it.
+		# draw a grey box with a white X in it.
 		var tl = Vector2(x + 1, y + 1)
 		var br = Vector2(x + _cell_size.x -1, y +_cell_size.y -1)
-		draw_rect(Rect2(tl, Vector2(_cell_size.x -1, _cell_size.y -1)), Color(0,0,0))
+		draw_rect(Rect2(tl, Vector2(_cell_size.x -1, _cell_size.y -1)), Color(.15, .15, .15))
 		draw_line(tl, br, Color(1,1,1))
 		draw_line(Vector2(br.x, tl.y), Vector2(tl.x, br.y), Color(1,1,1))
 
@@ -91,7 +91,7 @@ func _fit_vertically():
 func set_size(s):
 	.set_size(s)
 	# if the minimum size is set in the editor then you can never make it
-	# smaller.
+	# smaller so we don't set it when in the editor.
 	if(!_is_in_editor()):
 		_recalc_num_per_row()
 		# The minimum size has to be set so that the scroll bars on the scroll
@@ -153,11 +153,9 @@ func clear():
 func saveit(path):
 	var f = ConfigFile.new()
 	f.set_value('colors', 'all_colors', _colors)
-	f.set_value('colors', 'selected', _selected_index)
 	f.save(path)
 
 func loadit(path):
 	var f = ConfigFile.new()
 	f.load(path)
 	_colors = f.get_value('colors', 'all_colors', [])
-	_selected_index = f.get_value('colors', 'selected', -1)

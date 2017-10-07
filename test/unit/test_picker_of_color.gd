@@ -140,14 +140,3 @@ func test_gets_empty_array_when_file_does_not_exist():
 	gr.poc.add_color(1,1,1)
 	gr.poc.loadit('user://_some_non_existant_file__2q34asd')
 	assert_eq(gr.poc.get_colors().size(), 0)
-
-func test_saving_and_loading_saves_selected():
-	gr.poc.add_color(1,1,1)
-	gr.poc.add_color(2,1,1)
-	gr.poc.add_color(3,1,1)
-	gr.poc.set_selected_index(1)
-	gr.poc.saveit(TEMP_FILE)
-
-	var other = PickerOfColor.new()
-	other.loadit(TEMP_FILE)
-	assert_eq(other.get_selected_color(), Color(2,1,1))
