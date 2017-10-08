@@ -89,8 +89,12 @@ func _on_clear_button_pressed():
 	_custom.set_color(_custom.get_selected_index(), null)
 	emit_signal('customs_changed')
 
+func _increase_custom_slots_to(num):
+	for i in range(_custom.get_colors().size(), num):
+		_custom.add_color(null)
+	_custom.update()
+
 func _on_custom_maker_changed(color):
-	#_ctrls.set_button.add_color_override("font_color", color)
 	_ctrls.set_button.update()
 
 func get_custom_slots():
@@ -99,9 +103,7 @@ func get_custom_slots():
 func set_custom_slots(custom_slots):
 	if(_custom_slots < custom_slots):
 		_custom_slots = custom_slots
-		for i in range(_custom.get_colors().size(), _custom_slots):
-			_custom.add_color(null)
-		_custom.update()
+		_increase_custom_slots_to(_custom_slots)
 		emit_signal('customs_changed')
 
 func get_cell_size():
@@ -172,9 +174,7 @@ func load_custom_colors(path):
 	_custom.loadit(path)
 	_customs_path = path
 	if(_custom.get_colors().size() < _custom_slots):
-		for i in range(_custom.get_colors().size(), _custom_slots):
-			_custom.add_color(null)
-		_custom.update()
+		_increase_custom_slots_to(_custom_slots)
 	else:
 		_custom_slots = _custom.get_colors().size()
 
