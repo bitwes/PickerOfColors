@@ -171,7 +171,12 @@ func get_color():
 func load_custom_colors(path):
 	_custom.loadit(path)
 	_customs_path = path
-	_custom_slots = _custom.get_colors().size()
+	if(_custom.get_colors().size() < _custom_slots):
+		for i in range(_custom.get_colors().size(), _custom_slots):
+			_custom.add_color(null)
+		_custom.update()
+	else:
+		_custom_slots = _custom.get_colors().size()
 
 func load_preset_colors(path):
 	_presets.loadit(path)

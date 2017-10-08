@@ -10,18 +10,26 @@ var gr = {
 	poc = null,
 	other = null
 }
+func _simulate_set_custom(index, color):
+	gr.poc.get_custom_picker().set_selected_index(index)
+	gr.poc._ctrls.custom_maker.set_color(color)
+	gr.poc._on_set_button_pressed()
+
+func _simulate_clear_custom(index):
+	gr.poc.get_custom_picker().set_selected_index(index)
+	gr.poc._on_clear_button_pressed()
 
 func simulate_select(picker, index):
 	picker.set_selected_index(index)
 	picker.emit_signal('selected', picker.get_colors()[index])
 	return picker.get_colors()[index]
 
-func create_color_file():
+func create_color_file(path):
 	var p = PickerOfColor.new()
 	p.add_color(.23, .99, .03)
 	p.add_color(.1, .23, .45)
 	p.add_color(.54, .3, .21)
-	p.saveit(TEMP_COLOR)
+	p.saveit(path)
 
 
 
@@ -83,12 +91,12 @@ func test_when_custom_selected_the_selected_signal_is_emitted():
 	assert_signal_emitted(gr.poc, 'selected')
 
 func test_can_load_custom_colors():
-	create_color_file()
+	create_color_file(TEMP_COLOR)
 	gr.poc.load_custom_colors(TEMP_COLOR)
 	assert_eq(gr.poc.get_custom_picker().get_colors().size(), 3)
 
 func test_can_load_preset_colors():
-	create_color_file()
+	create_color_file(TEMP_COLOR)
 	gr.poc.load_preset_colors(TEMP_COLOR)
 	assert_eq(gr.poc.get_presets_picker().get_colors().size(), 3)
 
@@ -119,13 +127,13 @@ func test_can_save_load_selected_preset():
 	assert_eq(other.get_presets_picker().get_selected_color(), c, 'Color is selected')
 
 func test_can_save_load_custom_file():
-	create_color_file()
+	create_color_file(TEMP_COLOR)
 	gr.poc.load_custom_colors(TEMP_COLOR)
 	var other = save_load()
 	assert_eq(other.get_custom_picker().get_colors().size(), 3)
 
 func test_can_save_load_selected_custom():
-	create_color_file()
+	create_color_file(TEMP_COLOR)
 	gr.poc.load_custom_colors(TEMP_COLOR)
 	var c = simulate_select(gr.poc.get_custom_picker(), 0)
 	var other = save_load()
@@ -133,20 +141,10 @@ func test_can_save_load_selected_custom():
 	assert_eq(other.get_custom_picker().get_selected_color(), c, 'Color is selected')
 
 func test_can_save_load_preset_file():
-	create_color_file()
+	create_color_file(TEMP_COLOR)
 	gr.poc.load_preset_colors(TEMP_COLOR)
 	var other = save_load()
 	assert_eq(other.get_presets_picker().get_colors().size(), 3)
-
-
-func _simulate_set_custom(index, color):
-	gr.poc.get_custom_picker().set_selected_index(index)
-	gr.poc._ctrls.custom_maker.set_color(color)
-	gr.poc._on_set_button_pressed()
-
-func _simulate_clear_custom(index):
-	gr.poc.get_custom_picker().set_selected_index(index)
-	gr.poc._on_clear_button_pressed()
 
 func test__customs_changed__emitted_on_color_set():
 	watch_signals(gr.poc)
@@ -166,14 +164,21 @@ func test__customs_changed__emitted_when_changing_custom_slots():
 	gr.poc.set_custom_slots(10)
 	assert_signal_emitted(gr.poc, 'customs_changed')
 
-func test_loading_customs_does_not_lower_number_of_custom_slots():
+func test_less_customs_does_not_lower_number_of_custom_slots():
 	gr.poc.set_custom_slots(10)
 	gr.poc.set_custom_slots(5)
 	assert_eq(gr.poc.get_custom_slots(), 10, '10 slot value')
 	assert_eq(gr.poc.get_custom_picker().get_colors().size(), 10, '10 actual slots')
 
+func test_loading_customs_does_not_lower_number_of_custom_slots():
+	create_color_file(TEMP_COLOR)
+	gr.poc.set_custom_slots(10)
+	gr.poc.load_custom_colors(TEMP_COLOR)
+	assert_eq(gr.poc.get_custom_slots(), 10, 'should have 10 slot as value')
+	assert_eq(gr.poc.get_custom_picker().get_colors().size(), 10, 'Should have 10 actual slots')
+
 func test_loading_customs_can_increasse_number_of_custom_slots():
-	create_color_file() # 3 colors
+	create_color_file(TEMP_COLOR) # 3 colors
 	gr.poc.set_custom_slots(1)
 	gr.poc.load_custom_colors(TEMP_COLOR)
 	assert_eq(gr.poc.get_custom_slots(), 3, 'should have 3 custom slots')
