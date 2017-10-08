@@ -47,6 +47,7 @@ func teardown():
 	gut.file_delete(TEMP_COLOR)
 	if(gr.other != null):
 		remove_child(gr.other)
+		gr.other = null
 
 # #############
 # Tests
@@ -136,3 +137,59 @@ func test_can_save_load_preset_file():
 	gr.poc.load_preset_colors(TEMP_COLOR)
 	var other = save_load()
 	assert_eq(other.get_presets_picker().get_colors().size(), 3)
+
+
+func _simulate_set_custom(index, color):
+	gr.poc.get_custom_picker().set_selected_index(index)
+	gr.poc._ctrls.custom_maker.set_color(color)
+	gr.poc._on_set_button_pressed()
+
+func _simulate_clear_custom(index):
+	gr.poc.get_custom_picker().set_selected_index(index)
+	gr.poc._on_clear_button_pressed()
+
+func test__customs_changed__emitted_on_color_set():
+	watch_signals(gr.poc)
+	gr.poc.set_custom_slots(10)
+	_simulate_set_custom(0, Color(1,1,1))
+	assert_signal_emitted(gr.poc, 'customs_changed')
+
+func test__customs_changed__emitted_on_clear():
+	watch_signals(gr.poc)
+	gr.poc.set_custom_slots(10)
+	_simulate_clear_custom(1)
+	assert_signal_emitted(gr.poc, 'customs_changed')
+
+func test__customs_changed__emitted_when_changing_custom_slots():
+	gr.poc.set_custom_slots(5)
+	watch_signals(gr.poc)
+	gr.poc.set_custom_slots(10)
+	assert_signal_emitted(gr.poc, 'customs_changed')
+
+func test_loading_customs_does_not_lower_number_of_custom_slots():
+	gr.poc.set_custom_slots(10)
+	gr.poc.set_custom_slots(5)
+	assert_eq(gr.poc.get_custom_slots(), 10, '10 slot value')
+	assert_eq(gr.poc.get_custom_picker().get_colors().size(), 10, '10 actual slots')
+
+func test_loading_customs_can_increasse_number_of_custom_slots():
+	create_color_file() # 3 colors
+	gr.poc.set_custom_slots(1)
+	gr.poc.load_custom_colors(TEMP_COLOR)
+	assert_eq(gr.poc.get_custom_slots(), 3, 'should have 3 custom slots')
+	assert_eq(gr.poc.get_custom_picker().get_colors().size(), 3, 'should have 3 colors loaded')
+
+func test_setting_custom_slots_increases_slots_to_max():
+	gr.poc.set_custom_slots(5)
+	gr.poc.set_custom_slots(10)
+	assert_eq(gr.poc.get_custom_slots(), 10, '10 slot value')
+	assert_eq(gr.poc.get_custom_picker().get_colors().size(), 10, '10 actual slots')
+
+func test_can_set_pre_delete_callback():
+	pending('These might be needed but Im not doing it now')
+
+func test_pre_delete_callback_called_when_custom_deleted():
+	pending('These might be needed but Im not doing it now')
+
+func test_pre_delete_callback_can_cancel_delete():
+	pending('These might be needed but Im not doing it now')

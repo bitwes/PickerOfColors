@@ -14,6 +14,7 @@ var _presets_path = null
 const D = 'd'
 const U = 'u'
 signal selected(color)
+signal customs_changed
 
 var Gui = load('res://addons/PickerOfColors/PickerOfColors.tscn')
 var _gui = null
@@ -82,9 +83,11 @@ func _on_custom_selected(color):
 
 func _on_set_button_pressed():
 	_custom.set_color(_custom.get_selected_index(), _ctrls.custom_maker.get_color())
+	emit_signal('customs_changed')
 
 func _on_clear_button_pressed():
 	_custom.set_color(_custom.get_selected_index(), null)
+	emit_signal('customs_changed')
 
 func _on_custom_maker_changed(color):
 	#_ctrls.set_button.add_color_override("font_color", color)
@@ -94,10 +97,12 @@ func get_custom_slots():
 	return _custom_slots
 
 func set_custom_slots(custom_slots):
-	_custom_slots = custom_slots
-	for i in range(_custom_slots):
-		_custom.add_color(null)
-	_custom.update()
+	if(_custom_slots < custom_slots):
+		_custom_slots = custom_slots
+		for i in range(_custom.get_colors().size(), _custom_slots):
+			_custom.add_color(null)
+		_custom.update()
+		emit_signal('customs_changed')
 
 func get_cell_size():
 	return _presets.get_cell_size()
@@ -166,6 +171,7 @@ func get_color():
 func load_custom_colors(path):
 	_custom.loadit(path)
 	_customs_path = path
+	_custom_slots = _custom.get_colors().size()
 
 func load_preset_colors(path):
 	_presets.loadit(path)

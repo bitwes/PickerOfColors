@@ -9,7 +9,10 @@ var _selected_top_left = Vector2(400, 50)
 signal selected
 
 func _draw():
-	draw_rect(Rect2(Vector2(0,0), get_size()), Color(.5, .5, .5))
+	# left this commented out b/c it can sometimes be helpful in debugging
+	# drawing issues and i've had to comment/uncomment it a bunch and, well,
+	# against by better judgement I think it should stay.
+	# draw_rect(Rect2(Vector2(0,0), get_size()), Color(.5, .5, .5))
 	_draw_colors(_colors)
 
 func _is_in_editor():
