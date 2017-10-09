@@ -10,6 +10,11 @@ var _cur_color = null
 var _default_step = -1.0
 var _customs_path = null
 var _presets_path = null
+const MODES = {
+	PICK = 'pick',
+	EDIT = 'edit'
+}
+var _mode = null
 
 const D = 'd'
 const U = 'u'
@@ -32,11 +37,15 @@ func _ready():
 	_ctrls = {
 		preset_tab = _gui.get_node("Tabs/Preset"),
 		custom_tab = _gui.get_node("Tabs/Custom"),
+
 		custom_maker = _gui.get_node("Tabs/Custom/CustomColor"),
 		set_button = _gui.get_node("Tabs/Custom/SetButton"),
+		edit_button = _gui.get_node("Tabs/Custom/EditButton"),
 		clear_button = _gui.get_node("Tabs/Custom/ClearButton"),
-		preset_scroll = _gui.get_node("Tabs/Preset/ScrollContainer"),
-		custom_scroll = _gui.get_node("Tabs/Custom/ScrollContainer")
+		done_button = _gui.get_node("Tabs/Custom/DoneButton"),
+		custom_scroll = _gui.get_node("Tabs/Custom/ScrollContainer"),
+
+		preset_scroll = _gui.get_node("Tabs/Preset/ScrollContainer")
 	}
 
 	if(get_tree().is_editor_hint()):
@@ -48,6 +57,8 @@ func _ready():
 	_ctrls.set_button.connect('draw', self, '_on_set_button_draw')
 	_ctrls.set_button.connect('pressed', self, '_on_set_button_pressed')
 	_ctrls.clear_button.connect('pressed', self, '_on_clear_button_pressed')
+	_ctrls.edit_button.connect('pressed', self, '_on_edit_button_pressed')
+	_ctrls.done_button.connect('pressed', self, '_on_done_button_pressed')
 
 	_presets = _ctrls.preset_scroll.get_node("PickerOfColor")
 	_presets.set_size(Vector2(_ctrls.preset_tab.get_size().x -15, 300))
@@ -62,6 +73,7 @@ func _ready():
 	#_ctrls.custom_scroll.queue_sort()
 
 	_cur_picker = _presets
+	set_mode(MODES.PICK)
 
 func _on_set_button_draw():
 	var s = _ctrls.set_button.get_size()
@@ -73,13 +85,16 @@ func _on_preset_selected(color):
 	_cur_color = color
 
 func _on_custom_selected(color):
-	if(color != null):
-		_ctrls.custom_maker.set_color(color)
-		emit_signal('selected', color)
-		_presets.set_selected_index(-1)
-	_ctrls.set_button.set_disabled(false)
-	_ctrls.clear_button.set_disabled(false)
-	_cur_color = color
+	if(_mode == MODES.PICK):
+		if(color != null):
+			emit_signal('selected', color)
+			_presets.set_selected_index(-1)
+		_cur_color = color
+	else:
+		if(color != null):
+			_ctrls.custom_maker.set_color(color)
+		_ctrls.set_button.set_disabled(false)
+		_ctrls.clear_button.set_disabled(false)
 
 func _on_set_button_pressed():
 	_custom.set_color(_custom.get_selected_index(), _ctrls.custom_maker.get_color())
@@ -88,6 +103,12 @@ func _on_set_button_pressed():
 func _on_clear_button_pressed():
 	_custom.set_color(_custom.get_selected_index(), null)
 	emit_signal('customs_changed')
+
+func _on_edit_button_pressed():
+	set_mode(MODES.EDIT)
+
+func _on_done_button_pressed():
+	set_mode(MODES.PICK)
 
 func _increase_custom_slots_to(num):
 	for i in range(_custom.get_colors().size(), num):
@@ -181,6 +202,32 @@ func load_custom_colors(path):
 func load_preset_colors(path):
 	_presets.loadit(path)
 	_presets_path = path
+
+func get_mode():
+	return _mode
+
+func set_mode(mode):
+	var cs = _ctrls.custom_scroll.get_size()
+	if(mode == MODES.EDIT):
+		_ctrls.custom_maker.show()
+		_ctrls.set_button.show()
+		_ctrls.clear_button.show()
+		_ctrls.done_button.show()
+
+		_ctrls.edit_button.hide()
+
+		_ctrls.custom_scroll.set_size(Vector2(cs.x, _ctrls.custom_maker.get_pos().y -10))
+	elif(mode == MODES.PICK):
+		_ctrls.custom_maker.hide()
+		_ctrls.set_button.hide()
+		_ctrls.clear_button.hide()
+		_ctrls.done_button.hide()
+
+		_ctrls.edit_button.show()
+		_ctrls.custom_scroll.set_size(Vector2(cs.x, _ctrls.edit_button.get_pos().y -10))
+
+
+	_mode = mode
 
 func saveit(path):
 	var f = ConfigFile.new()

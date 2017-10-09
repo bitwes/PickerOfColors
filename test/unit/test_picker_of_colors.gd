@@ -24,6 +24,12 @@ func simulate_select(picker, index):
 	picker.emit_signal('selected', picker.get_colors()[index])
 	return picker.get_colors()[index]
 
+func select_preset_tab(poc):
+	poc._gui.get_node("Tabs").set_current_tab(0)
+
+func select_custom_tab(poc):
+	poc._gui.get_node("Tabs").set_current_tab(1)
+
 func create_color_file(path):
 	var p = PickerOfColor.new()
 	p.add_color(.23, .99, .03)
@@ -190,6 +196,45 @@ func test_setting_custom_slots_increases_slots_to_max():
 	assert_eq(gr.poc.get_custom_slots(), 10, '10 slot value')
 	assert_eq(gr.poc.get_custom_picker().get_colors().size(), 10, '10 actual slots')
 
+# ###############
+# Edit/Pick mode
+# ###############
+func test_can_get_set_mode():
+	assert_get_set_methods(gr.poc, 'mode', gr.poc.MODES.PICK, gr.poc.MODES.EDIT)
+
+func test_setting_mode_to_edit_shows_correct_controls():
+	gr.poc.set_mode(gr.poc.MODES.EDIT)
+	select_custom_tab(gr.poc)
+	assert_true(gr.poc._ctrls.custom_maker.is_visible(), 'custom maker')
+	assert_true(gr.poc._ctrls.set_button.is_visible(), 'set button')
+	assert_true(gr.poc._ctrls.clear_button.is_visible(), 'clear button')
+	assert_true(gr.poc._ctrls.done_button.is_visible(), 'done button')
+
+	assert_false(gr.poc._ctrls.edit_button.is_visible(), 'edit button')
+
+func test_setting_mode_to_preset_shows_correct_controls():
+	select_custom_tab(gr.poc)
+	gr.poc.set_mode(gr.poc.MODES.EDIT)
+	gr.poc.set_mode(gr.poc.MODES.PICK)
+	assert_false(gr.poc._ctrls.custom_maker.is_visible(), 'custom maker')
+	assert_false(gr.poc._ctrls.set_button.is_visible(), 'set button')
+	assert_false(gr.poc._ctrls.clear_button.is_visible(), 'clear button')
+	assert_false(gr.poc._ctrls.done_button.is_visible(), 'done button')
+
+	assert_true(gr.poc._ctrls.edit_button.is_visible(), 'edit button')
+
+func test_selected_signal_not_fired_in_edit_mode():
+	select_custom_tab(gr.poc)
+	watch_signals(gr.poc)
+	gr.poc.set_mode(gr.poc.MODES.EDIT)
+	gr.poc.set_custom_slots(5)
+	gr.poc.get_custom_picker().set_color(0, Color(1,1,1))
+	simulate_select(gr.poc.get_custom_picker(), 0)
+	assert_signal_not_emitted(gr.poc, 'selected')
+
+# ###############
+# Delete callback
+# ###############
 func test_can_set_pre_delete_callback():
 	pending('These might be needed but Im not doing it now')
 
