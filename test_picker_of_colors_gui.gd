@@ -2,6 +2,7 @@ onready var _picker = get_node("PickerOfColors")
 const CUSTOM_FILE = 'user://test_custom_colors.cfg'
 const PICKER_FILE = 'user://test_picker_file.cfg'
 var PickerOfColors = load('res://addons/PickerOfColors/picker_of_colors.gd')
+
 onready var _ctrls = {
 	panel = get_node("Controls"),
 	txt_selected = get_node("Controls/txtSelectedIndex"),
@@ -12,7 +13,9 @@ onready var _ctrls = {
 	cell_width_slider = get_node("SettingsPanel/CellWidthSlider"),
 	cell_height_slider = get_node("SettingsPanel/CellHeightSlider"),
 	config_info = get_node("SettingsPanel/ConfigInfoLabel"),
-	step_spinner = get_node("SettingsPanel/StepSpinBox")
+	step_spinner = get_node("SettingsPanel/StepSpinBox"),
+	
+	picker_of_color = get_node("PickerOfColor")
 }
 
 var _color = null
@@ -33,6 +36,12 @@ func _ready():
 	_ctrls.width_slider.connect('value_changed', self, '_on_size_slider_changed')
 	_update_config_display()
 	_update_size_sliders()
+	
+	_ctrls.picker_of_color.add_color(1,1,1)
+	_ctrls.picker_of_color.add_color(0,0,0)
+	_ctrls.picker_of_color.add_color(1,0,0)
+	_ctrls.picker_of_color.add_color(0,1,0)
+	_ctrls.picker_of_color.add_color(0,0,1)
 
 func _update_size_sliders():
 	_ctrls.width_slider.set_value(_picker.get_size().x)

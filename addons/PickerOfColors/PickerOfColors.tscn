@@ -36,7 +36,6 @@ __meta__ = { "_edit_lock_":true }
 [node name="Preset" type="Tabs" parent="Tabs"]
 
 editor/display_folded = true
-visibility/visible = false
 anchor/right = 1
 anchor/bottom = 1
 focus/ignore_mouse = false
@@ -80,6 +79,7 @@ script/script = ExtResource( 1 )
 
 [node name="Custom" type="Tabs" parent="Tabs"]
 
+editor/display_folded = true
 anchor/right = 1
 anchor/bottom = 1
 focus/ignore_mouse = false

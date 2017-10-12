@@ -1,3 +1,4 @@
+tool
 extends Control
 
 var _cell_size = Vector2(30, 30)
@@ -6,14 +7,40 @@ var _colors = []
 var _selected_index = -1
 var _selected_top_left = Vector2(400, 50)
 
-signal selected
+signal selected(color)
+
+func _ready():
+	update()
 
 func _draw():
-	# left this commented out b/c it can sometimes be helpful in debugging
-	# drawing issues and i've had to comment/uncomment it a bunch and, well,
-	# against by better judgement I think it should stay.
-	# draw_rect(Rect2(Vector2(0,0), get_size()), Color(.5, .5, .5))
-	_draw_colors(_colors)
+	if(_is_in_editor()):
+		_draw_checkered()
+	else:
+		_draw_colors(_colors)
+
+func _draw_checkered():
+	draw_rect(Rect2(Vector2(0,0), get_size()), Color(.5, .5, .5))
+	var clr1 = Color(0,1,0)
+	var clr2 = Color(1,0,0)
+	var rows = int(get_size().y / _cell_size.y)
+	var cols = int(get_size().x / _cell_size.x)
+	var color = clr1
+	var row_start_color = color
+
+	for r in range(rows):
+		if(row_start_color == clr1):
+			row_start_color = clr2
+		else:
+			row_start_color = clr1
+		color = row_start_color
+		for c in range(cols):
+			_draw_color(c * _cell_size.x, r * _cell_size.y, color)
+			if(color == clr1):
+				color = clr2
+			else:
+				color = clr1
+
+
 
 func _is_in_editor():
 	var to_return = false
@@ -29,12 +56,17 @@ func _draw_color(x, y, color, selected=false):
 		outline_extra = 5
 
 	# draw outline
-	draw_rect(Rect2(x - outline_extra, y - outline_extra, _cell_size.x + outline_extra * 2, _cell_size.y + outline_extra * 2), outline_color)
+	draw_rect(Rect2(x - outline_extra, \
+	                y - outline_extra, \
+					_cell_size.x + outline_extra * 2, \
+					_cell_size.y + outline_extra * 2), \
+				outline_color)
+
 	# draw color
 	if(color != null):
 		draw_rect(Rect2(x + 1, y + 1, _cell_size.x -1, _cell_size.y -1), color)
+	# draw a grey box with a white X in it.
 	else:
-		# draw a grey box with a white X in it.
 		var tl = Vector2(x + 1, y + 1)
 		var br = Vector2(x + _cell_size.x -1, y +_cell_size.y -1)
 		draw_rect(Rect2(tl, Vector2(_cell_size.x -1, _cell_size.y -1)), Color(.15, .15, .15))
