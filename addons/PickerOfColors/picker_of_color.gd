@@ -1,12 +1,12 @@
 tool
 extends Control
 
-var _cell_size = Vector2(30, 30)
+#var _cell_size = Vector2(30, 30)
 var _num_per_row = 1
 var _colors = []
 var _selected_index = -1
 var _selected_top_left = Vector2(400, 50)
-
+export(Vector2) var _cell_size = Vector2(30, 30) setget set_cell_size, get_cell_size
 signal selected(color)
 
 func _ready():
@@ -20,25 +20,28 @@ func _draw():
 
 func _draw_checkered():
 	draw_rect(Rect2(Vector2(0,0), get_size()), Color(.5, .5, .5))
-	var clr1 = Color(0,1,0)
-	var clr2 = Color(1,0,0)
+	var clr1 = Color(.75,.75,.75)
+	var clr2 = Color(.1,.1,.1)
+
 	var rows = int(get_size().y / _cell_size.y)
 	var cols = int(get_size().x / _cell_size.x)
 	var color = clr1
 	var row_start_color = color
 
 	for r in range(rows):
-		if(row_start_color == clr1):
-			row_start_color = clr2
-		else:
-			row_start_color = clr1
-		color = row_start_color
 		for c in range(cols):
 			_draw_color(c * _cell_size.x, r * _cell_size.y, color)
 			if(color == clr1):
 				color = clr2
 			else:
 				color = clr1
+
+		if(row_start_color == clr1):
+			row_start_color = clr2
+		else:
+			row_start_color = clr1
+		color = row_start_color
+
 
 
 

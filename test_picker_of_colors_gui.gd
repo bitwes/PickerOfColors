@@ -14,7 +14,7 @@ onready var _ctrls = {
 	cell_height_slider = get_node("SettingsPanel/CellHeightSlider"),
 	config_info = get_node("SettingsPanel/ConfigInfoLabel"),
 	step_spinner = get_node("SettingsPanel/StepSpinBox"),
-	
+
 	picker_of_color = get_node("PickerOfColor")
 }
 
@@ -36,12 +36,13 @@ func _ready():
 	_ctrls.width_slider.connect('value_changed', self, '_on_size_slider_changed')
 	_update_config_display()
 	_update_size_sliders()
-	
-	_ctrls.picker_of_color.add_color(1,1,1)
-	_ctrls.picker_of_color.add_color(0,0,0)
-	_ctrls.picker_of_color.add_color(1,0,0)
-	_ctrls.picker_of_color.add_color(0,1,0)
-	_ctrls.picker_of_color.add_color(0,0,1)
+
+	for i in range(3):
+		_ctrls.picker_of_color.add_color(1,1,1)
+		_ctrls.picker_of_color.add_color(0,0,0)
+		_ctrls.picker_of_color.add_color(1,0,0)
+		_ctrls.picker_of_color.add_color(0,1,0)
+		_ctrls.picker_of_color.add_color(0,0,1)
 
 func _update_size_sliders():
 	_ctrls.width_slider.set_value(_picker.get_size().x)

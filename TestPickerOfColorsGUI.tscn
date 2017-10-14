@@ -332,12 +332,13 @@ focus/ignore_mouse = false
 focus/stop_mouse = true
 size_flags/horizontal = 2
 size_flags/vertical = 2
-margin/left = 648.0
-margin/top = 362.0
-margin/right = 922.0
-margin/bottom = 458.0
+margin/left = 637.0
+margin/top = 359.0
+margin/right = 968.0
+margin/bottom = 479.0
 script/script = ExtResource( 4 )
 __meta__ = { "_editor_icon":ExtResource( 3 ) }
+_cell_size = Vector2( 30, 60 )
 
 [connection signal="selected" from="PickerOfColors" to="." method="_on_PickerOfColors_selected"]
 
