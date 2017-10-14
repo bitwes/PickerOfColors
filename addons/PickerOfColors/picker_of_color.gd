@@ -16,6 +16,8 @@ func _draw():
 	if(_is_in_editor()):
 		_draw_checkered()
 	else:
+		_recalc_num_per_row()
+		_fit_vertically()
 		_draw_colors(_colors)
 
 func _draw_checkered():
@@ -41,9 +43,6 @@ func _draw_checkered():
 		else:
 			row_start_color = clr1
 		color = row_start_color
-
-
-
 
 func _is_in_editor():
 	var to_return = false
@@ -118,32 +117,32 @@ func _recalc_num_per_row():
 	_num_per_row = int(int(get_size().x) / _cell_size.x)
 	if(_num_per_row < 1):
 		_num_per_row = 1
-	update()
+	#update()
 
 func _fit_vertically():
 	var new_y = int(int(_colors.size()) / _num_per_row) * _cell_size.y + _cell_size.y
 	if(get_size().y < new_y):
 		set_size(Vector2(get_size().x, new_y))
-	update()
+	#update()
 
 func set_size(s):
 	.set_size(s)
 	# if the minimum size is set in the editor then you can never make it
 	# smaller so we don't set it when in the editor.
+	update()
 	if(!_is_in_editor()):
-		_recalc_num_per_row()
 		# The minimum size has to be set so that the scroll bars on the scroll
 		# container work as expected.  This has the side effect that you
 		# probably cannot make it smaller at runtime.
 		set_custom_minimum_size(get_size())
-	update()
 
 func add_color(r, g=-1, b=-1):
 	if(g == -1):
 		_colors.append(r)
 	else:
 		_colors.append(Color(r, g, b))
-	_fit_vertically()
+	update()
+
 
 func add_unique_color(r, g, b):
 	if(!_colors.has(Color(r, g, b))):
@@ -154,8 +153,7 @@ func get_cell_size():
 
 func set_cell_size(cell_size):
 	_cell_size = cell_size
-	_recalc_num_per_row()
-	_fit_vertically()
+	update()
 
 func get_selected_index():
 	return _selected_index

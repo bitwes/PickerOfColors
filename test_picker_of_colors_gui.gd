@@ -15,7 +15,7 @@ onready var _ctrls = {
 	config_info = get_node("SettingsPanel/ConfigInfoLabel"),
 	step_spinner = get_node("SettingsPanel/StepSpinBox"),
 
-	picker_of_color = get_node("PickerOfColor")
+	picker_of_color = get_node("ColorSampleScroll/PickerOfColor")
 }
 
 var _color = null
@@ -37,7 +37,7 @@ func _ready():
 	_update_config_display()
 	_update_size_sliders()
 
-	for i in range(3):
+	for i in range(20):
 		_ctrls.picker_of_color.add_color(1,1,1)
 		_ctrls.picker_of_color.add_color(0,0,0)
 		_ctrls.picker_of_color.add_color(1,0,0)
@@ -74,7 +74,9 @@ func _on_LoadCustom_pressed():
 	_picker.load_custom_colors(CUSTOM_FILE)
 
 func _on_cell_slider_changed(value):
-	_picker.set_cell_size(Vector2(_ctrls.cell_width_slider.get_value(), _ctrls.cell_height_slider.get_value()))
+	var s = Vector2(_ctrls.cell_width_slider.get_value(), _ctrls.cell_height_slider.get_value())
+	_picker.set_cell_size(s)
+	_ctrls.picker_of_color.set_cell_size(s)
 	_update_config_display()
 
 func _on_StepSpinBox_value_changed( value ):

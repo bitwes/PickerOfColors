@@ -17,8 +17,8 @@ size_flags/horizontal = 2
 size_flags/vertical = 2
 margin/left = -1.0
 margin/top = 0.0
-margin/right = 585.0
-margin/bottom = 367.0
+margin/right = 568.0
+margin/bottom = 232.0
 script/script = ExtResource( 2 )
 __meta__ = { "_editor_icon":ExtResource( 3 ) }
 
@@ -244,10 +244,11 @@ focus/ignore_mouse = false
 focus/stop_mouse = true
 size_flags/horizontal = 2
 size_flags/vertical = 2
-margin/left = 688.0
-margin/top = 462.0
-margin/right = 871.0
-margin/bottom = 579.0
+margin/left = 399.0
+margin/top = 458.0
+margin/right = 582.0
+margin/bottom = 575.0
+__meta__ = { "_edit_group_":true }
 
 [node name="StepSpinBox" type="SpinBox" parent="SettingsPanel"]
 
@@ -326,16 +327,32 @@ percent_visible = 1.0
 lines_skipped = 0
 max_lines_visible = -1
 
-[node name="PickerOfColor" type="Control" parent="."]
+[node name="ColorSampleScroll" type="ScrollContainer" parent="."]
 
+editor/display_folded = true
 focus/ignore_mouse = false
 focus/stop_mouse = true
 size_flags/horizontal = 2
 size_flags/vertical = 2
-margin/left = 637.0
-margin/top = 359.0
-margin/right = 946.0
-margin/bottom = 485.0
+margin/left = 635.0
+margin/top = 362.0
+margin/right = 966.0
+margin/bottom = 562.0
+scroll/horizontal = false
+scroll/vertical = true
+__meta__ = { "_edit_group_":true }
+
+[node name="PickerOfColor" type="Control" parent="ColorSampleScroll"]
+
+rect/min_size = Vector2( 0, 60 )
+focus/ignore_mouse = false
+focus/stop_mouse = true
+size_flags/horizontal = 3
+size_flags/vertical = 3
+margin/left = 0.0
+margin/top = 0.0
+margin/right = 331.0
+margin/bottom = 60.0
 script/script = ExtResource( 4 )
 __meta__ = { "_editor_icon":ExtResource( 3 ) }
 _cell_size = Vector2( 30, 60 )
