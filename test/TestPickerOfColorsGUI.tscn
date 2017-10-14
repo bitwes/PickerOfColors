@@ -1,6 +1,6 @@
 [gd_scene load_steps=5 format=1]
 
-[ext_resource path="res://test_picker_of_colors_gui.gd" type="Script" id=1]
+[ext_resource path="res://test/test_picker_of_colors_gui.gd" type="Script" id=1]
 [ext_resource path="res://addons/PickerOfColors/picker_of_colors.gd" type="Script" id=2]
 [ext_resource path="res://addons/PickerOfColors/icon.png" type="Texture" id=3]
 [ext_resource path="res://addons/PickerOfColors/picker_of_color.gd" type="Script" id=4]
@@ -329,14 +329,13 @@ max_lines_visible = -1
 
 [node name="ColorSampleScroll" type="ScrollContainer" parent="."]
 
-editor/display_folded = true
 focus/ignore_mouse = false
 focus/stop_mouse = true
 size_flags/horizontal = 2
 size_flags/vertical = 2
 margin/left = 635.0
 margin/top = 362.0
-margin/right = 966.0
+margin/right = 990.0
 margin/bottom = 562.0
 scroll/horizontal = false
 scroll/vertical = true
@@ -351,7 +350,7 @@ size_flags/horizontal = 3
 size_flags/vertical = 3
 margin/left = 0.0
 margin/top = 0.0
-margin/right = 331.0
+margin/right = 355.0
 margin/bottom = 60.0
 script/script = ExtResource( 4 )
 __meta__ = { "_editor_icon":ExtResource( 3 ) }
