@@ -66,6 +66,41 @@ func teardown():
 # #############
 # Tests
 # #############
+func test_can_get_set_color():
+	gr.poc.get_presets_picker().add_color(1,1,1)
+	assert_get_set_methods(gr.poc, 'color', null, Color(1,1,1))
+
+func test_cannot_set_color_to_color_that_does_not_exist_in_picker():
+	gr.poc.set_color(Color(1,1,1))
+	assert_eq(gr.poc.get_color(), null)
+
+func test_can_set_color_to_custom_color():
+	gr.poc.get_custom_picker().add_color(1,1,1)
+	gr.poc.set_color(Color(1,1,1))
+	assert_eq(gr.poc.get_color(), Color(1,1,1))
+
+func test_setting_color_to_custom_unselects_preset():
+	gr.poc.get_presets_picker().add_color(1,1,1)
+	gr.poc.get_custom_picker().add_color(1,0,0)
+	gr.poc.set_color(Color(1,1,1))
+	gr.poc.set_color(Color(1,0,0))
+	assert_eq(gr.poc.get_presets_picker().get_selected_index(), -1)
+
+func test_setting_color_to_preset_unselectes_custom():
+	gr.poc.get_presets_picker().add_color(1,1,1)
+	gr.poc.get_custom_picker().add_color(1,0,0)
+	gr.poc.set_color(Color(1,0,0))
+	gr.poc.set_color(Color(1,1,1))
+	assert_eq(gr.poc.get_custom_picker().get_selected_index(), -1)
+
+func test_setting_color_sets_preset_if_color_exists_in_both():
+	gr.poc.get_presets_picker().add_color(1,1,1)
+	gr.poc.get_custom_picker().add_color(1,1,1)
+	gr.poc.set_color(Color(1,1,1))
+	assert_eq(gr.poc.get_presets_picker().get_selected_index(), 0, 'preset set')
+	assert_eq(gr.poc.get_custom_picker().get_selected_index(), -1, 'custom is not set')
+
+
 func test_can_get_set_custom_slots():
 	assert_get_set_methods(gr.poc, 'custom_slots', 0, 10)
 

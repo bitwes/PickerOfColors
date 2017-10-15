@@ -65,14 +65,16 @@ func test_setting_cell_size_causes_vertical_resize():
 	gr.poc.add_color(3,3,3)
 	# This size should cause one per line for a total size of 300
 	gr.poc.set_cell_size(Vector2(75, 100))
-	assert_eq(gr.poc.get_size().y, 400)
+	yield(yield_for(.5, 'wait to paint'), YIELD)
+	assert_eq(gr.poc.get_size().y, 400.0)
 
 func test_adding_colors_causes_vertical_resize():
 	gr.poc.set_size(Vector2(100, 50))
 	gr.poc.set_cell_size(Vector2(75, 100))
 	gr.poc.add_color(1,1,1)
 	gr.poc.add_color(2,2,2)
-	assert_eq(gr.poc.get_size().y, 300)
+	yield(yield_for(.5, 'wait to paint'), YIELD)
+	assert_eq(gr.poc.get_size().y, 300.0)
 
 # ########
 # Selecting things

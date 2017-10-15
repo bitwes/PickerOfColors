@@ -10,6 +10,7 @@ var _cur_color = null
 var _default_step = -1.0
 var _customs_path = null
 var _presets_path = null
+
 const MODES = {
 	PICK = 'pick',
 	EDIT = 'edit'
@@ -48,32 +49,30 @@ func _ready():
 		preset_scroll = _gui.get_node("Tabs/Preset/ScrollContainer")
 	}
 
-	if(get_tree().is_editor_hint()):
-		return
+	if(!get_tree().is_editor_hint()):
+		_gui.get_node("Tabs").connect('tab_changed', self, '_on_TabContainer_tab_changed')
 
-	_gui.get_node("Tabs").connect('tab_changed', self, '_on_TabContainer_tab_changed')
+		_ctrls.custom_maker.connect('value_changed', self, '_on_custom_maker_changed')
+		_ctrls.set_button.connect('draw', self, '_on_set_button_draw')
+		_ctrls.set_button.connect('pressed', self, '_on_set_button_pressed')
+		_ctrls.clear_button.connect('pressed', self, '_on_clear_button_pressed')
+		_ctrls.edit_button.connect('pressed', self, '_on_edit_button_pressed')
+		_ctrls.done_button.connect('pressed', self, '_on_done_button_pressed')
 
-	_ctrls.custom_maker.connect('value_changed', self, '_on_custom_maker_changed')
-	_ctrls.set_button.connect('draw', self, '_on_set_button_draw')
-	_ctrls.set_button.connect('pressed', self, '_on_set_button_pressed')
-	_ctrls.clear_button.connect('pressed', self, '_on_clear_button_pressed')
-	_ctrls.edit_button.connect('pressed', self, '_on_edit_button_pressed')
-	_ctrls.done_button.connect('pressed', self, '_on_done_button_pressed')
+		_presets = _ctrls.preset_scroll.get_node("PickerOfColor")
+		_presets.set_size(Vector2(_ctrls.preset_tab.get_size().x -15, 300))
+		_presets.set_custom_minimum_size(_presets.get_size())
+		_presets.connect('selected', self, '_on_preset_selected')
+		#_ctrls.preset_scroll.queue_sort()
 
-	_presets = _ctrls.preset_scroll.get_node("PickerOfColor")
-	_presets.set_size(Vector2(_ctrls.preset_tab.get_size().x -15, 300))
-	_presets.set_custom_minimum_size(_presets.get_size())
-	_presets.connect('selected', self, '_on_preset_selected')
-	#_ctrls.preset_scroll.queue_sort()
+		_custom = _ctrls.custom_scroll.get_node("PickerOfColor")
+		_custom.set_size(Vector2(_ctrls.custom_tab.get_size().x -15, 200))
+		_custom.set_custom_minimum_size(_custom.get_size())
+		_custom.connect('selected', self, '_on_custom_selected')
+		#_ctrls.custom_scroll.queue_sort()
 
-	_custom = _ctrls.custom_scroll.get_node("PickerOfColor")
-	_custom.set_size(Vector2(_ctrls.custom_tab.get_size().x -15, 200))
-	_custom.set_custom_minimum_size(_custom.get_size())
-	_custom.connect('selected', self, '_on_custom_selected')
-	#_ctrls.custom_scroll.queue_sort()
-
-	_cur_picker = _presets
-	set_mode(MODES.PICK)
+		_cur_picker = _presets
+		set_mode(MODES.PICK)
 
 func _on_set_button_draw():
 	var s = _ctrls.set_button.get_size()
@@ -188,6 +187,15 @@ func _on_TabContainer_tab_changed( tab ):
 	elif(tab == 1):
 		_cur_picker = _custom
 
+func set_color(color):
+	_presets.set_selected_index(-1)
+	_custom.set_selected_index(-1)
+	_presets.set_selected_color(color)
+	_cur_color = _presets.get_selected_color()
+	if(_cur_color == null):
+		_custom.set_selected_color(color)
+		_cur_color = _custom.get_selected_color()
+
 func get_color():
  	return _cur_color
 
@@ -215,7 +223,6 @@ func set_mode(mode):
 		_ctrls.done_button.show()
 
 		_ctrls.edit_button.hide()
-
 		_ctrls.custom_scroll.set_size(Vector2(cs.x, _ctrls.custom_maker.get_pos().y -10))
 	elif(mode == MODES.PICK):
 		_ctrls.custom_maker.hide()
@@ -225,7 +232,6 @@ func set_mode(mode):
 
 		_ctrls.edit_button.show()
 		_ctrls.custom_scroll.set_size(Vector2(cs.x, _ctrls.edit_button.get_pos().y -10))
-
 
 	_mode = mode
 
