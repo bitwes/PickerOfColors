@@ -12,8 +12,8 @@ var gr = {
 }
 func _simulate_set_custom(index, color):
 	gr.poc.get_custom_picker().set_selected_index(index)
-	gr.poc._ctrls.custom_maker.set_color(color)
-	gr.poc._on_set_button_pressed()
+	#gr.poc._ctrls.custom_maker.set_color(color)
+	gr.poc._on_custom_maker_changed(color)
 
 func _simulate_clear_custom(index):
 	gr.poc.get_custom_picker().set_selected_index(index)
@@ -260,7 +260,6 @@ func test_setting_mode_to_edit_shows_correct_controls():
 	gr.poc.set_mode(gr.poc.MODES.EDIT)
 	select_custom_tab(gr.poc)
 	assert_true(gr.poc._ctrls.custom_maker.is_visible(), 'custom maker')
-	assert_true(gr.poc._ctrls.set_button.is_visible(), 'set button')
 	assert_true(gr.poc._ctrls.clear_button.is_visible(), 'clear button')
 	assert_true(gr.poc._ctrls.done_button.is_visible(), 'done button')
 
@@ -271,7 +270,6 @@ func test_setting_mode_to_preset_shows_correct_controls():
 	gr.poc.set_mode(gr.poc.MODES.EDIT)
 	gr.poc.set_mode(gr.poc.MODES.PICK)
 	assert_false(gr.poc._ctrls.custom_maker.is_visible(), 'custom maker')
-	assert_false(gr.poc._ctrls.set_button.is_visible(), 'set button')
 	assert_false(gr.poc._ctrls.clear_button.is_visible(), 'clear button')
 	assert_false(gr.poc._ctrls.done_button.is_visible(), 'done button')
 

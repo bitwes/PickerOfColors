@@ -40,7 +40,6 @@ func _ready():
 		custom_tab = _gui.get_node("Tabs/Custom"),
 
 		custom_maker = _gui.get_node("Tabs/Custom/CustomColor"),
-		set_button = _gui.get_node("Tabs/Custom/SetButton"),
 		edit_button = _gui.get_node("Tabs/Custom/EditButton"),
 		clear_button = _gui.get_node("Tabs/Custom/ClearButton"),
 		done_button = _gui.get_node("Tabs/Custom/DoneButton"),
@@ -53,8 +52,6 @@ func _ready():
 		_gui.get_node("Tabs").connect('tab_changed', self, '_on_TabContainer_tab_changed')
 
 		_ctrls.custom_maker.connect('value_changed', self, '_on_custom_maker_changed')
-		_ctrls.set_button.connect('draw', self, '_on_set_button_draw')
-		_ctrls.set_button.connect('pressed', self, '_on_set_button_pressed')
 		_ctrls.clear_button.connect('pressed', self, '_on_clear_button_pressed')
 		_ctrls.edit_button.connect('pressed', self, '_on_edit_button_pressed')
 		_ctrls.done_button.connect('pressed', self, '_on_done_button_pressed')
@@ -93,10 +90,6 @@ func _is_dir(val):
 # ##########
 # Events
 # ##########
-func _on_set_button_draw():
-	var s = _ctrls.set_button.get_size()
-	_ctrls.set_button.draw_rect(Rect2(5, 5, s.x-10, s.y-10), _ctrls.custom_maker.get_color())
-
 func _on_preset_selected(color):
 	emit_signal('selected', color)
 	_custom.set_selected_index(-1)
@@ -115,12 +108,7 @@ func _on_custom_selected(color):
 			_presets.set_selected_index(-1)
 		_cur_color = color
 	else:
-		_ctrls.set_button.set_disabled(false)
 		_ctrls.clear_button.set_disabled(false)
-
-func _on_set_button_pressed():
-	_custom.set_color(_custom.get_selected_index(), _ctrls.custom_maker.get_color())
-	emit_signal('customs_changed')
 
 func _on_clear_button_pressed():
 	_custom.set_color(_custom.get_selected_index(), null)
@@ -136,7 +124,6 @@ func _on_custom_maker_changed(color):
 	_custom.set_color(_custom.get_selected_index(), _ctrls.custom_maker.get_color())
 	emit_signal('selected', color)
 	emit_signal('customs_changed')
-	_ctrls.set_button.update()
 
 func _on_TabContainer_tab_changed( tab ):
 	if(tab == 0):
@@ -232,7 +219,6 @@ func set_mode(mode):
 	var cs = _ctrls.custom_scroll.get_size()
 	if(mode == MODES.EDIT):
 		_ctrls.custom_maker.show()
-		_ctrls.set_button.show()
 		_ctrls.clear_button.show()
 		_ctrls.done_button.show()
 
@@ -240,7 +226,6 @@ func set_mode(mode):
 		_ctrls.custom_scroll.set_size(Vector2(cs.x, _ctrls.custom_maker.get_pos().y -10))
 	elif(mode == MODES.PICK):
 		_ctrls.custom_maker.hide()
-		_ctrls.set_button.hide()
 		_ctrls.clear_button.hide()
 		_ctrls.done_button.hide()
 
