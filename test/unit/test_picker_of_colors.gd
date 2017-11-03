@@ -231,6 +231,7 @@ func test_setting_custom_slots_increases_slots_to_max():
 	assert_eq(gr.poc.get_custom_slots(), 10, '10 slot value')
 	assert_eq(gr.poc.get_custom_picker().get_colors().size(), 10, '10 actual slots')
 
+
 # ###############
 # Edit/Pick mode
 # ###############
@@ -266,6 +267,13 @@ func test_selected_signal_not_fired_in_edit_mode():
 	gr.poc.get_custom_picker().set_color(0, Color(1,1,1))
 	simulate_select(gr.poc.get_custom_picker(), 0)
 	assert_signal_not_emitted(gr.poc, 'selected')
+
+func test_when_empty_slot_selected_edit_mode_started():
+	select_custom_tab(gr.poc)
+	gr.poc.set_custom_slots(10)
+	gr.poc.get_custom_picker()._handle_click(Vector2(10, 10))
+	assert_eq(gr.poc.get_mode(), gr.poc.MODES.EDIT)
+	gut.pause_before_teardown()
 
 # ###############
 # Delete callback

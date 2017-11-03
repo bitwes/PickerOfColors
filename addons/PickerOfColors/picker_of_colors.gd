@@ -74,6 +74,25 @@ func _ready():
 		_cur_picker = _presets
 		set_mode(MODES.PICK)
 
+func _increase_custom_slots_to(num):
+	for i in range(_custom.get_colors().size(), num):
+		_custom.add_color(null)
+	_custom.update()
+
+func _get_val(dir, x, step=.1):
+	var val = 0
+	if(dir == U):
+		val = step * x
+	if(dir == D):
+		val = 1 - step * x
+	return val
+
+func _is_dir(val):
+	return str(val) == U or str(val) == D
+
+# ##########
+# Events
+# ##########
 func _on_set_button_draw():
 	var s = _ctrls.set_button.get_size()
 	_ctrls.set_button.draw_rect(Rect2(5, 5, s.x-10, s.y-10), _ctrls.custom_maker.get_color())
@@ -84,6 +103,10 @@ func _on_preset_selected(color):
 	_cur_color = color
 
 func _on_custom_selected(color):
+	# switch to edit mode when an unset color is picked.
+	if(color == null):
+		set_mode(MODES.EDIT)
+
 	if(_mode == MODES.PICK):
 		if(color != null):
 			emit_signal('selected', color)
@@ -109,14 +132,18 @@ func _on_edit_button_pressed():
 func _on_done_button_pressed():
 	set_mode(MODES.PICK)
 
-func _increase_custom_slots_to(num):
-	for i in range(_custom.get_colors().size(), num):
-		_custom.add_color(null)
-	_custom.update()
-
 func _on_custom_maker_changed(color):
 	_ctrls.set_button.update()
 
+func _on_TabContainer_tab_changed( tab ):
+	if(tab == 0):
+		_cur_picker = _presets
+	elif(tab == 1):
+		_cur_picker = _custom
+
+# ##########
+# Public
+# ##########
 func get_custom_slots():
 	return _custom_slots
 
@@ -141,17 +168,6 @@ func get_custom_picker():
 
 func get_active_picker():
 	return _cur_picker
-
-func _get_val(dir, x, step=.1):
-	var val = 0
-	if(dir == U):
-		val = step * x
-	if(dir == D):
-		val = 1 - step * x
-	return val
-
-func _is_dir(val):
-	return str(val) == U or str(val) == D
 
 func add_range(r, g, b, step=.05):
 	var lr = r
@@ -181,11 +197,6 @@ func load_default_presets(step=.05):
 
 	_presets.update()
 
-func _on_TabContainer_tab_changed( tab ):
-	if(tab == 0):
-		_cur_picker = _presets
-	elif(tab == 1):
-		_cur_picker = _custom
 
 func set_color(color):
 	_presets.set_selected_index(-1)
