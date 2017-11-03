@@ -250,6 +250,26 @@ func test_when_custom_maker_changes_color_signals_are_emitted():
 	assert_signal_emitted(gr.poc, 'selected')
 	assert_signal_emitted(gr.poc, 'customs_changed')
 
+func test_when_empty_custom_selected_clear_button_is_disabled():
+	select_custom_tab(gr.poc)
+	gr.poc.set_custom_slots(5)
+	simulate_select(gr.poc.get_custom_picker(), 0)
+	assert_true(gr.poc._ctrls.clear_button.is_disabled())
+
+func test_when_custom_color_selected_clear_button_enabled():
+	select_custom_tab(gr.poc)
+	gr.poc.set_custom_slots(5)
+	gr.poc.get_custom_picker().set_color(0, Color(1,1,1))
+	simulate_select(gr.poc.get_custom_picker(), 0)
+	assert_false(gr.poc._ctrls.clear_button.is_disabled())
+
+func test_when_color_maker_changes_clear_button_enabled():
+	select_custom_tab(gr.poc)
+	gr.poc.set_custom_slots(5)
+	simulate_select(gr.poc.get_custom_picker(), 0)
+	gr.poc._ctrls.custom_maker._on_slider_changed(.1)
+	assert_false(gr.poc._ctrls.clear_button.is_disabled())
+
 # ###############
 # Edit/Pick mode
 # ###############
