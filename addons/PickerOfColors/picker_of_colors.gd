@@ -101,15 +101,11 @@ func _on_custom_selected(color):
 		set_mode(MODES.EDIT)
 	else:
 		_ctrls.custom_maker.set_color(color)
-
-	_ctrls.clear_button.set_disabled(color == null)
-
-	if(_mode == MODES.PICK):
-		if(color != null):
-			emit_signal('selected', color)
-			_presets.set_selected_index(-1)
+		emit_signal('selected', color)
+		_presets.set_selected_index(-1)
 		_cur_color = color
 
+	_ctrls.clear_button.set_disabled(color == null)
 
 func _on_clear_button_pressed():
 	_custom.set_color(_custom.get_selected_index(), null)
@@ -178,17 +174,15 @@ func add_range(r, g, b, step=.05):
 func load_default_presets(step=.05):
 	_default_step = step
 
-	add_range(1, U, 0, step)
-	add_range(D, 1, 0, step)
-	add_range(0, 1, U, step)
-	add_range(0, D, 1, step)
-	add_range(U, 0, 1, step)
-	add_range(1, 0, D, step)
-	# grey
-	add_range(U, U, U, step)
+	add_range(1, U, 0, step) # red -> yellow
+	add_range(D, 1, 0, step) # yellow -> green
+	add_range(0, 1, U, step) # green -> light blue
+	add_range(0, D, 1, step) # light blue -> blue
+	add_range(U, 0, 1, step) # blue -> purple
+	add_range(1, 0, D, step) # purple -> red
+	add_range(U, U, U, step)  # black -> white
 
 	_presets.update()
-
 
 func set_color(color):
 	_presets.set_selected_index(-1)

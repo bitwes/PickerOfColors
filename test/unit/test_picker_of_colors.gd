@@ -295,15 +295,6 @@ func test_setting_mode_to_preset_shows_correct_controls():
 
 	assert_true(gr.poc._ctrls.edit_button.is_visible(), 'edit button')
 
-# func test_selected_signal_not_fired_in_edit_mode():
-# 	select_custom_tab(gr.poc)
-# 	watch_signals(gr.poc)
-# 	gr.poc.set_mode(gr.poc.MODES.EDIT)
-# 	gr.poc.set_custom_slots(5)
-# 	gr.poc.get_custom_picker().set_color(0, Color(1,1,1))
-# 	simulate_select(gr.poc.get_custom_picker(), 0)
-# 	assert_signal_not_emitted(gr.poc, 'selected')
-
 func test_when_empty_slot_selected_edit_mode_started():
 	select_custom_tab(gr.poc)
 	gr.poc.set_custom_slots(10)
