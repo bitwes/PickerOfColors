@@ -37,8 +37,6 @@ func create_color_file(path):
 	p.add_color(.54, .3, .21)
 	p.saveit(path)
 
-
-
 func save_load():
 	gr.poc.saveit(TEMP_FILE)
 	gr.other = PickerOfColors.new()
@@ -231,6 +229,26 @@ func test_setting_custom_slots_increases_slots_to_max():
 	assert_eq(gr.poc.get_custom_slots(), 10, '10 slot value')
 	assert_eq(gr.poc.get_custom_picker().get_colors().size(), 10, '10 actual slots')
 
+func test_when_color_selected_in_select_mode_color_maker_color_set():
+	gr.poc.set_custom_slots(5)
+	gr.poc.get_custom_picker().set_color(0, Color(1,1,1))
+	simulate_select(gr.poc.get_custom_picker(), 0)
+	assert_eq(gr.poc._ctrls.custom_maker.get_color(), Color(1,1,1))
+
+func test_when_custom_maker_changes_color_is_set():
+	gr.poc.set_custom_slots(5)
+	simulate_select(gr.poc.get_custom_picker(), 0)
+	gr.poc._ctrls.custom_maker._on_slider_changed(.1)
+	assert_ne(gr.poc.get_custom_picker().get_colors()[0], null)
+
+func test_when_custom_maker_changes_color_signals_are_emitted():
+	select_custom_tab(gr.poc)
+	gr.poc.set_custom_slots(5)
+	watch_signals(gr.poc)
+	simulate_select(gr.poc.get_custom_picker(), 0)
+	gr.poc._ctrls.custom_maker._on_slider_changed(.1)
+	assert_signal_emitted(gr.poc, 'selected')
+	assert_signal_emitted(gr.poc, 'customs_changed')
 
 # ###############
 # Edit/Pick mode
@@ -259,21 +277,20 @@ func test_setting_mode_to_preset_shows_correct_controls():
 
 	assert_true(gr.poc._ctrls.edit_button.is_visible(), 'edit button')
 
-func test_selected_signal_not_fired_in_edit_mode():
-	select_custom_tab(gr.poc)
-	watch_signals(gr.poc)
-	gr.poc.set_mode(gr.poc.MODES.EDIT)
-	gr.poc.set_custom_slots(5)
-	gr.poc.get_custom_picker().set_color(0, Color(1,1,1))
-	simulate_select(gr.poc.get_custom_picker(), 0)
-	assert_signal_not_emitted(gr.poc, 'selected')
+# func test_selected_signal_not_fired_in_edit_mode():
+# 	select_custom_tab(gr.poc)
+# 	watch_signals(gr.poc)
+# 	gr.poc.set_mode(gr.poc.MODES.EDIT)
+# 	gr.poc.set_custom_slots(5)
+# 	gr.poc.get_custom_picker().set_color(0, Color(1,1,1))
+# 	simulate_select(gr.poc.get_custom_picker(), 0)
+# 	assert_signal_not_emitted(gr.poc, 'selected')
 
 func test_when_empty_slot_selected_edit_mode_started():
 	select_custom_tab(gr.poc)
 	gr.poc.set_custom_slots(10)
 	gr.poc.get_custom_picker()._handle_click(Vector2(10, 10))
 	assert_eq(gr.poc.get_mode(), gr.poc.MODES.EDIT)
-	gut.pause_before_teardown()
 
 # ###############
 # Delete callback

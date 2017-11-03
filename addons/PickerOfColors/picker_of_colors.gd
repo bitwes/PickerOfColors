@@ -106,6 +106,8 @@ func _on_custom_selected(color):
 	# switch to edit mode when an unset color is picked.
 	if(color == null):
 		set_mode(MODES.EDIT)
+	else:
+		_ctrls.custom_maker.set_color(color)
 
 	if(_mode == MODES.PICK):
 		if(color != null):
@@ -113,8 +115,6 @@ func _on_custom_selected(color):
 			_presets.set_selected_index(-1)
 		_cur_color = color
 	else:
-		if(color != null):
-			_ctrls.custom_maker.set_color(color)
 		_ctrls.set_button.set_disabled(false)
 		_ctrls.clear_button.set_disabled(false)
 
@@ -133,6 +133,9 @@ func _on_done_button_pressed():
 	set_mode(MODES.PICK)
 
 func _on_custom_maker_changed(color):
+	_custom.set_color(_custom.get_selected_index(), _ctrls.custom_maker.get_color())
+	emit_signal('selected', color)
+	emit_signal('customs_changed')
 	_ctrls.set_button.update()
 
 func _on_TabContainer_tab_changed( tab ):
