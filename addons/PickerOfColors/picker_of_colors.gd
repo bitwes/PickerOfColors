@@ -102,13 +102,14 @@ func _on_custom_selected(color):
 	else:
 		_ctrls.custom_maker.set_color(color)
 
+	_ctrls.clear_button.set_disabled(color == null)
+
 	if(_mode == MODES.PICK):
 		if(color != null):
 			emit_signal('selected', color)
 			_presets.set_selected_index(-1)
 		_cur_color = color
-	else:
-		_ctrls.clear_button.set_disabled(false)
+
 
 func _on_clear_button_pressed():
 	_custom.set_color(_custom.get_selected_index(), null)
@@ -124,6 +125,7 @@ func _on_custom_maker_changed(color):
 	_custom.set_color(_custom.get_selected_index(), _ctrls.custom_maker.get_color())
 	emit_signal('selected', color)
 	emit_signal('customs_changed')
+	_ctrls.clear_button.set_disabled(color == null)
 
 func _on_TabContainer_tab_changed( tab ):
 	if(tab == 0):
