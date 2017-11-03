@@ -76,10 +76,11 @@ margin/top = 0.0
 margin/right = 1005.0
 margin/bottom = 50.0
 script/script = ExtResource( 1 )
+_cell_size = Vector2( 30, 30 )
 
 [node name="Custom" type="Tabs" parent="Tabs"]
 
-editor/display_folded = true
+visibility/visible = false
 anchor/right = 1
 anchor/bottom = 1
 focus/ignore_mouse = false
@@ -119,6 +120,7 @@ margin/top = 0.0
 margin/right = 50.0
 margin/bottom = 50.0
 script/script = ExtResource( 1 )
+_cell_size = Vector2( 30, 30 )
 
 [node name="CustomColor" parent="Tabs/Custom" instance=ExtResource( 2 )]
 
@@ -128,25 +130,6 @@ margin/left = -2.0
 margin/top = 118.0
 margin/right = 366.0
 margin/bottom = -5.0
-
-[node name="SetButton" type="Button" parent="Tabs/Custom"]
-
-anchor/top = 1
-anchor/bottom = 1
-focus/ignore_mouse = false
-focus/stop_mouse = true
-size_flags/horizontal = 2
-size_flags/vertical = 2
-margin/left = 374.0
-margin/top = 118.0
-margin/right = 467.0
-margin/bottom = 91.0
-disabled = true
-toggle_mode = false
-enabled_focus_mode = 2
-shortcut = null
-text = "Set"
-flat = false
 
 [node name="ClearButton" type="Button" parent="Tabs/Custom"]
 
