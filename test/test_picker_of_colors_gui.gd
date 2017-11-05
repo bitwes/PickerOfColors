@@ -26,7 +26,7 @@ func _on_panel_draw():
 
 func _ready():
 	_picker.set_cell_size(Vector2(40, 60))
-	_picker.set_custom_slots(10)
+	#_picker.set_custom_slots(10)
 	_picker.load_default_presets()
 	_picker.connect('selected', self, '_on_picker_selected')
 	_ctrls.panel.connect('draw', self, '_on_panel_draw')

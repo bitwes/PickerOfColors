@@ -301,6 +301,12 @@ func test_when_empty_slot_selected_edit_mode_started():
 	gr.poc.get_custom_picker()._handle_click(Vector2(10, 10))
 	assert_eq(gr.poc.get_mode(), gr.poc.MODES.EDIT)
 
+func test_when_there_are_no_custom_colors_edit_button_doesnt_crash_everything():
+	select_custom_tab(gr.poc)
+	gr.poc._on_edit_button_pressed()
+	gr.poc._ctrls.custom_maker._on_slider_changed(.1)
+	assert_true(true, 'should make it here')
+
 # ###############
 # Delete callback
 # ###############

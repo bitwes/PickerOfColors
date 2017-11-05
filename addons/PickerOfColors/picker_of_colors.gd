@@ -118,10 +118,12 @@ func _on_done_button_pressed():
 	set_mode(MODES.PICK)
 
 func _on_custom_maker_changed(color):
-	_custom.set_color(_custom.get_selected_index(), _ctrls.custom_maker.get_color())
-	emit_signal('selected', color)
-	emit_signal('customs_changed')
-	_ctrls.clear_button.set_disabled(color == null)
+	var slot = _custom.get_selected_index()
+	if(slot != -1):
+		_custom.set_color(slot, _ctrls.custom_maker.get_color())
+		emit_signal('selected', color)
+		emit_signal('customs_changed')
+		_ctrls.clear_button.set_disabled(color == null)
 
 func _on_TabContainer_tab_changed( tab ):
 	if(tab == 0):
