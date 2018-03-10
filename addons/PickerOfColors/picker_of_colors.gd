@@ -29,7 +29,7 @@ onready var _ctrls = {}
 
 func _ready():
 	_gui = Gui.instance()
-	#add_child(_gui)
+	add_child(_gui)
 	_gui.set_anchor(MARGIN_LEFT, ANCHOR_BEGIN)
 	_gui.set_anchor(MARGIN_TOP, ANCHOR_BEGIN)
 	_gui.set_anchor(MARGIN_BOTTOM, ANCHOR_END)
