@@ -1,3 +1,4 @@
+extends Control
 onready var _ctrls = {
 	r_slider = get_node("RSlider"),
 	g_slider = get_node("GSlider"),
@@ -29,10 +30,11 @@ func _on_slider_changed(value):
 	_update_controls()
 
 func set_color(color):
+	return
 	_color = color
-	_ctrls.b_slider.set_value(color.b)
-	_ctrls.r_slider.set_value(color.r)
-	_ctrls.g_slider.set_value(color.g)
+	_ctrls.b_slider.value = color.b
+	_ctrls.r_slider.value = color.r
+	_ctrls.g_slider.value = color.g
 	_update_controls()
 
 func get_color():

@@ -42,7 +42,7 @@ func save_load():
 	gr.other = PickerOfColors.new()
 	add_child(gr.other)
 	gr.other.loadit(TEMP_FILE)
-	gr.other.set_pos(Vector2(0, 400))
+	gr.other.set_position(Vector2(0, 400))
 	return gr.other
 
 # #############

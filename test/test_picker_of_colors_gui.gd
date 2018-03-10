@@ -1,3 +1,5 @@
+extends Node2D
+
 onready var _picker = get_node("PickerOfColors")
 const CUSTOM_FILE = 'user://test_custom_colors.cfg'
 const PICKER_FILE = 'user://test_picker_file.cfg'
@@ -95,12 +97,12 @@ func _on_LoadAll_pressed():
 
 func _on_ClearPicker_pressed():
 	var s = _picker.get_size()
-	var p = _picker.get_pos()
+	var p = _picker.get_position()
 	_picker.queue_free()
 	_picker = PickerOfColors.new()
 	add_child(_picker)
 	_picker.set_size(s)
-	_picker.set_pos(p)
+	_picker.set_position(p)
 	_picker.connect('selected', self, '_on_picker_selected')
 	_update_config_display()
 	_update_size_sliders()

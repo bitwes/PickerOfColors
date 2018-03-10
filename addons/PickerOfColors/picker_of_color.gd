@@ -46,7 +46,8 @@ func _draw_checkered():
 
 func _is_in_editor():
 	var to_return = false
-	if(get_parent() and get_tree().is_editor_hint()):
+
+	if(get_parent() and Engine.is_editor_hint()):
 		to_return = true
 	return to_return
 

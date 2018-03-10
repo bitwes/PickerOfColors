@@ -29,7 +29,7 @@ onready var _ctrls = {}
 
 func _ready():
 	_gui = Gui.instance()
-	add_child(_gui)
+	#add_child(_gui)
 	_gui.set_anchor(MARGIN_LEFT, ANCHOR_BEGIN)
 	_gui.set_anchor(MARGIN_TOP, ANCHOR_BEGIN)
 	_gui.set_anchor(MARGIN_BOTTOM, ANCHOR_END)
@@ -48,7 +48,7 @@ func _ready():
 		preset_scroll = _gui.get_node("Tabs/Preset/ScrollContainer")
 	}
 
-	if(!get_tree().is_editor_hint()):
+	if(!Engine.is_editor_hint()):
 		_gui.get_node("Tabs").connect('tab_changed', self, '_on_TabContainer_tab_changed')
 
 		_ctrls.custom_maker.connect('value_changed', self, '_on_custom_maker_changed')
@@ -221,14 +221,14 @@ func set_mode(mode):
 		_ctrls.done_button.show()
 
 		_ctrls.edit_button.hide()
-		_ctrls.custom_scroll.set_size(Vector2(cs.x, _ctrls.custom_maker.get_pos().y -10))
+		_ctrls.custom_scroll.set_size(Vector2(cs.x, _ctrls.custom_maker.get_position().y -10))
 	elif(mode == MODES.PICK):
 		_ctrls.custom_maker.hide()
 		_ctrls.clear_button.hide()
 		_ctrls.done_button.hide()
 
 		_ctrls.edit_button.show()
-		_ctrls.custom_scroll.set_size(Vector2(cs.x, _ctrls.edit_button.get_pos().y -10))
+		_ctrls.custom_scroll.set_size(Vector2(cs.x, _ctrls.edit_button.get_position().y -10))
 
 	_mode = mode
 
