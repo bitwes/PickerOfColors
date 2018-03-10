@@ -11,6 +11,7 @@ signal selected(color)
 
 func _ready():
 	update()
+	set_process_input(true)
 
 func _draw():
 	if(_is_in_editor()):
@@ -96,21 +97,24 @@ func _get_color_at_location(loc):
 	var to_return = -1
 	var x = int(int(loc.x) / int(_cell_size.x))
 	var y = int(int(loc.y) / int(_cell_size.y))
+
 	var idx = x + y * _num_per_row
 	if(idx > -1 and idx < _colors.size()):
 		to_return = idx
 	return int(to_return)
 
 func _handle_click(ev):
-	if(ev.x < _cell_size.x * _num_per_row):
-		var idx = _get_color_at_location(ev)
-		if(idx != -1):
-			_selected_index = idx
-			emit_signal('selected', _colors[idx])
-			update()
+	if(ev.get_position().x < _cell_size.x * _num_per_row):
+		var adjusted_pos = ev.get_global_position() - get_global_position()
+		if(adjusted_pos.x > 0 and adjusted_pos.y > 0):
+			var idx = _get_color_at_location(adjusted_pos)
+			if(idx != -1):
+				_selected_index = idx
+				emit_signal('selected', _colors[idx])
+				update()
 
-func _input_event( ev ):
-	if ev.type == InputEvent.MOUSE_BUTTON:
+func _gui_input( ev ):
+	if ev is InputEventMouseButton:
 		if ev.button_index == BUTTON_LEFT and ev.pressed:
 			_handle_click(ev)
 

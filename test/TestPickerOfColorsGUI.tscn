@@ -1,7 +1,9 @@
-[gd_scene load_steps=3 format=2]
+[gd_scene load_steps=5 format=2]
 
 [ext_resource path="res://test/test_picker_of_colors_gui.gd" type="Script" id=1]
-[ext_resource path="res://addons/PickerOfColors/icon.png" type="Texture" id=2]
+[ext_resource path="res://addons/PickerOfColors/picker_of_color.gd" type="Script" id=2]
+[ext_resource path="res://addons/PickerOfColors/icon.png" type="Texture" id=3]
+[ext_resource path="res://addons/PickerOfColors/picker_of_colors.gd" type="Script" id=4]
 
 [node name="Node2D" type="Node2D" index="0"]
 
@@ -14,7 +16,8 @@ anchor_left = 0.0
 anchor_top = 0.0
 anchor_right = 0.0
 anchor_bottom = 0.0
-margin_right = 537.0
+margin_left = 489.0
+margin_right = 1026.0
 margin_bottom = 305.0
 rect_pivot_offset = Vector2( 0, 0 )
 mouse_filter = 0
@@ -315,15 +318,14 @@ focus_mode = 2
 
 [node name="SettingsPanel" type="Panel" parent="." index="1"]
 
-editor/display_folded = true
 anchor_left = 0.0
 anchor_top = 0.0
 anchor_right = 0.0
 anchor_bottom = 0.0
-margin_left = 510.0
-margin_top = 107.0
-margin_right = 982.0
-margin_bottom = 398.0
+margin_left = 239.0
+margin_top = 406.0
+margin_right = 540.0
+margin_bottom = 550.0
 rect_pivot_offset = Vector2( 0, 0 )
 mouse_filter = 0
 mouse_default_cursor_shape = 0
@@ -337,10 +339,10 @@ anchor_left = 0.0
 anchor_top = 0.0
 anchor_right = 0.0
 anchor_bottom = 0.0
-margin_left = 160.0
-margin_top = 80.0
-margin_right = 234.0
-margin_bottom = 104.0
+margin_left = 18.0
+margin_top = 35.0
+margin_right = 92.0
+margin_bottom = 59.0
 rect_pivot_offset = Vector2( 0, 0 )
 mouse_filter = 0
 mouse_default_cursor_shape = 0
@@ -363,21 +365,21 @@ anchor_left = 0.0
 anchor_top = 0.0
 anchor_right = 0.0
 anchor_bottom = 0.0
-margin_left = 62.0
-margin_top = 34.0
-margin_right = 315.0
-margin_bottom = 56.0
+margin_left = 11.0
+margin_top = 5.0
+margin_right = 264.0
+margin_bottom = 27.0
 rect_pivot_offset = Vector2( 0, 0 )
 focus_mode = 2
 mouse_filter = 0
 mouse_default_cursor_shape = 0
 size_flags_horizontal = 1
 size_flags_vertical = 0
-min_value = 0.0
+min_value = 5.0
 max_value = 100.0
 step = 1.0
 page = 0.0
-value = 0.0
+value = 5.0
 exp_edit = false
 rounded = false
 editable = true
@@ -391,21 +393,21 @@ anchor_left = 0.0
 anchor_top = 0.0
 anchor_right = 0.0
 anchor_bottom = 0.0
-margin_left = 343.0
-margin_top = 32.0
-margin_right = 359.0
-margin_bottom = 214.0
+margin_left = 274.0
+margin_top = 11.0
+margin_right = 290.0
+margin_bottom = 132.0
 rect_pivot_offset = Vector2( 0, 0 )
 focus_mode = 2
 mouse_filter = 0
 mouse_default_cursor_shape = 0
 size_flags_horizontal = 0
 size_flags_vertical = 1
-min_value = 0.0
+min_value = 5.0
 max_value = 100.0
 step = 1.0
 page = 0.0
-value = 0.0
+value = 5.0
 exp_edit = false
 rounded = false
 editable = true
@@ -434,24 +436,26 @@ max_lines_visible = -1
 
 [node name="ColorSampleScroll" type="ScrollContainer" parent="." index="2"]
 
+editor/display_folded = true
 anchor_left = 0.0
 anchor_top = 0.0
 anchor_right = 0.0
 anchor_bottom = 0.0
-margin_left = 276.0
-margin_top = 319.0
-margin_right = 536.0
-margin_bottom = 499.0
+margin_left = 608.0
+margin_top = 414.0
+margin_right = 868.0
+margin_bottom = 594.0
 rect_pivot_offset = Vector2( 0, 0 )
 rect_clip_content = true
 mouse_filter = 0
 mouse_default_cursor_shape = 0
 size_flags_horizontal = 1
 size_flags_vertical = 1
-scroll_horizontal_enabled = true
+scroll_horizontal_enabled = false
 scroll_horizontal = 0
 scroll_vertical_enabled = true
 scroll_vertical = 0
+_sections_unfolded = [ "Anchor", "Focus", "Grow Direction", "Hint", "Margin", "Material", "Mouse", "Pause", "Rect", "Scroll", "Size Flags", "Theme", "Visibility" ]
 __meta__ = {
 "_edit_group_": true
 }
@@ -462,16 +466,34 @@ anchor_left = 0.0
 anchor_top = 0.0
 anchor_right = 0.0
 anchor_bottom = 0.0
-margin_right = 215.0
-margin_bottom = 205.0
 rect_pivot_offset = Vector2( 0, 0 )
 mouse_filter = 0
 mouse_default_cursor_shape = 0
 size_flags_horizontal = 1
 size_flags_vertical = 1
-_sections_unfolded = [ "Grow Direction", "Rect" ]
+script = ExtResource( 2 )
+_sections_unfolded = [ "Rect" ]
 __meta__ = {
-"_editor_icon": ExtResource( 2 )
+"_editor_icon": ExtResource( 3 )
+}
+_cell_size = Vector2( 30, 30 )
+
+[node name="PickerOfColors" type="Control" parent="." index="3"]
+
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_right = 40.0
+margin_bottom = 40.0
+rect_pivot_offset = Vector2( 0, 0 )
+mouse_filter = 0
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 1
+size_flags_vertical = 1
+script = ExtResource( 4 )
+__meta__ = {
+"_editor_icon": ExtResource( 3 )
 }
 
 [connection signal="pressed" from="Controls/btnSetSelected" to="." method="_on_btnSetSelected_pressed"]
@@ -493,5 +515,7 @@ __meta__ = {
 [connection signal="value_changed" from="Controls/WidthSlider" to="." method="_on_WidthSlider_value_changed"]
 
 [connection signal="value_changed" from="SettingsPanel/StepSpinBox" to="." method="_on_StepSpinBox_value_changed"]
+
+[connection signal="selected" from="PickerOfColors" to="." method="_on_PickerOfColors_selected"]
 
 

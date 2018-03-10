@@ -51,7 +51,7 @@ func _update_size_sliders():
 	_ctrls.height_slider.set_value(_picker.get_size().y)
 	print(_picker.get_size())
 
-func _on_picker_selected(color):
+func _on_PickerOfColors_selected( color ):
 	if(color != null):
 		var txt = str('r = ', color.r, "\ng = ", color.g, "\nb = ", color.b, "\n", color.to_html())
 		_ctrls.lbl_color_info.set_text(txt)
@@ -109,3 +109,4 @@ func _on_ClearPicker_pressed():
 
 func _on_size_slider_changed(value):
 	_picker.set_size(Vector2(_ctrls.width_slider.get_value(), _ctrls.height_slider.get_value()))
+

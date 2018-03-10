@@ -5,7 +5,16 @@ var PickerOfColor = load('res://addons/PickerOfColors/picker_of_color.gd')
 
 const TEMP_FILE = 'user://__test_picker_of_color__.txt'
 const TEMP_COLOR = 'user://__test_color_file__.txt'
-
+class HasPosition:
+	var _pos = Vector2(0,0)
+	func get_position():
+		return _pos
+	func set_position(pos):
+		_pos = pos
+	func get_global_position():
+		return _pos
+	func _init(x, y):
+		_pos = Vector2(x, y)
 var gr = {
 	poc = null,
 	other = null
@@ -298,7 +307,7 @@ func test_setting_mode_to_preset_shows_correct_controls():
 func test_when_empty_slot_selected_edit_mode_started():
 	select_custom_tab(gr.poc)
 	gr.poc.set_custom_slots(10)
-	gr.poc.get_custom_picker()._handle_click(Vector2(10, 10))
+	gr.poc.get_custom_picker()._handle_click(HasPosition.new(20, 40))
 	assert_eq(gr.poc.get_mode(), gr.poc.MODES.EDIT)
 
 func test_when_there_are_no_custom_colors_edit_button_doesnt_crash_everything():

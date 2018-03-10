@@ -5,7 +5,16 @@ const TEMP_FILE = 'user://__test_picker_of_color__.txt'
 var gr = {
 	poc = null
 }
-
+class HasPosition:
+	var _pos = Vector2(0,0)
+	func get_position():
+		return _pos
+	func set_position(pos):
+		_pos = pos
+	func get_global_position():
+		return _pos
+	func _init(x, y):
+		_pos = Vector2(x, y)
 # #############
 # Seutp/Teardown
 # #############
@@ -118,13 +127,13 @@ func test_setting_selected_color_sets_nothing_if_color_does_not_exist():
 func test__signal_seleted__fires_when_clicking_item():
 	watch_signals(gr.poc)
 	gr.poc.add_color(1,1,1)
-	gr.poc._handle_click(Vector2(1,1))
+	gr.poc._handle_click(HasPosition.new(1,1))
 	assert_signal_emitted(gr.poc, 'selected')
 
 func test__signal_selected__sends_selected_color():
 	watch_signals(gr.poc)
 	gr.poc.add_color(1,1,1)
-	gr.poc._handle_click(Vector2(1,1))
+	gr.poc._handle_click(HasPosition.new(1,1))
 	assert_signal_emitted_with_parameters(gr.poc, 'selected', [Color(1,1,1)])
 
 # ###############
