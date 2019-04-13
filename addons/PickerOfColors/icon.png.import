@@ -3,20 +3,21 @@
 importer="texture"
 type="StreamTexture"
 path="res://.import/icon.png-186f8ac2427827b98bd7d0d1bd4816b8.stex"
+metadata={
+"vram_texture": false
+}
 
 [deps]
 
 source_file="res://addons/PickerOfColors/icon.png"
-source_md5="e3ff8b33ff3992599641aa747914e60a"
-
 dest_files=[ "res://.import/icon.png-186f8ac2427827b98bd7d0d1bd4816b8.stex" ]
-dest_md5="8820de6d66d0b0124b779a187b7cb924"
 
 [params]
 
 compress/mode=0
 compress/lossy_quality=0.7
 compress/hdr_mode=0
+compress/bptc_ldr=0
 compress/normal_map=0
 flags/repeat=0
 flags/filter=true
@@ -26,6 +27,7 @@ flags/srgb=2
 process/fix_alpha_border=true
 process/premult_alpha=false
 process/HDR_as_SRGB=false
+process/invert_color=false
 stream=false
 size_limit=0
 detect_3d=true

@@ -5,517 +5,159 @@
 [ext_resource path="res://addons/PickerOfColors/icon.png" type="Texture" id=3]
 [ext_resource path="res://addons/PickerOfColors/picker_of_colors.gd" type="Script" id=4]
 
-[node name="Node2D" type="Node2D" index="0"]
-
+[node name="Node2D" type="Node2D"]
 script = ExtResource( 1 )
 
-[node name="Controls" type="Panel" parent="." index="0"]
-
+[node name="Controls" type="Panel" parent="."]
 editor/display_folded = true
-anchor_left = 0.0
-anchor_top = 0.0
-anchor_right = 0.0
-anchor_bottom = 0.0
 margin_left = 489.0
 margin_right = 1026.0
 margin_bottom = 305.0
-rect_pivot_offset = Vector2( 0, 0 )
-mouse_filter = 0
+
+[node name="txtSelectedIndex" type="TextEdit" parent="Controls"]
 mouse_default_cursor_shape = 0
-size_flags_horizontal = 1
-size_flags_vertical = 1
-_sections_unfolded = [ "Rect" ]
 
-[node name="txtSelectedIndex" type="TextEdit" parent="Controls" index="0"]
-
-anchor_left = 0.0
-anchor_top = 0.0
-anchor_right = 0.0
-anchor_bottom = 0.0
-rect_pivot_offset = Vector2( 0, 0 )
-focus_mode = 2
-mouse_filter = 0
-mouse_default_cursor_shape = 0
-size_flags_horizontal = 1
-size_flags_vertical = 1
-text = ""
-readonly = false
-highlight_current_line = false
-syntax_highlighting = false
-show_line_numbers = false
-highlight_all_occurrences = false
-override_selected_font_color = false
-context_menu_enabled = true
-smooth_scrolling = false
-v_scroll_speed = 80.0
-hiding_enabled = 0
-wrap_lines = false
-caret_block_mode = false
-caret_blink = false
-caret_blink_speed = 0.65
-caret_moving_by_right_click = true
-
-[node name="lblSelectedIndex" type="Label" parent="Controls" index="1"]
-
-anchor_left = 0.0
-anchor_top = 0.0
-anchor_right = 0.0
-anchor_bottom = 0.0
+[node name="lblSelectedIndex" type="Label" parent="Controls"]
 margin_left = 134.0
 margin_top = 4.0
 margin_right = 229.0
 margin_bottom = 18.0
-rect_pivot_offset = Vector2( 0, 0 )
-mouse_filter = 2
-mouse_default_cursor_shape = 0
-size_flags_horizontal = 1
-size_flags_vertical = 4
 text = "Selected Index"
-percent_visible = 1.0
-lines_skipped = 0
-max_lines_visible = -1
 
-[node name="btnSetSelected" type="Button" parent="Controls" index="2"]
-
-anchor_left = 0.0
-anchor_top = 0.0
-anchor_right = 0.0
-anchor_bottom = 0.0
+[node name="btnSetSelected" type="Button" parent="Controls"]
 margin_left = 341.0
 margin_top = 232.0
 margin_right = 373.0
 margin_bottom = 252.0
-rect_pivot_offset = Vector2( 0, 0 )
-focus_mode = 2
-mouse_filter = 0
-mouse_default_cursor_shape = 0
-size_flags_horizontal = 1
-size_flags_vertical = 1
-toggle_mode = false
-enabled_focus_mode = 2
-shortcut = null
-group = null
 text = "set"
-flat = false
-align = 1
 
-[node name="lblColorInfo" type="Label" parent="Controls" index="3"]
-
-anchor_left = 0.0
-anchor_top = 0.0
-anchor_right = 0.0
-anchor_bottom = 0.0
-rect_pivot_offset = Vector2( 0, 0 )
-mouse_filter = 2
-mouse_default_cursor_shape = 0
-size_flags_horizontal = 1
-size_flags_vertical = 4
+[node name="lblColorInfo" type="Label" parent="Controls"]
 text = "Color info"
 autowrap = true
-percent_visible = 1.0
-lines_skipped = 0
-max_lines_visible = -1
 
-[node name="Add10Colors" type="Button" parent="Controls" index="4"]
-
-anchor_left = 0.0
-anchor_top = 0.0
-anchor_right = 0.0
-anchor_bottom = 0.0
+[node name="Add10Colors" type="Button" parent="Controls"]
 margin_left = 349.0
 margin_top = 192.0
 margin_right = 450.0
 margin_bottom = 212.0
-rect_pivot_offset = Vector2( 0, 0 )
-focus_mode = 2
-mouse_filter = 0
-mouse_default_cursor_shape = 0
-size_flags_horizontal = 1
-size_flags_vertical = 1
-toggle_mode = false
-enabled_focus_mode = 2
-shortcut = null
-group = null
 text = "Add 10 Colors"
-flat = false
-align = 1
 
-[node name="SaveCustom" type="Button" parent="Controls" index="5"]
-
-anchor_left = 0.0
-anchor_top = 0.0
-anchor_right = 0.0
-anchor_bottom = 0.0
+[node name="SaveCustom" type="Button" parent="Controls"]
 margin_left = 340.0
 margin_top = 159.0
 margin_right = 434.0
 margin_bottom = 179.0
-rect_pivot_offset = Vector2( 0, 0 )
-focus_mode = 2
-mouse_filter = 0
-mouse_default_cursor_shape = 0
-size_flags_horizontal = 1
-size_flags_vertical = 1
-toggle_mode = false
-enabled_focus_mode = 2
-shortcut = null
-group = null
 text = "Save Custom"
-flat = false
-align = 1
 
-[node name="LoadCustom" type="Button" parent="Controls" index="6"]
-
-anchor_left = 0.0
-anchor_top = 0.0
-anchor_right = 0.0
-anchor_bottom = 0.0
+[node name="LoadCustom" type="Button" parent="Controls"]
 margin_left = 339.0
 margin_top = 132.0
 margin_right = 434.0
 margin_bottom = 152.0
-rect_pivot_offset = Vector2( 0, 0 )
-focus_mode = 2
-mouse_filter = 0
-mouse_default_cursor_shape = 0
-size_flags_horizontal = 1
-size_flags_vertical = 1
-toggle_mode = false
-enabled_focus_mode = 2
-shortcut = null
-group = null
 text = "Load Custom"
-flat = false
-align = 1
 
-[node name="SaveAll" type="Button" parent="Controls" index="7"]
-
-anchor_left = 0.0
-anchor_top = 0.0
-anchor_right = 0.0
-anchor_bottom = 0.0
+[node name="SaveAll" type="Button" parent="Controls"]
 margin_left = 340.0
 margin_top = 97.0
 margin_right = 451.0
 margin_bottom = 117.0
-rect_pivot_offset = Vector2( 0, 0 )
-focus_mode = 2
-mouse_filter = 0
-mouse_default_cursor_shape = 0
-size_flags_horizontal = 1
-size_flags_vertical = 1
-toggle_mode = false
-enabled_focus_mode = 2
-shortcut = null
-group = null
 text = "Save The Picker"
-flat = false
-align = 1
 
-[node name="LoadAll" type="Button" parent="Controls" index="8"]
-
-anchor_left = 0.0
-anchor_top = 0.0
-anchor_right = 0.0
-anchor_bottom = 0.0
+[node name="LoadAll" type="Button" parent="Controls"]
 margin_left = 341.0
 margin_top = 28.0
 margin_right = 453.0
 margin_bottom = 48.0
-rect_pivot_offset = Vector2( 0, 0 )
-focus_mode = 2
-mouse_filter = 0
-mouse_default_cursor_shape = 0
-size_flags_horizontal = 1
-size_flags_vertical = 1
-toggle_mode = false
-enabled_focus_mode = 2
-shortcut = null
-group = null
 text = "Load The Picker"
-flat = false
-align = 1
 
-[node name="ClearPicker" type="Button" parent="Controls" index="9"]
-
-anchor_left = 0.0
-anchor_top = 0.0
-anchor_right = 0.0
-anchor_bottom = 0.0
+[node name="ClearPicker" type="Button" parent="Controls"]
 margin_left = 343.0
 margin_top = 61.0
 margin_right = 430.0
 margin_bottom = 81.0
-rect_pivot_offset = Vector2( 0, 0 )
-focus_mode = 2
-mouse_filter = 0
-mouse_default_cursor_shape = 0
-size_flags_horizontal = 1
-size_flags_vertical = 1
-toggle_mode = false
-enabled_focus_mode = 2
-shortcut = null
-group = null
 text = "Clear Picker"
-flat = false
-align = 1
 
-[node name="HeightSlider" type="VSlider" parent="Controls" index="10"]
-
-anchor_left = 0.0
-anchor_top = 0.0
-anchor_right = 0.0
-anchor_bottom = 0.0
+[node name="HeightSlider" type="VSlider" parent="Controls"]
 margin_left = 29.0
 margin_top = 88.0
 margin_right = 45.0
 margin_bottom = 255.0
-rect_pivot_offset = Vector2( 0, 0 )
-focus_mode = 2
-mouse_filter = 0
-mouse_default_cursor_shape = 0
-size_flags_horizontal = 0
-size_flags_vertical = 1
-min_value = 0.0
-max_value = 100.0
-step = 1.0
-page = 0.0
-value = 0.0
-exp_edit = false
-rounded = false
-editable = true
-tick_count = 0
-ticks_on_borders = false
-focus_mode = 2
 
-[node name="WidthSlider" type="HSlider" parent="Controls" index="11"]
-
-anchor_left = 0.0
-anchor_top = 0.0
-anchor_right = 0.0
-anchor_bottom = 0.0
+[node name="WidthSlider" type="HSlider" parent="Controls"]
 margin_left = 75.0
 margin_top = 61.0
 margin_right = 276.0
 margin_bottom = 77.0
-rect_pivot_offset = Vector2( 0, 0 )
-focus_mode = 2
-mouse_filter = 0
-mouse_default_cursor_shape = 0
-size_flags_horizontal = 1
-size_flags_vertical = 0
-min_value = 0.0
-max_value = 100.0
-step = 1.0
-page = 0.0
-value = 0.0
-exp_edit = false
-rounded = false
-editable = true
-tick_count = 0
 ticks_on_borders = true
-focus_mode = 2
 
-[node name="SettingsPanel" type="Panel" parent="." index="1"]
-
-anchor_left = 0.0
-anchor_top = 0.0
-anchor_right = 0.0
-anchor_bottom = 0.0
+[node name="SettingsPanel" type="Panel" parent="."]
 margin_left = 239.0
 margin_top = 406.0
 margin_right = 540.0
 margin_bottom = 550.0
-rect_pivot_offset = Vector2( 0, 0 )
-mouse_filter = 0
-mouse_default_cursor_shape = 0
-size_flags_horizontal = 1
-size_flags_vertical = 1
-_sections_unfolded = [ "Rect" ]
 
-[node name="StepSpinBox" type="SpinBox" parent="SettingsPanel" index="0"]
-
-anchor_left = 0.0
-anchor_top = 0.0
-anchor_right = 0.0
-anchor_bottom = 0.0
+[node name="StepSpinBox" type="SpinBox" parent="SettingsPanel"]
 margin_left = 18.0
 margin_top = 35.0
 margin_right = 92.0
 margin_bottom = 59.0
-rect_pivot_offset = Vector2( 0, 0 )
-mouse_filter = 0
-mouse_default_cursor_shape = 0
-size_flags_horizontal = 1
-size_flags_vertical = 1
-min_value = 0.0
-max_value = 100.0
-step = 1.0
-page = 0.0
-value = 0.0
-exp_edit = false
-rounded = false
-editable = true
-prefix = ""
-suffix = ""
 
-[node name="CellWidthSlider" type="HSlider" parent="SettingsPanel" index="1"]
-
-anchor_left = 0.0
-anchor_top = 0.0
-anchor_right = 0.0
-anchor_bottom = 0.0
+[node name="CellWidthSlider" type="HSlider" parent="SettingsPanel"]
 margin_left = 11.0
 margin_top = 5.0
 margin_right = 264.0
 margin_bottom = 27.0
-rect_pivot_offset = Vector2( 0, 0 )
-focus_mode = 2
-mouse_filter = 0
-mouse_default_cursor_shape = 0
-size_flags_horizontal = 1
-size_flags_vertical = 0
 min_value = 5.0
-max_value = 100.0
-step = 1.0
-page = 0.0
 value = 5.0
-exp_edit = false
-rounded = false
-editable = true
-tick_count = 0
 ticks_on_borders = true
-focus_mode = 2
 
-[node name="CellHeightSlider" type="VSlider" parent="SettingsPanel" index="2"]
-
-anchor_left = 0.0
-anchor_top = 0.0
-anchor_right = 0.0
-anchor_bottom = 0.0
+[node name="CellHeightSlider" type="VSlider" parent="SettingsPanel"]
 margin_left = 274.0
 margin_top = 11.0
 margin_right = 290.0
 margin_bottom = 132.0
-rect_pivot_offset = Vector2( 0, 0 )
-focus_mode = 2
-mouse_filter = 0
-mouse_default_cursor_shape = 0
-size_flags_horizontal = 0
-size_flags_vertical = 1
 min_value = 5.0
-max_value = 100.0
-step = 1.0
-page = 0.0
 value = 5.0
-exp_edit = false
-rounded = false
-editable = true
-tick_count = 0
 ticks_on_borders = true
-focus_mode = 2
 
-[node name="ConfigInfoLabel" type="Label" parent="SettingsPanel" index="3"]
-
-anchor_left = 0.0
-anchor_top = 0.0
-anchor_right = 0.0
-anchor_bottom = 0.0
+[node name="ConfigInfoLabel" type="Label" parent="SettingsPanel"]
 margin_left = 45.0
 margin_top = 243.0
 margin_right = 376.0
 margin_bottom = 257.0
-rect_pivot_offset = Vector2( 0, 0 )
-mouse_filter = 2
-mouse_default_cursor_shape = 0
-size_flags_horizontal = 1
-size_flags_vertical = 4
-percent_visible = 1.0
-lines_skipped = 0
-max_lines_visible = -1
 
-[node name="ColorSampleScroll" type="ScrollContainer" parent="." index="2"]
-
+[node name="ColorSampleScroll" type="ScrollContainer" parent="."]
 editor/display_folded = true
-anchor_left = 0.0
-anchor_top = 0.0
-anchor_right = 0.0
-anchor_bottom = 0.0
 margin_left = 608.0
 margin_top = 414.0
 margin_right = 868.0
 margin_bottom = 594.0
-rect_pivot_offset = Vector2( 0, 0 )
-rect_clip_content = true
-mouse_filter = 0
-mouse_default_cursor_shape = 0
-size_flags_horizontal = 1
-size_flags_vertical = 1
 scroll_horizontal_enabled = false
-scroll_horizontal = 0
-scroll_vertical_enabled = true
-scroll_vertical = 0
-_sections_unfolded = [ "Anchor", "Focus", "Grow Direction", "Hint", "Margin", "Material", "Mouse", "Pause", "Rect", "Scroll", "Size Flags", "Theme", "Visibility" ]
 __meta__ = {
 "_edit_group_": true
 }
 
-[node name="PickerOfColor" type="Control" parent="ColorSampleScroll" index="0"]
-
-anchor_left = 0.0
-anchor_top = 0.0
-anchor_right = 0.0
-anchor_bottom = 0.0
-rect_pivot_offset = Vector2( 0, 0 )
-mouse_filter = 0
-mouse_default_cursor_shape = 0
-size_flags_horizontal = 1
-size_flags_vertical = 1
+[node name="PickerOfColor" type="Control" parent="ColorSampleScroll"]
 script = ExtResource( 2 )
-_sections_unfolded = [ "Rect" ]
 __meta__ = {
 "_editor_icon": ExtResource( 3 )
 }
-_cell_size = Vector2( 30, 30 )
 
-[node name="PickerOfColors" type="Control" parent="." index="3"]
-
-anchor_left = 0.0
-anchor_top = 0.0
-anchor_right = 0.0
-anchor_bottom = 0.0
+[node name="PickerOfColors" type="Control" parent="."]
 margin_right = 40.0
 margin_bottom = 40.0
-rect_pivot_offset = Vector2( 0, 0 )
-mouse_filter = 0
-mouse_default_cursor_shape = 0
-size_flags_horizontal = 1
-size_flags_vertical = 1
 script = ExtResource( 4 )
 __meta__ = {
 "_editor_icon": ExtResource( 3 )
 }
 
 [connection signal="pressed" from="Controls/btnSetSelected" to="." method="_on_btnSetSelected_pressed"]
-
 [connection signal="pressed" from="Controls/Add10Colors" to="." method="_on_Add10Colors_pressed"]
-
 [connection signal="pressed" from="Controls/SaveCustom" to="." method="_on_SaveCustom_pressed"]
-
 [connection signal="pressed" from="Controls/LoadCustom" to="." method="_on_LoadCustom_pressed"]
-
 [connection signal="pressed" from="Controls/SaveAll" to="." method="_on_SaveAll_pressed"]
-
 [connection signal="pressed" from="Controls/LoadAll" to="." method="_on_LoadAll_pressed"]
-
 [connection signal="pressed" from="Controls/ClearPicker" to="." method="_on_ClearPicker_pressed"]
-
 [connection signal="value_changed" from="Controls/HeightSlider" to="." method="_on_HeightSlider_value_changed"]
-
 [connection signal="value_changed" from="Controls/WidthSlider" to="." method="_on_WidthSlider_value_changed"]
-
 [connection signal="value_changed" from="SettingsPanel/StepSpinBox" to="." method="_on_StepSpinBox_value_changed"]
-
-[connection signal="selected" from="PickerOfColors" to="." method="_on_PickerOfColors_selected"]
-
-
