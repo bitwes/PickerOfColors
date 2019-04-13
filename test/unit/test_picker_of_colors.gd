@@ -21,7 +21,7 @@ var gr = {
 }
 func _simulate_set_custom(index, color):
 	gr.poc.get_custom_picker().set_selected_index(index)
-	#gr.poc._ctrls.custom_maker.set_color(color)
+	#gr.poc._ctrls.custom_maker.set_selected_color(color)
 	gr.poc._on_custom_maker_changed(color)
 
 func _simulate_clear_custom(index):
@@ -75,53 +75,53 @@ func teardown():
 # #############
 func test_can_get_set_color():
 	gr.poc.get_presets_picker().add_color(1,1,1)
-	assert_get_set_methods(gr.poc, 'color', null, Color(1,1,1))
+	assert_accessors(gr.poc, 'selected_color', null, Color(1,1,1))
 
 func test_cannot_set_color_to_color_that_does_not_exist_in_picker():
-	gr.poc.set_color(Color(1,1,1))
-	assert_eq(gr.poc.get_color(), null)
+	gr.poc.set_selected_color(Color(1,1,1))
+	assert_eq(gr.poc.get_selected_color(), null)
 
 func test_can_set_color_to_custom_color():
 	gr.poc.get_custom_picker().add_color(1,1,1)
-	gr.poc.set_color(Color(1,1,1))
-	assert_eq(gr.poc.get_color(), Color(1,1,1))
+	gr.poc.set_selected_color(Color(1,1,1))
+	assert_eq(gr.poc.get_selected_color(), Color(1,1,1))
 
 func test_setting_color_to_custom_unselects_preset():
 	gr.poc.get_presets_picker().add_color(1,1,1)
 	gr.poc.get_custom_picker().add_color(1,0,0)
-	gr.poc.set_color(Color(1,1,1))
-	gr.poc.set_color(Color(1,0,0))
+	gr.poc.set_selected_color(Color(1,1,1))
+	gr.poc.set_selected_color(Color(1,0,0))
 	assert_eq(gr.poc.get_presets_picker().get_selected_index(), -1)
 
 func test_setting_color_to_preset_unselectes_custom():
 	gr.poc.get_presets_picker().add_color(1,1,1)
 	gr.poc.get_custom_picker().add_color(1,0,0)
-	gr.poc.set_color(Color(1,0,0))
-	gr.poc.set_color(Color(1,1,1))
+	gr.poc.set_selected_color(Color(1,0,0))
+	gr.poc.set_selected_color(Color(1,1,1))
 	assert_eq(gr.poc.get_custom_picker().get_selected_index(), -1)
 
 func test_setting_color_sets_preset_if_color_exists_in_both():
 	gr.poc.get_presets_picker().add_color(1,1,1)
 	gr.poc.get_custom_picker().add_color(1,1,1)
-	gr.poc.set_color(Color(1,1,1))
+	gr.poc.set_selected_color(Color(1,1,1))
 	assert_eq(gr.poc.get_presets_picker().get_selected_index(), 0, 'preset set')
 	assert_eq(gr.poc.get_custom_picker().get_selected_index(), -1, 'custom is not set')
 
 
 func test_can_get_set_custom_slots():
-	assert_get_set_methods(gr.poc, 'custom_slots', 0, 10)
+	assert_accessors(gr.poc, 'custom_slots', 0, 10)
 
 func test_can_get_selected_color_when_preset_selected():
 	gr.poc.load_default_presets()
 	var sel_color = simulate_select(gr.poc.get_presets_picker(), 1)
-	assert_eq(gr.poc.get_color(), sel_color)
+	assert_eq(gr.poc.get_selected_color(), sel_color)
 
 func test_can_get_selected_color_when_custom_selected():
 	gr.poc.set_custom_slots(5)
 	gr.poc.get_custom_picker().add_color(1,1,1)
 	gr.poc.get_custom_picker().add_color(2,2,2)
 	var sel_color = simulate_select(gr.poc.get_custom_picker(), 1)
-	assert_eq(gr.poc.get_color(), sel_color)
+	assert_eq(gr.poc.get_selected_color(), sel_color)
 
 func test_has_selected_signal():
 	assert_has_signal(gr.poc, 'selected')
@@ -149,7 +149,7 @@ func test_can_load_preset_colors():
 	assert_eq(gr.poc.get_presets_picker().get_colors().size(), 3)
 
 func test_can_get_set_cell_size():
-	assert_get_set_methods(gr.poc, 'cell_size', Vector2(30,30), Vector2(50, 50))
+	assert_accessors(gr.poc, 'cell_size', Vector2(30,30), Vector2(50, 50))
 
 func test_setting_cell_size_sets_custom_cell_size():
 	gr.poc.set_cell_size(Vector2(100, 100))
@@ -171,7 +171,7 @@ func test_can_save_load_selected_preset():
 	gr.poc.load_default_presets(0.5)
 	var c = simulate_select(gr.poc.get_presets_picker(), 0)
 	var other = save_load()
-	assert_eq(other.get_color(), c, 'Color is set')
+	assert_eq(other.get_selected_color(), c, 'Color is set')
 	assert_eq(other.get_presets_picker().get_selected_color(), c, 'Color is selected')
 
 func test_can_save_load_custom_file():
@@ -185,7 +185,7 @@ func test_can_save_load_selected_custom():
 	gr.poc.load_custom_colors(TEMP_COLOR)
 	var c = simulate_select(gr.poc.get_custom_picker(), 0)
 	var other = save_load()
-	assert_eq(other.get_color(), c, 'Color is set')
+	assert_eq(other.get_selected_color(), c, 'Color is set')
 	assert_eq(other.get_custom_picker().get_selected_color(), c, 'Color is selected')
 
 func test_can_save_load_preset_file():
@@ -240,9 +240,9 @@ func test_setting_custom_slots_increases_slots_to_max():
 
 func test_when_color_selected_in_select_mode_color_maker_color_set():
 	gr.poc.set_custom_slots(5)
-	gr.poc.get_custom_picker().set_color(0, Color(1,1,1))
+	gr.poc.get_custom_picker().set_color_at(0, Color(1,1,1))
 	simulate_select(gr.poc.get_custom_picker(), 0)
-	assert_eq(gr.poc._ctrls.custom_maker.get_color(), Color(1,1,1))
+	assert_eq(gr.poc._ctrls.custom_maker.get_selected_color(), Color(1,1,1))
 
 func test_when_custom_maker_changes_color_is_set():
 	gr.poc.set_custom_slots(5)
@@ -268,7 +268,7 @@ func test_when_empty_custom_selected_clear_button_is_disabled():
 func test_when_custom_color_selected_clear_button_enabled():
 	select_custom_tab(gr.poc)
 	gr.poc.set_custom_slots(5)
-	gr.poc.get_custom_picker().set_color(0, Color(1,1,1))
+	gr.poc.get_custom_picker().set_color_at(0, Color(1,1,1))
 	simulate_select(gr.poc.get_custom_picker(), 0)
 	assert_false(gr.poc._ctrls.clear_button.is_disabled())
 
@@ -283,7 +283,7 @@ func test_when_color_maker_changes_clear_button_enabled():
 # Edit/Pick mode
 # ###############
 func test_can_get_set_mode():
-	assert_get_set_methods(gr.poc, 'mode', gr.poc.MODES.PICK, gr.poc.MODES.EDIT)
+	assert_accessors(gr.poc, 'mode', gr.poc.MODES.PICK, gr.poc.MODES.EDIT)
 
 func test_setting_mode_to_edit_shows_correct_controls():
 	gr.poc.set_mode(gr.poc.MODES.EDIT)

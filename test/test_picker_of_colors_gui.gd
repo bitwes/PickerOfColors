@@ -30,7 +30,7 @@ func _ready():
 	_picker.set_cell_size(Vector2(40, 60))
 	#_picker.set_custom_slots(10)
 	_picker.load_default_presets()
-	_picker.connect('selected', self, '_on_picker_selected')
+	# _picker.connect('selected', self, '_on_picker_selected')
 	_ctrls.panel.connect('draw', self, '_on_panel_draw')
 	_ctrls.cell_width_slider.connect('value_changed', self, '_on_cell_slider_changed')
 	_ctrls.cell_height_slider.connect('value_changed', self, '_on_cell_slider_changed')
@@ -103,7 +103,7 @@ func _on_ClearPicker_pressed():
 	add_child(_picker)
 	_picker.set_size(s)
 	_picker.set_position(p)
-	_picker.connect('selected', self, '_on_picker_selected')
+	#_picker.connect('selected', self, '_on_picker_selected')
 	_update_config_display()
 	_update_size_sliders()
 

@@ -9,7 +9,6 @@
 script = ExtResource( 1 )
 
 [node name="Controls" type="Panel" parent="."]
-editor/display_folded = true
 margin_left = 489.0
 margin_right = 1026.0
 margin_bottom = 305.0
@@ -158,6 +157,5 @@ __meta__ = {
 [connection signal="pressed" from="Controls/SaveAll" to="." method="_on_SaveAll_pressed"]
 [connection signal="pressed" from="Controls/LoadAll" to="." method="_on_LoadAll_pressed"]
 [connection signal="pressed" from="Controls/ClearPicker" to="." method="_on_ClearPicker_pressed"]
-[connection signal="value_changed" from="Controls/HeightSlider" to="." method="_on_HeightSlider_value_changed"]
-[connection signal="value_changed" from="Controls/WidthSlider" to="." method="_on_WidthSlider_value_changed"]
 [connection signal="value_changed" from="SettingsPanel/StepSpinBox" to="." method="_on_StepSpinBox_value_changed"]
+[connection signal="selected" from="PickerOfColors" to="." method="_on_PickerOfColors_selected"]

@@ -183,7 +183,7 @@ func set_selected_color(c):
 func get_colors():
 	return _colors
 
-func set_color(index, color):
+func set_color_at(index, color):
 	_colors[index] = color
 	update()
 

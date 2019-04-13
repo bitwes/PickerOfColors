@@ -1,14 +1,12 @@
-{"dirs":["res://test/unit"],
-"double_strategy":null,
-"ignore_pause":null,
-"include_subdirs":null,
-"inner_class":null,
-"log_level":null,
-"opacity":null,
-"prefix":null,
-"selected":null,
-"should_exit":null,
-"should_maximize":null,
-"suffix":null,
-"tests":null,
-"unit_test_name":null}
+{
+  "dirs":["res://test/unit"],
+  "ignore_pause":false,
+  "include_subdirs":false,
+
+  "log_level":null,
+  "should_exit":true,
+  "should_maximize":false,
+
+  "unit_test_name":null,
+  "inner_class":null,
+}

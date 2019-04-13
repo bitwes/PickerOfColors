@@ -31,7 +31,7 @@ func teardown():
 # Tests
 # #############
 func test_can_get_set_cell_size():
-	assert_get_set_methods(gr.poc, 'cell_size', Vector2(30,30), Vector2(40, 40))
+	assert_accessors(gr.poc, 'cell_size', Vector2(30,30), Vector2(40, 40))
 
 func test_can_add_color_with_rgb():
 	gr.poc.add_color(1,1,1)
@@ -64,7 +64,7 @@ func test_can_add_null_colors():
 func test_can_set_color_for_index():
 	gr.poc.add_color(1,1,1)
 	gr.poc.add_color(2,2,2)
-	gr.poc.set_color(0, Color(3,3,3))
+	gr.poc.set_color_at(0, Color(3,3,3))
 	assert_eq(gr.poc.get_colors()[0], Color(3,3,3))
 
 func test_setting_cell_size_causes_vertical_resize():
@@ -75,7 +75,7 @@ func test_setting_cell_size_causes_vertical_resize():
 	# This size should cause one per line for a total size of 300
 	gr.poc.set_cell_size(Vector2(75, 100))
 	yield(yield_for(.5, 'wait to paint'), YIELD)
-	assert_eq(gr.poc.get_size().y, 400.0)
+	assert_eq(gr.poc.get_size().y, 300.0)
 
 func test_adding_colors_causes_vertical_resize():
 	gr.poc.set_size(Vector2(100, 50))
@@ -92,7 +92,7 @@ func test_adding_colors_causes_vertical_resize():
 func test_can_get_set_selected_index():
 	for i in range(10):
 		gr.poc.add_color(1,1,1)
-	assert_get_set_methods(gr.poc, 'selected_index', -1, 5)
+	assert_accessors(gr.poc, 'selected_index', -1, 5)
 
 func test_cannot_select_index_that_does_not_exist():
 	# nothing in here so it should fail

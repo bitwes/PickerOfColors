@@ -100,7 +100,7 @@ func _on_custom_selected(color):
 	if(color == null):
 		set_mode(MODES.EDIT)
 	else:
-		_ctrls.custom_maker.set_color(color)
+		_ctrls.custom_maker.set_selected_color(color)
 		emit_signal('selected', color)
 		_presets.set_selected_index(-1)
 		_cur_color = color
@@ -108,7 +108,7 @@ func _on_custom_selected(color):
 	_ctrls.clear_button.set_disabled(color == null)
 
 func _on_clear_button_pressed():
-	_custom.set_color(_custom.get_selected_index(), null)
+	_custom.set_color_at(_custom.get_selected_index(), null)
 	emit_signal('customs_changed')
 
 func _on_edit_button_pressed():
@@ -120,7 +120,7 @@ func _on_done_button_pressed():
 func _on_custom_maker_changed(color):
 	var slot = _custom.get_selected_index()
 	if(slot != -1):
-		_custom.set_color(slot, _ctrls.custom_maker.get_color())
+		_custom.set_color_at(slot, _ctrls.custom_maker.get_selected_color())
 		emit_signal('selected', color)
 		emit_signal('customs_changed')
 		_ctrls.clear_button.set_disabled(color == null)
@@ -186,7 +186,7 @@ func load_default_presets(step=.05):
 
 	_presets.update()
 
-func set_color(color):
+func set_selected_color(color):
 	_presets.set_selected_index(-1)
 	_custom.set_selected_index(-1)
 	_presets.set_selected_color(color)
@@ -195,7 +195,7 @@ func set_color(color):
 		_custom.set_selected_color(color)
 		_cur_color = _custom.get_selected_color()
 
-func get_color():
+func get_selected_color():
  	return _cur_color
 
 func load_custom_colors(path):
@@ -236,7 +236,7 @@ func saveit(path):
 	var f = ConfigFile.new()
 	f.set_value('settings', 'cell_size', get_cell_size())
 	f.set_value('settings', 'default_step', _default_step)
-	f.set_value('settings', 'color', get_color())
+	f.set_value('settings', 'color', get_selected_color())
 	f.set_value('settings', 'customs_path', _customs_path)
 	f.set_value('settings', 'presets_path', _presets_path)
 
@@ -258,12 +258,12 @@ func loadit(path):
 		_presets.clear()
 		load_default_presets(_default_step)
 
-	_presets_path = f.get_value('settings', 'presets_path')
-	if(_presets_path != null):
+	_presets_path = f.get_value('settings', 'presets_path', '')
+	if(_presets_path != ''):
 		load_preset_colors(_presets_path)
 
-	_customs_path = f.get_value('settings', 'customs_path')
-	if(_customs_path != null):
+	_customs_path = f.get_value('settings', 'customs_path', '')
+	if(_customs_path != ''):
 		load_custom_colors(_customs_path)
 
 	var tab = f.get_value('settings', 'color_tab', 'none')
