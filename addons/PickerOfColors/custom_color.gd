@@ -3,9 +3,9 @@ onready var _ctrls = {
 	r_slider = get_node("RSlider"),
 	g_slider = get_node("GSlider"),
 	b_slider = get_node("BSlider"),
-	r_value = get_node("RedValue"),
-	g_value = get_node("GreenValue"),
-	b_value = get_node("BlueValue")
+	r_value = $RSlider/RedValue,
+	g_value = $GSlider/GreenValue,
+	b_value = $BSlider/BlueValue
 }
 var _color = Color(1,1,1)
 

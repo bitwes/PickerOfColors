@@ -27,9 +27,12 @@ func _on_panel_draw():
 		_ctrls.panel.draw_rect(Rect2(233, 30, 30, 30), _color)
 
 func _ready():
+	$ColorButton.set_the_color(Color(1, 1, 0))
+	
+	
 	_picker.set_cell_size(Vector2(40, 60))
 	#_picker.set_custom_slots(10)
-	_picker.load_default_presets()
+	_picker.load_default_presets(.2)
 	# _picker.connect('selected', self, '_on_picker_selected')
 	_ctrls.panel.connect('draw', self, '_on_panel_draw')
 	_ctrls.cell_width_slider.connect('value_changed', self, '_on_cell_slider_changed')

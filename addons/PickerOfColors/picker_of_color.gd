@@ -2,11 +2,16 @@ tool
 extends Control
 
 #var _cell_size = Vector2(30, 30)
+var ColorButton = load('res://addons/PickerOfColors/ColorButton.tscn')
 var _num_per_row = 1
 var _colors = []
 var _selected_index = -1
 var _selected_top_left = Vector2(400, 50)
+
+export(Color) var _background_color = Color(1, 1, 1, 0)
 export(Vector2) var _cell_size = Vector2(30, 30) setget set_cell_size, get_cell_size
+export(Vector2) var _cell_pad = Vector2(10, 10)
+
 signal selected(color)
 
 func _ready():
@@ -53,29 +58,32 @@ func _is_in_editor():
 	return to_return
 
 func _draw_color(x, y, color, selected=false):
-	var outline_color = Color(1,1,1)
+	return
+	var outline_color = _background_color
 	var outline_extra = 0
 	if(selected):
 		outline_color = Color(0, 0, 0)
 		outline_extra = 5
 
-	# draw outline
-	draw_rect(Rect2(x - outline_extra, \
-	                y - outline_extra, \
-					_cell_size.x + outline_extra * 2, \
-					_cell_size.y + outline_extra * 2), \
-				outline_color)
+	var tl = Vector2(x  + _cell_pad.x / 2, y + _cell_pad.y / 2)
+	var size = _cell_size - (_cell_pad / 2)
 
 	# draw color
 	if(color != null):
-		draw_rect(Rect2(x + 1, y + 1, _cell_size.x -1, _cell_size.y -1), color)
+		draw_rect(Rect2(tl, size), color)
 	# draw a grey box with a white X in it.
 	else:
-		var tl = Vector2(x + 1, y + 1)
-		var br = Vector2(x + _cell_size.x -1, y +_cell_size.y -1)
-		draw_rect(Rect2(tl, Vector2(_cell_size.x -1, _cell_size.y -1)), Color(.15, .15, .15))
+		var br = tl + size
+		draw_rect(Rect2(tl, size), Color(.15, .15, .15))
 		draw_line(tl, br, Color(1,1,1))
 		draw_line(Vector2(br.x, tl.y), Vector2(tl.x, br.y), Color(1,1,1))
+
+	# draw outline
+	var outline_loc = Vector2(x - outline_extra, y - outline_extra)
+	var outline_size = Vector2(_cell_size.x + outline_extra * 2, _cell_size.y + outline_extra * 2)
+	for i in range(outline_extra):
+		var inc = Vector2(i, i)
+		draw_rect(Rect2(outline_loc + inc, outline_size - inc), outline_color, false)
 
 func _draw_colors(colors):
 	var row_width = int(int(get_size().x) / _cell_size.x)

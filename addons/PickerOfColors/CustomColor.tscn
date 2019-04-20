@@ -3,227 +3,83 @@
 [ext_resource path="res://addons/PickerOfColors/custom_color.gd" type="Script" id=1]
 
 [node name="CustomColor" type="Control"]
-
-anchor_left = 0.0
-anchor_top = 0.0
-anchor_right = 0.0
-anchor_bottom = 0.0
 margin_left = 1.0
 margin_right = 206.0
 margin_bottom = 138.0
-rect_pivot_offset = Vector2( 0, 0 )
-mouse_filter = 0
-mouse_default_cursor_shape = 0
-size_flags_horizontal = 1
-size_flags_vertical = 1
 script = ExtResource( 1 )
-_sections_unfolded = [ "Rect" ]
 
-[node name="RSlider" type="HSlider" parent="." index="0"]
-
-anchor_left = 0.0
-anchor_top = 0.0
-anchor_right = 0.0
-anchor_bottom = 0.0
+[node name="RSlider" type="HSlider" parent="."]
 margin_left = 3.0
 margin_top = 17.0
-margin_right = 153.0
+margin_right = 309.0
 margin_bottom = 33.0
-rect_pivot_offset = Vector2( 0, 0 )
-focus_mode = 2
-mouse_filter = 0
-mouse_default_cursor_shape = 0
-size_flags_horizontal = 1
-size_flags_vertical = 0
-min_value = 0.0
 max_value = 1.0
 step = 0.01
-page = 0.0
-value = 0.0
-exp_edit = false
-rounded = false
-editable = true
 tick_count = 5
 ticks_on_borders = true
-focus_mode = 2
-_sections_unfolded = [ "Rect" ]
 
-[node name="GSlider" type="HSlider" parent="." index="1"]
-
-anchor_left = 0.0
-anchor_top = 0.0
-anchor_right = 0.0
-anchor_bottom = 0.0
-margin_left = 4.0
-margin_top = 51.0
-margin_right = 154.0
-margin_bottom = 67.0
-rect_pivot_offset = Vector2( 0, 0 )
-focus_mode = 2
-mouse_filter = 0
-mouse_default_cursor_shape = 0
-size_flags_horizontal = 1
-size_flags_vertical = 0
-min_value = 0.0
-max_value = 1.0
-step = 0.01
-page = 0.0
-value = 0.0
-exp_edit = false
-rounded = false
-editable = true
-tick_count = 5
-ticks_on_borders = true
-focus_mode = 2
-_sections_unfolded = [ "Rect" ]
-
-[node name="BSlider" type="HSlider" parent="." index="2"]
-
-anchor_left = 0.0
-anchor_top = 0.0
-anchor_right = 0.0
-anchor_bottom = 0.0
-margin_left = 5.0
-margin_top = 86.0
-margin_right = 155.0
-margin_bottom = 102.0
-rect_pivot_offset = Vector2( 0, 0 )
-focus_mode = 2
-mouse_filter = 0
-mouse_default_cursor_shape = 0
-size_flags_horizontal = 1
-size_flags_vertical = 0
-min_value = 0.0
-max_value = 1.0
-step = 0.01
-page = 0.0
-value = 0.0
-exp_edit = false
-rounded = false
-editable = true
-tick_count = 5
-ticks_on_borders = true
-focus_mode = 2
-_sections_unfolded = [ "Rect" ]
-
-[node name="Label" type="Label" parent="." index="3"]
-
-anchor_left = 0.0
-anchor_top = 0.0
-anchor_right = 0.0
-anchor_bottom = 0.0
-margin_left = 3.0
-margin_top = 3.0
-margin_right = 27.0
-margin_bottom = 17.0
-rect_pivot_offset = Vector2( 0, 0 )
-mouse_filter = 2
-mouse_default_cursor_shape = 0
-size_flags_horizontal = 1
-size_flags_vertical = 4
+[node name="Label" type="Label" parent="RSlider"]
+margin_top = -14.0
+margin_right = 24.0
 text = "Red"
-percent_visible = 1.0
-lines_skipped = 0
-max_lines_visible = -1
 
-[node name="Label1" type="Label" parent="." index="4"]
+[node name="RedValue" type="Label" parent="RSlider"]
+anchor_left = 1.0
+anchor_right = 1.0
+margin_left = -33.0
+margin_top = -15.0
+margin_right = -13.0
+margin_bottom = -1.0
+text = "0.5"
 
-anchor_left = 0.0
-anchor_top = 0.0
-anchor_right = 0.0
-anchor_bottom = 0.0
-margin_left = 6.0
-margin_top = 69.0
-margin_right = 35.0
-margin_bottom = 83.0
-rect_pivot_offset = Vector2( 0, 0 )
-mouse_filter = 2
-mouse_default_cursor_shape = 0
-size_flags_horizontal = 1
-size_flags_vertical = 4
-text = "Blue"
-percent_visible = 1.0
-lines_skipped = 0
-max_lines_visible = -1
-
-[node name="Label2" type="Label" parent="." index="5"]
-
-anchor_left = 0.0
-anchor_top = 0.0
-anchor_right = 0.0
-anchor_bottom = 0.0
+[node name="GSlider" type="HSlider" parent="."]
 margin_left = 4.0
-margin_top = 35.0
-margin_right = 43.0
-margin_bottom = 49.0
-rect_pivot_offset = Vector2( 0, 0 )
-mouse_filter = 2
-mouse_default_cursor_shape = 0
-size_flags_horizontal = 1
-size_flags_vertical = 4
-text = "Green"
-percent_visible = 1.0
-lines_skipped = 0
-max_lines_visible = -1
-
-[node name="RedValue" type="Label" parent="." index="6"]
-
-anchor_left = 0.0
-anchor_top = 0.0
-anchor_right = 0.0
-anchor_bottom = 0.0
-margin_left = 120.0
-margin_top = 2.0
-margin_right = 140.0
-margin_bottom = 16.0
-rect_pivot_offset = Vector2( 0, 0 )
-mouse_filter = 2
-mouse_default_cursor_shape = 0
-size_flags_horizontal = 1
-size_flags_vertical = 4
-text = "0.5"
-percent_visible = 1.0
-lines_skipped = 0
-max_lines_visible = -1
-
-[node name="GreenValue" type="Label" parent="." index="7"]
-
-anchor_left = 0.0
-anchor_top = 0.0
-anchor_right = 0.0
-anchor_bottom = 0.0
-margin_left = 121.0
-margin_top = 34.0
-margin_right = 141.0
-margin_bottom = 48.0
-rect_pivot_offset = Vector2( 0, 0 )
-mouse_filter = 2
-mouse_default_cursor_shape = 0
-size_flags_horizontal = 1
-size_flags_vertical = 4
-text = "0.5"
-percent_visible = 1.0
-lines_skipped = 0
-max_lines_visible = -1
-
-[node name="BlueValue" type="Label" parent="." index="8"]
-
-anchor_left = 0.0
-anchor_top = 0.0
-anchor_right = 0.0
-anchor_bottom = 0.0
-margin_left = 122.0
-margin_top = 69.0
-margin_right = 142.0
+margin_top = 67.0
+margin_right = 309.0
 margin_bottom = 83.0
-rect_pivot_offset = Vector2( 0, 0 )
-mouse_filter = 2
-mouse_default_cursor_shape = 0
-size_flags_horizontal = 1
-size_flags_vertical = 4
-text = "0.5"
-percent_visible = 1.0
-lines_skipped = 0
-max_lines_visible = -1
+max_value = 1.0
+step = 0.01
+tick_count = 5
+ticks_on_borders = true
 
+[node name="Label" type="Label" parent="GSlider"]
+margin_top = -16.0
+margin_right = 39.0
+margin_bottom = -2.0
+text = "Green"
+
+[node name="GreenValue" type="Label" parent="GSlider"]
+anchor_left = 1.0
+anchor_right = 1.0
+margin_left = -33.0
+margin_top = -17.0
+margin_right = -13.0
+margin_bottom = -3.0
+text = "0.5"
+
+[node name="BSlider" type="HSlider" parent="."]
+margin_left = 5.0
+margin_top = 120.0
+margin_right = 309.0
+margin_bottom = 136.0
+max_value = 1.0
+step = 0.01
+tick_count = 5
+ticks_on_borders = true
+
+[node name="Label" type="Label" parent="BSlider"]
+margin_left = 1.0
+margin_top = -17.0
+margin_right = 30.0
+margin_bottom = -3.0
+text = "Blue"
+
+[node name="BlueValue" type="Label" parent="BSlider"]
+anchor_left = 1.0
+anchor_right = 1.0
+margin_left = -33.0
+margin_top = -17.0
+margin_right = -13.0
+margin_bottom = -3.0
+text = "0.5"
 

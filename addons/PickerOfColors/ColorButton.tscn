@@ -1,0 +1,16 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://addons/PickerOfColors/white_flat_button_style.tres" type="StyleBox" id=1]
+[ext_resource path="res://addons/PickerOfColors/ColorButton.gd" type="Script" id=2]
+
+[node name="ColorButton" type="Button"]
+margin_right = 88.0
+margin_bottom = 50.0
+custom_styles/hover = ExtResource( 1 )
+custom_styles/pressed = ExtResource( 1 )
+custom_styles/focus = ExtResource( 1 )
+custom_styles/disabled = ExtResource( 1 )
+custom_styles/normal = ExtResource( 1 )
+script = ExtResource( 2 )
+
+[connection signal="pressed" from="." to="." method="_on_ColorButton_pressed"]

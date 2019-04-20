@@ -182,6 +182,7 @@ func load_default_presets(step=.05):
 	add_range(0, D, 1, step) # light blue -> blue
 	add_range(U, 0, 1, step) # blue -> purple
 	add_range(1, 0, D, step) # purple -> red
+	
 	add_range(U, U, U, step)  # black -> white
 
 	_presets.update()
