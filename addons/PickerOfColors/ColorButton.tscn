@@ -6,6 +6,7 @@
 [node name="ColorButton" type="Button"]
 margin_right = 88.0
 margin_bottom = 50.0
+rect_min_size = Vector2( 20, 20 )
 custom_styles/hover = ExtResource( 1 )
 custom_styles/pressed = ExtResource( 1 )
 custom_styles/focus = ExtResource( 1 )

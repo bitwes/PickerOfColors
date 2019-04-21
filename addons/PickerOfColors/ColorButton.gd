@@ -9,7 +9,14 @@ signal color_picked
 
 func _init(c=null):
 	_color = c
-	_style_box = self.get('custom_styles/normal')
+	_style_box = self.get('custom_styles/normal').duplicate()
+
+	set('custom_styles/hover', _style_box)
+	set('custom_styles/pressed', _style_box)
+	set('custom_styles/focus', _style_box)
+	set('custom_styles/disabled', _style_box)
+	set('custom_styles/normal', _style_box)
+
 
 func _ready():
 	if(_color):

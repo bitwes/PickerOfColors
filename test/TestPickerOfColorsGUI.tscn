@@ -2,9 +2,9 @@
 
 [ext_resource path="res://test/test_picker_of_colors_gui.gd" type="Script" id=1]
 [ext_resource path="res://addons/PickerOfColors/picker_of_color.gd" type="Script" id=2]
-[ext_resource path="res://addons/PickerOfColors/icon.png" type="Texture" id=3]
+[ext_resource path="res://addons/PickerOfColors/ColorButton.tscn" type="PackedScene" id=3]
 [ext_resource path="res://addons/PickerOfColors/picker_of_colors.gd" type="Script" id=4]
-[ext_resource path="res://addons/PickerOfColors/ColorButton.tscn" type="PackedScene" id=5]
+[ext_resource path="res://addons/PickerOfColors/icon.png" type="Texture" id=5]
 
 [node name="Node2D" type="Node2D"]
 script = ExtResource( 1 )
@@ -88,6 +88,7 @@ margin_left = 29.0
 margin_top = 88.0
 margin_right = 45.0
 margin_bottom = 255.0
+ticks_on_borders = true
 
 [node name="WidthSlider" type="HSlider" parent="Controls"]
 margin_left = 75.0
@@ -134,7 +135,6 @@ margin_right = 376.0
 margin_bottom = 257.0
 
 [node name="ColorSampleScroll" type="ScrollContainer" parent="."]
-editor/display_folded = true
 margin_left = 608.0
 margin_top = 414.0
 margin_right = 868.0
@@ -144,26 +144,24 @@ __meta__ = {
 "_edit_group_": true
 }
 
-[node name="PickerOfColor" type="Control" parent="ColorSampleScroll"]
+[node name="PickerOfColor" type="GridContainer" parent="ColorSampleScroll"]
+columns = 5
 script = ExtResource( 2 )
-__meta__ = {
-"_editor_icon": ExtResource( 3 )
-}
-_background_color = Color( 1, 1, 1, 1 )
+_cell_size = Vector2( 50, 50 )
 
-[node name="PickerOfColors" type="Control" parent="."]
-margin_right = 40.0
-margin_bottom = 40.0
-script = ExtResource( 4 )
-__meta__ = {
-"_editor_icon": ExtResource( 3 )
-}
-
-[node name="ColorButton" parent="." instance=ExtResource( 5 )]
+[node name="ColorButton" parent="." instance=ExtResource( 3 )]
 margin_left = 10.0
 margin_top = 408.0
 margin_right = 98.0
 margin_bottom = 458.0
+
+[node name="PickerOfColors" type="Panel" parent="."]
+margin_right = 40.0
+margin_bottom = 40.0
+script = ExtResource( 4 )
+__meta__ = {
+"_editor_icon": ExtResource( 5 )
+}
 
 [connection signal="pressed" from="Controls/btnSetSelected" to="." method="_on_btnSetSelected_pressed"]
 [connection signal="pressed" from="Controls/Add10Colors" to="." method="_on_Add10Colors_pressed"]

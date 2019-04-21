@@ -1,12 +1,12 @@
 tool
-extends Control
+extends GridContainer
 
-#var _cell_size = Vector2(30, 30)
 var ColorButton = load('res://addons/PickerOfColors/ColorButton.tscn')
 var _num_per_row = 1
 var _colors = []
 var _selected_index = -1
 var _selected_top_left = Vector2(400, 50)
+var _selected_button = null
 
 export(Color) var _background_color = Color(1, 1, 1, 0)
 export(Vector2) var _cell_size = Vector2(30, 30) setget set_cell_size, get_cell_size
@@ -14,41 +14,15 @@ export(Vector2) var _cell_pad = Vector2(10, 10)
 
 signal selected(color)
 
+func _on_color_button_picked(color, button):
+	if(_selected_button != null):
+		_selected_button.set_selected(false)
+	_selected_button = button
+	emit_signal('selected', color)
+
 func _ready():
 	update()
 	set_process_input(true)
-
-func _draw():
-	if(_is_in_editor()):
-		_draw_checkered()
-	else:
-		_recalc_num_per_row()
-		_fit_vertically()
-		_draw_colors(_colors)
-
-func _draw_checkered():
-	draw_rect(Rect2(Vector2(0,0), get_size()), Color(.5, .5, .5))
-	var clr1 = Color(.75,.75,.75)
-	var clr2 = Color(.1,.1,.1)
-
-	var rows = int(get_size().y / _cell_size.y)
-	var cols = int(get_size().x / _cell_size.x)
-	var color = clr1
-	var row_start_color = color
-
-	for r in range(rows):
-		for c in range(cols):
-			_draw_color(c * _cell_size.x, r * _cell_size.y, color)
-			if(color == clr1):
-				color = clr2
-			else:
-				color = clr1
-
-		if(row_start_color == clr1):
-			row_start_color = clr2
-		else:
-			row_start_color = clr1
-		color = row_start_color
 
 func _is_in_editor():
 	var to_return = false
@@ -56,87 +30,6 @@ func _is_in_editor():
 	if(get_parent() and Engine.is_editor_hint()):
 		to_return = true
 	return to_return
-
-func _draw_color(x, y, color, selected=false):
-	return
-	var outline_color = _background_color
-	var outline_extra = 0
-	if(selected):
-		outline_color = Color(0, 0, 0)
-		outline_extra = 5
-
-	var tl = Vector2(x  + _cell_pad.x / 2, y + _cell_pad.y / 2)
-	var size = _cell_size - (_cell_pad / 2)
-
-	# draw color
-	if(color != null):
-		draw_rect(Rect2(tl, size), color)
-	# draw a grey box with a white X in it.
-	else:
-		var br = tl + size
-		draw_rect(Rect2(tl, size), Color(.15, .15, .15))
-		draw_line(tl, br, Color(1,1,1))
-		draw_line(Vector2(br.x, tl.y), Vector2(tl.x, br.y), Color(1,1,1))
-
-	# draw outline
-	var outline_loc = Vector2(x - outline_extra, y - outline_extra)
-	var outline_size = Vector2(_cell_size.x + outline_extra * 2, _cell_size.y + outline_extra * 2)
-	for i in range(outline_extra):
-		var inc = Vector2(i, i)
-		draw_rect(Rect2(outline_loc + inc, outline_size - inc), outline_color, false)
-
-func _draw_colors(colors):
-	var row_width = int(int(get_size().x) / _cell_size.x)
-	for i in range(colors.size()):
-		var l = _get_color_location(i)
-		_draw_color(l.x, l.y, colors[i])
-
-	if(_selected_index != -1 and _selected_index < colors.size()):
-		var l = _get_color_location(_selected_index)
-		_draw_color(l.x, l.y, colors[_selected_index], true)
-
-func _get_color_location(index):
-	var to_return = Vector2(0, 0)
-	to_return.x = fmod(index, _num_per_row) * _cell_size.x #+ int(_size/2)
-	to_return.y = int(index/_num_per_row) * _cell_size.y
-	return to_return
-
-func _get_color_at_location(loc):
-	var to_return = -1
-	var x = int(int(loc.x) / int(_cell_size.x))
-	var y = int(int(loc.y) / int(_cell_size.y))
-
-	var idx = x + y * _num_per_row
-	if(idx > -1 and idx < _colors.size()):
-		to_return = idx
-	return int(to_return)
-
-func _handle_click(ev):
-	if(ev.get_position().x < _cell_size.x * _num_per_row):
-		var adjusted_pos = ev.get_global_position() - get_global_position()
-		if(adjusted_pos.x > 0 and adjusted_pos.y > 0):
-			var idx = _get_color_at_location(adjusted_pos)
-			if(idx != -1):
-				_selected_index = idx
-				emit_signal('selected', _colors[idx])
-				update()
-
-func _gui_input( ev ):
-	if ev is InputEventMouseButton:
-		if ev.button_index == BUTTON_LEFT and ev.pressed:
-			_handle_click(ev)
-
-func _recalc_num_per_row():
-	_num_per_row = int(int(get_size().x) / _cell_size.x)
-	if(_num_per_row < 1):
-		_num_per_row = 1
-	#update()
-
-func _fit_vertically():
-	var new_y = int(int(_colors.size()) / _num_per_row) * _cell_size.y + _cell_size.y
-	if(get_size().y < new_y):
-		set_size(Vector2(get_size().x, new_y))
-	#update()
 
 func set_size(s):
 	.set_size(s)
@@ -150,12 +43,18 @@ func set_size(s):
 		set_custom_minimum_size(get_size())
 
 func add_color(r, g=-1, b=-1):
-	if(g == -1):
-		_colors.append(r)
-	else:
-		_colors.append(Color(r, g, b))
+	var button = ColorButton.instance()
+	var c = r
+	if(g != -1):
+		c = Color(r, g, b)
+	_colors.append(c)
+	button.set_the_color(c)
+	button.set_custom_minimum_size(_cell_size)
+	add_child(button)
+	button.connect('color_picked', self, '_on_color_button_picked', [button])
+	columns = max(int(self.get_size().x / _cell_size.x), 1.0)
+	set_columns(columns)
 	update()
-
 
 func add_unique_color(r, g, b):
 	if(!_colors.has(Color(r, g, b))):
@@ -166,7 +65,12 @@ func get_cell_size():
 
 func set_cell_size(cell_size):
 	_cell_size = cell_size
-	update()
+	var btns = get_children()
+	for i in range(btns.size()):
+		btns[i].set_custom_minimum_size(_cell_size)
+	if(get_parent()):
+		columns = int(get_parent().get_size().x / _cell_size.x)
+		set_columns(columns)
 
 func get_selected_index():
 	return _selected_index
@@ -174,7 +78,7 @@ func get_selected_index():
 func set_selected_index(selected_index):
 	if(selected_index < _colors.size()):
 		_selected_index = selected_index
-		update()
+		#update()
 
 func get_selected_color():
 	var c = null
@@ -191,12 +95,11 @@ func set_selected_color(c):
 func get_colors():
 	return _colors
 
-func set_color_at(index, color):
-	_colors[index] = color
-	update()
-
 func clear():
 	_colors.clear()
+	var btns = get_children()
+	for i in range(btns.size()):
+		remove_child(btns[i])
 	update()
 
 func saveit(path):
@@ -207,4 +110,6 @@ func saveit(path):
 func loadit(path):
 	var f = ConfigFile.new()
 	f.load(path)
-	_colors = f.get_value('colors', 'all_colors', [])
+	var colors = f.get_value('colors', 'all_colors', [])
+	for i in range(colors):
+		add_color(colors[i])
