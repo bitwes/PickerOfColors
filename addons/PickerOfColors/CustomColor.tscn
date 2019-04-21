@@ -86,3 +86,100 @@ margin_right = -13.0
 margin_bottom = -3.0
 text = "0.5"
 
+[node name="VSlider" type="HSlider" parent="."]
+editor/display_folded = true
+margin_left = 6.0
+margin_top = 162.0
+margin_right = 310.0
+margin_bottom = 178.0
+max_value = 1.0
+step = 0.01
+tick_count = 5
+ticks_on_borders = true
+
+[node name="Label" type="Label" parent="VSlider"]
+margin_left = 1.0
+margin_top = -17.0
+margin_right = 30.0
+margin_bottom = -3.0
+text = "Value
+
+"
+
+[node name="Value" type="Label" parent="VSlider"]
+anchor_left = 1.0
+anchor_right = 1.0
+margin_left = -33.0
+margin_top = -17.0
+margin_right = -13.0
+margin_bottom = -3.0
+text = "0.5"
+
+[node name="RadiusSlider" type="HSlider" parent="."]
+editor/display_folded = true
+margin_left = 9.0
+margin_top = 210.0
+margin_right = 313.0
+margin_bottom = 226.0
+min_value = 5.0
+max_value = 50.0
+step = 0.01
+value = 5.0
+tick_count = 5
+ticks_on_borders = true
+
+[node name="Label" type="Label" parent="RadiusSlider"]
+margin_left = 1.0
+margin_top = -17.0
+margin_right = 30.0
+margin_bottom = -3.0
+text = "Radius
+
+
+"
+
+[node name="Value" type="Label" parent="RadiusSlider"]
+anchor_left = 1.0
+anchor_right = 1.0
+margin_left = -33.0
+margin_top = -17.0
+margin_right = -13.0
+margin_bottom = -3.0
+text = "0.5"
+
+[node name="RingWidthSlider" type="HSlider" parent="."]
+editor/display_folded = true
+margin_left = 9.0
+margin_top = 260.0
+margin_right = 313.0
+margin_bottom = 276.0
+min_value = 2.0
+max_value = 20.0
+step = 0.01
+value = 2.0
+tick_count = 5
+ticks_on_borders = true
+
+[node name="Label" type="Label" parent="RingWidthSlider"]
+margin_left = 1.0
+margin_top = -17.0
+margin_right = 30.0
+margin_bottom = -3.0
+text = "RingWidth
+
+
+
+"
+
+[node name="Value" type="Label" parent="RingWidthSlider"]
+anchor_left = 1.0
+anchor_right = 1.0
+margin_left = -33.0
+margin_top = -17.0
+margin_right = -13.0
+margin_bottom = -3.0
+text = "0.5"
+
+[connection signal="value_changed" from="VSlider" to="." method="_on_VSlider_value_changed"]
+[connection signal="value_changed" from="RadiusSlider" to="." method="_on_RadiusSlider_value_changed"]
+[connection signal="value_changed" from="RingWidthSlider" to="." method="_on_RingWidthSlider_value_changed"]
