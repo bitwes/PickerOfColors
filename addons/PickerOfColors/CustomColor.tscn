@@ -1,6 +1,17 @@
-[gd_scene load_steps=2 format=2]
+[gd_scene load_steps=3 format=2]
 
 [ext_resource path="res://addons/PickerOfColors/custom_color.gd" type="Script" id=1]
+
+[sub_resource type="Theme" id=3]
+HSlider/icons/grabber = null
+HSlider/icons/grabber_disabled = null
+HSlider/icons/grabber_highlight = null
+HSlider/icons/tick = null
+HSlider/styles/focus = null
+HSlider/styles/grabber_area = null
+HSlider/styles/grabber_disabled = null
+HSlider/styles/grabber_highlight = null
+HSlider/styles/slider = null
 
 [node name="CustomColor" type="Control"]
 margin_left = 1.0
@@ -84,10 +95,11 @@ margin_bottom = -3.0
 text = "0.5"
 
 [node name="VSlider" type="HSlider" parent="."]
-margin_left = 6.0
-margin_top = 162.0
-margin_right = 310.0
-margin_bottom = 178.0
+margin_left = 29.0
+margin_top = 440.0
+margin_right = 333.0
+margin_bottom = 456.0
+theme = SubResource( 3 )
 max_value = 1.0
 step = 0.01
 tick_count = 5

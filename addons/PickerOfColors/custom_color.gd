@@ -144,11 +144,34 @@ class ColorWheel:
 			
 	func _pixel_size():
 		return Vector2(_ring_width + 1, _ring_width + 1)
+
+	func _create_points():
+		_points = []
+		for a in range(0, 360, 1):
+			for r in range(_radius):
+				var rad = deg2rad(float(a))
+				var where = polar2cartesian(r * _ring_width, rad)
+				_points.append(Point.new(where.x, where.y,  float(a)/360.0, float(r)/_radius, _value))
 		
 	func _init(radius=_radius, ring_width=_ring_width):
 		_radius = radius
 		_ring_width = ring_width
 		_create_points()
+
+	func _draw_pixel(index, with_border=false):
+		if(with_border):
+			var offset = Vector2(3, 3)
+			draw_rect(Rect2(_points[index].get_position() - offset, _pixel_size() + offset * 2), Color(0, 0, 0))			
+		draw_rect(Rect2(_points[index].get_position(), _pixel_size()), _points[index].color)
+		
+	func _draw():
+		for i in range(_points.size()):				
+			_draw_pixel(i)
+	
+		if(_selected_index != -1):
+			_draw_pixel(_selected_index, true)
+			
+		draw_circle_arc(Vector2(_ring_width -2, _ring_width -2), _radius * _ring_width + 1, 0, 360, Color(0, 0, 0))
 	
 	func set_value(val):
 		for i in range(_points.size()):
@@ -156,15 +179,7 @@ class ColorWheel:
 		if(_selected_index != -1):
 			emit_signal('selected', _points[_selected_index].color)
 		update()
-			
-	func _create_points():
-		_points = []
-		for a in range(0, 360):
-			for r in range(_radius):
-				var rad = deg2rad(float(a))
-				var where = polar2cartesian(r * _ring_width, rad)
-				_points.append(Point.new(where.x, where.y,  float(a)/360.0, float(r)/_radius, _value))
-	
+				
 	func draw_circle_arc(center, radius, angle_from, angle_to, color):
 	    var nb_points = 32
 	    var points_arc = PoolVector2Array()
@@ -176,17 +191,3 @@ class ColorWheel:
 	    for index_point in range(nb_points):
 	        draw_line(points_arc[index_point], points_arc[index_point + 1], color, 5)
 	
-	func _draw_pixel(index, with_border=false):
-		if(with_border):
-			var offset = Vector2(3, 3)
-			draw_rect(Rect2(_points[index].get_position() - offset, _pixel_size() + offset * 2), Color(0, 0, 0))			
-		draw_rect(Rect2(_points[index].get_position(), _pixel_size()), _points[index].color)
-		
-	func _draw():
-		for i in range(_points.size()):				
-			_draw_pixel(i)
-
-		if(_selected_index != -1):
-			_draw_pixel(_selected_index, true)
-			
-		draw_circle_arc(Vector2(_ring_width -2, _ring_width -2), _radius * _ring_width + 1, 0, 360, Color(0, 0, 0))

@@ -1,0 +1,18 @@
+[gd_scene load_steps=2 format=2]
+
+[sub_resource type="StyleBoxFlat" id=1]
+border_width_left = 10
+border_width_top = 10
+border_width_right = 10
+border_width_bottom = 10
+
+[node name="Node2D" type="Node2D"]
+
+[node name="VSlider" type="VSlider" parent="."]
+margin_left = 50.0
+margin_top = 16.0
+margin_right = 110.0
+margin_bottom = 400.0
+custom_styles/grabber_area = SubResource( 1 )
+ticks_on_borders = false
+
