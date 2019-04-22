@@ -1,20 +1,23 @@
+# #############################################################################
+# #############################################################################
 extends Control
+
 onready var _ctrls = {
-	r_slider = get_node("RSlider"),
-	g_slider = get_node("GSlider"),
-	b_slider = get_node("BSlider"),
-	r_value = $RSlider/RedValue,
-	g_value = $GSlider/GreenValue,
-	b_value = $BSlider/BlueValue
+	r_slider = SuperSlider.new(get_node("RSlider")),
+	g_slider = SuperSlider.new(get_node("GSlider")),
+	b_slider = SuperSlider.new(get_node("BSlider")),
+	vslider = SuperSlider.new(get_node('VSlider')),
+	radius_slider = SuperSlider.new(get_node('RadiusSlider')),
+	ring_slider = SuperSlider.new(get_node('RingWidthSlider'))
 }
+
 var _color = Color(1,1,1)
 var _color_wheel = ColorWheel.new(20, 10)
 
+signal value_changed(c)
+
 func _draw():
 	draw_rect(Rect2(Vector2(0, 0), Vector2(200, 200)), _color)
-
-
-signal value_changed(c)
 
 func _ready():
 	_ctrls.b_slider.connect('value_changed', self, '_on_slider_changed')
@@ -28,29 +31,12 @@ func _ready():
 	_color_wheel.connect('selected', self, '_on_wheel_selected')
 
 func _on_wheel_selected(color):
-	print(color)
 	set_selected_color(color)
-
-func _update_controls():
-	_ctrls.b_value.set_text(str(_ctrls.b_slider.get_value()))
-	_ctrls.r_value.set_text(str(_ctrls.r_slider.get_value()))
-	_ctrls.g_value.set_text(str(_ctrls.g_slider.get_value()))
-	update()
 
 func _on_slider_changed(value):
 	_color = Color(_ctrls.r_slider.get_value(), _ctrls.g_slider.get_value(), _ctrls.b_slider.get_value())
 	emit_signal('value_changed', _color)
-	_update_controls()
-
-func set_selected_color(color):
-	_color = color
-	_ctrls.b_slider.value = color.b
-	_ctrls.r_slider.value = color.r
-	_ctrls.g_slider.value = color.g
-	_update_controls()
-
-func get_selected_color():
-	return _color
+	update()
 
 func _on_VSlider_value_changed(value):
 	_color_wheel.set_value(value)
@@ -65,6 +51,43 @@ func _on_RingWidthSlider_value_changed(value):
 	_color_wheel._create_points()
 	_color_wheel.update()
 
+func set_selected_color(color):
+	_color = color
+	_ctrls.b_slider.slider().value = color.b
+	_ctrls.r_slider.slider().value = color.r
+	_ctrls.g_slider.slider().value = color.g
+
+func get_selected_color():
+	return _color
+
+# #############################################################################
+# #############################################################################
+class SuperSlider:
+	var _slider = null
+	
+	signal value_changed
+	
+	func _init(slider = null):
+		set_slider(slider)
+		slider.get_node('Value').set_text(str(_slider.get_value()))
+		
+	func set_slider(slider):
+		_slider = slider
+		_slider.connect('value_changed', self, '_on_value_changed')
+		
+	func _on_value_changed(value):
+		_slider.get_node('Value').set_text(str(value))
+		emit_signal('value_changed', value)
+	
+	func slider():
+		return _slider
+	
+	func get_value():
+		return _slider.get_value()
+	
+
+# #############################################################################
+# #############################################################################
 class Point:
 	var x = 0
 	var y = 0
@@ -88,6 +111,8 @@ class Point:
 		self.v = val
 		self.color = Color(1,1,1).from_hsv(self.h, self.s, self.v)
 
+# #############################################################################
+# #############################################################################
 class ColorWheel:
 	extends Node2D
 
@@ -95,15 +120,16 @@ class ColorWheel:
 	var _points = []
 	var _value = 1
 	var _ring_width = 5
+	var _selected_index = -1
 
 	signal selected
+	
 	func _unhandled_input(event):
 		if(event is InputEventMouseButton or event is InputEventScreenTouch):
 			if(event.pressed and event.position.distance_to(global_position) <= _radius * _ring_width):
 				_select_color_at(event.position - global_position)
 	
 	func _select_color_at(pos):
-		print(pos)
 		var found = false
 		var i = 0
 		while(!found and i < _points.size()):
@@ -111,11 +137,10 @@ class ColorWheel:
 			if(rect.has_point(pos)):
 				found = true
 				emit_signal('selected', _points[i].color)
+				_selected_index = i
 			else:
 				i += 1
-		if(!found):
-			print('nope')
-		
+		update()
 			
 	func _pixel_size():
 		return Vector2(_ring_width + 1, _ring_width + 1)
@@ -128,6 +153,8 @@ class ColorWheel:
 	func set_value(val):
 		for i in range(_points.size()):
 			_points[i].set_value(val)
+		if(_selected_index != -1):
+			emit_signal('selected', _points[_selected_index].color)
 		update()
 			
 	func _create_points():
@@ -148,8 +175,18 @@ class ColorWheel:
 	
 	    for index_point in range(nb_points):
 	        draw_line(points_arc[index_point], points_arc[index_point + 1], color, 5)
+	
+	func _draw_pixel(index, with_border=false):
+		if(with_border):
+			var offset = Vector2(3, 3)
+			draw_rect(Rect2(_points[index].get_position() - offset, _pixel_size() + offset * 2), Color(0, 0, 0))			
+		draw_rect(Rect2(_points[index].get_position(), _pixel_size()), _points[index].color)
 		
 	func _draw():
-		for i in range(_points.size()):
-			draw_rect(Rect2(_points[i].get_position(), _pixel_size()), _points[i].color)
+		for i in range(_points.size()):				
+			_draw_pixel(i)
+
+		if(_selected_index != -1):
+			_draw_pixel(_selected_index, true)
+			
 		draw_circle_arc(Vector2(_ring_width -2, _ring_width -2), _radius * _ring_width + 1, 0, 360, Color(0, 0, 0))
