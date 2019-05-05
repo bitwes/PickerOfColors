@@ -14,7 +14,7 @@ func _calc_grabber_loc():
 	var percent = self.value / self.max_value
 	to_return.y = get_rect().size.y - get_rect().size.y * percent
 	to_return.x = get_rect().size.x / 2
-	
+
 	return to_return
 
 func draw_grabber(pos):
@@ -22,14 +22,13 @@ func draw_grabber(pos):
 
 func _draw():
 	draw_grabber(_calc_grabber_loc())
-	
+
 func get_grabber_color():
 	return _grabber_color
-	
+
 func set_grabber_color(color):
 	_grabber_color = color
 
 
 func _on_VSlider_value_changed(value):
 	_disp_value()
-
