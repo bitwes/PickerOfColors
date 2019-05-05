@@ -35,11 +35,10 @@ margin_bottom = -1.0
 size_flags_horizontal = 0
 size_flags_vertical = 0
 size_flags_stretch_ratio = 0.0
-columns = 13
+columns = 16
 script = ExtResource( 1 )
 
 [node name="Custom" type="Tabs" parent="Tabs"]
-visible = false
 anchor_right = 1.0
 anchor_bottom = 1.0
 margin_left = 4.0
@@ -55,7 +54,7 @@ margin_bottom = -158.0
 scroll_horizontal_enabled = false
 
 [node name="PickerOfColor" type="GridContainer" parent="Tabs/Custom/ScrollContainer"]
-columns = 12
+columns = 16
 script = ExtResource( 1 )
 
 [node name="CustomColor" parent="Tabs/Custom" instance=ExtResource( 2 )]

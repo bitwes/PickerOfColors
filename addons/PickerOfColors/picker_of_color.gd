@@ -4,6 +4,7 @@ extends GridContainer
 var ColorButton = load('res://addons/PickerOfColors/ColorButton.tscn')
 var _num_per_row = 1
 var _colors = []
+var _buttons = []
 var _selected_index = -1
 var _selected_top_left = Vector2(400, 50)
 var _selected_button = null
@@ -14,10 +15,11 @@ export(Vector2) var _cell_pad = Vector2(10, 10)
 
 signal selected(color)
 
-func _on_color_button_picked(color, button):
+func _on_color_button_picked(color, button, index):
 	if(_selected_button != null):
 		_selected_button.set_selected(false)
 	_selected_button = button
+	_selected_index = index
 	emit_signal('selected', color)
 
 func _ready():
@@ -43,15 +45,19 @@ func set_size(s):
 		set_custom_minimum_size(get_size())
 
 func add_color(r, g=-1, b=-1):
-	var button = ColorButton.instance()
 	var c = r
 	if(g != -1):
 		c = Color(r, g, b)
 	_colors.append(c)
+	
+	var button = ColorButton.instance()
+	_buttons.append(button)
+	
 	button.set_the_color(c)
 	button.set_custom_minimum_size(_cell_size)
 	add_child(button)
-	button.connect('color_picked', self, '_on_color_button_picked', [button])
+	button.connect('color_picked', self, '_on_color_button_picked', [button, _colors.size() -1])
+
 	columns = max(int(self.get_size().x / _cell_size.x), 1.0)
 	set_columns(columns)
 	update()
@@ -77,7 +83,10 @@ func get_selected_index():
 
 func set_selected_index(selected_index):
 	if(selected_index < _colors.size()):
+		if(_selected_button != null):
+			_selected_button.set_selected(false)
 		_selected_index = selected_index
+		_selected_button = _buttons[selected_index]
 		#update()
 
 func get_selected_color():
@@ -111,5 +120,8 @@ func loadit(path):
 	var f = ConfigFile.new()
 	f.load(path)
 	var colors = f.get_value('colors', 'all_colors', [])
-	for i in range(colors):
+	for i in range(colors.size()):
 		add_color(colors[i])
+
+func set_selected_button_color(c):
+	_selected_button.set_the_color(c)	

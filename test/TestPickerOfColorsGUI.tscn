@@ -135,6 +135,7 @@ margin_right = 376.0
 margin_bottom = 257.0
 
 [node name="ColorSampleScroll" type="ScrollContainer" parent="."]
+editor/display_folded = true
 margin_left = 608.0
 margin_top = 414.0
 margin_right = 868.0

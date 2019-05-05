@@ -1,195 +1,31 @@
 [gd_scene load_steps=3 format=2]
 
 [ext_resource path="res://addons/PickerOfColors/custom_color.gd" type="Script" id=1]
-
-[sub_resource type="Theme" id=1]
-HSlider/icons/grabber = null
-HSlider/icons/grabber_disabled = null
-HSlider/icons/grabber_highlight = null
-HSlider/icons/tick = null
-HSlider/styles/focus = null
-HSlider/styles/grabber_area = null
-HSlider/styles/grabber_disabled = null
-HSlider/styles/grabber_highlight = null
-HSlider/styles/slider = null
+[ext_resource path="res://addons/PickerOfColors/VSuperSlider.tscn" type="PackedScene" id=2]
 
 [node name="CustomColor" type="Control"]
 margin_left = 1.0
-margin_right = 206.0
-margin_bottom = 138.0
+margin_right = 201.0
+margin_bottom = 200.0
+mouse_filter = 2
 script = ExtResource( 1 )
 
-[node name="RSlider" type="HSlider" parent="."]
-editor/display_folded = true
-margin_left = 3.0
-margin_top = 17.0
-margin_right = 309.0
-margin_bottom = 33.0
+[node name="ValueSlider" parent="." instance=ExtResource( 2 )]
+margin_left = 239.0
+margin_top = 0.0
+margin_right = 279.0
+margin_bottom = 240.0
 max_value = 1.0
-step = 0.01
-tick_count = 5
-ticks_on_borders = true
+step = 0.1
+value = 1.0
 
-[node name="Label" type="Label" parent="RSlider"]
-margin_top = -14.0
-margin_right = 24.0
-text = "Red"
-
-[node name="Value" type="Label" parent="RSlider"]
-anchor_left = 1.0
-anchor_right = 1.0
-margin_left = -33.0
-margin_top = -15.0
-margin_right = -13.0
-margin_bottom = -1.0
-text = "0.5"
-
-[node name="GSlider" type="HSlider" parent="."]
-editor/display_folded = true
-margin_left = 4.0
-margin_top = 67.0
-margin_right = 309.0
-margin_bottom = 83.0
-max_value = 1.0
-step = 0.01
-tick_count = 5
-ticks_on_borders = true
-
-[node name="Label" type="Label" parent="GSlider"]
-margin_top = -16.0
-margin_right = 39.0
-margin_bottom = -2.0
-text = "Green"
-
-[node name="Value" type="Label" parent="GSlider"]
-anchor_left = 1.0
-anchor_right = 1.0
-margin_left = -33.0
-margin_top = -17.0
-margin_right = -13.0
-margin_bottom = -3.0
-text = "0.5"
-
-[node name="BSlider" type="HSlider" parent="."]
-editor/display_folded = true
-margin_left = 5.0
-margin_top = 120.0
-margin_right = 309.0
-margin_bottom = 136.0
-max_value = 1.0
-step = 0.01
-tick_count = 5
-ticks_on_borders = true
-
-[node name="Label" type="Label" parent="BSlider"]
-margin_left = 1.0
-margin_top = -17.0
-margin_right = 30.0
-margin_bottom = -3.0
-text = "Blue"
-
-[node name="Value" type="Label" parent="BSlider"]
-anchor_left = 1.0
-anchor_right = 1.0
-margin_left = -33.0
-margin_top = -17.0
-margin_right = -13.0
-margin_bottom = -3.0
-text = "0.5"
-
-[node name="VSlider" type="HSlider" parent="."]
-editor/display_folded = true
-margin_left = 29.0
-margin_top = 440.0
-margin_right = 333.0
-margin_bottom = 456.0
-theme = SubResource( 1 )
-max_value = 1.0
-step = 0.01
-tick_count = 5
-ticks_on_borders = true
-
-[node name="Label" type="Label" parent="VSlider"]
-margin_left = 1.0
-margin_top = -17.0
-margin_right = 30.0
-margin_bottom = -3.0
-text = "Value
-
+[node name="DebugColor" type="Label" parent="."]
+margin_left = 309.0
+margin_top = 100.0
+margin_right = 352.0
+margin_bottom = 131.0
+rect_scale = Vector2( 3, 3 )
+text = "Color
 "
 
-[node name="Value" type="Label" parent="VSlider"]
-anchor_left = 1.0
-anchor_right = 1.0
-margin_left = -33.0
-margin_top = -17.0
-margin_right = -13.0
-margin_bottom = -3.0
-text = "0.5"
-
-[node name="RadiusSlider" type="HSlider" parent="."]
-editor/display_folded = true
-margin_left = 9.0
-margin_top = 210.0
-margin_right = 313.0
-margin_bottom = 226.0
-min_value = 5.0
-max_value = 50.0
-value = 5.0
-tick_count = 5
-ticks_on_borders = true
-
-[node name="Label" type="Label" parent="RadiusSlider"]
-margin_left = 1.0
-margin_top = -17.0
-margin_right = 30.0
-margin_bottom = -3.0
-text = "Radius
-
-
-"
-
-[node name="Value" type="Label" parent="RadiusSlider"]
-anchor_left = 1.0
-anchor_right = 1.0
-margin_left = -33.0
-margin_top = -17.0
-margin_right = -13.0
-margin_bottom = -3.0
-text = "0.5"
-
-[node name="RingWidthSlider" type="HSlider" parent="."]
-editor/display_folded = true
-margin_left = 9.0
-margin_top = 260.0
-margin_right = 313.0
-margin_bottom = 276.0
-min_value = 2.0
-max_value = 20.0
-value = 2.0
-tick_count = 5
-ticks_on_borders = true
-
-[node name="Label" type="Label" parent="RingWidthSlider"]
-margin_left = 1.0
-margin_top = -17.0
-margin_right = 30.0
-margin_bottom = -3.0
-text = "RingWidth
-
-
-
-"
-
-[node name="Value" type="Label" parent="RingWidthSlider"]
-anchor_left = 1.0
-anchor_right = 1.0
-margin_left = -33.0
-margin_top = -17.0
-margin_right = -13.0
-margin_bottom = -3.0
-text = "0.5"
-
-[connection signal="value_changed" from="VSlider" to="." method="_on_VSlider_value_changed"]
-[connection signal="value_changed" from="RadiusSlider" to="." method="_on_RadiusSlider_value_changed"]
-[connection signal="value_changed" from="RingWidthSlider" to="." method="_on_RingWidthSlider_value_changed"]
+[connection signal="value_changed" from="ValueSlider" to="." method="_on_ValueSlider_value_changed"]

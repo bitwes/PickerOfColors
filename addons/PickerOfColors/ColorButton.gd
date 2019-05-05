@@ -24,9 +24,10 @@ func _ready():
 
 func set_the_color(c):
 	_color = c
-	_style_box.set_bg_color(c)
-	_style_box.set_border_color(c)
-
+	if(c != null):
+		_style_box.set_bg_color(c)
+		_style_box.set_border_color(c)
+	
 func get_the_color():
 	return _color
 
@@ -43,7 +44,10 @@ func set_selected(is_it):
 	if(_selected):
 		_style_box.set_border_color(_border_color)
 	else:
-		_style_box.set_border_color(_color)
+		if(_color == null):
+			_style_box.set_border_color(Color(0, 0, 0))
+		else:
+			_style_box.set_border_color(_color)
 
 func get_border_color():
 	return _border_color

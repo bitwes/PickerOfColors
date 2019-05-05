@@ -2,6 +2,7 @@ tool
 extends VSlider
 
 export var _grabber_color = Color(1, 1, 1, 1)
+export var _border_color = Color(0, 0, 0, 1)
 
 func _disp_value():
 	$Value.set_text(str(self.value))
@@ -18,7 +19,8 @@ func _calc_grabber_loc():
 	return to_return
 
 func draw_grabber(pos):
-	draw_circle(pos, self.get_rect().size.x/2, _grabber_color)
+	draw_circle(pos, self.get_rect().size.x/2, _border_color)
+	draw_circle(pos, (self.get_rect().size.x/2) * .90, _grabber_color)
 
 func _draw():
 	draw_grabber(_calc_grabber_loc())
@@ -28,7 +30,6 @@ func get_grabber_color():
 
 func set_grabber_color(color):
 	_grabber_color = color
-
 
 func _on_VSlider_value_changed(value):
 	_disp_value()

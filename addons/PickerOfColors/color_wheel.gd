@@ -8,18 +8,18 @@ class Point:
 	var s = 0
 	var v = 0
 	var color = Color(0, 0, 0)
-	
+
 	func _init(x, y, h, s, v):
-		self.x = x 
+		self.x = x
 		self.y = y
 		self.h = h
 		self.s = s
 		self.v = v
 		self.color = Color(1,1,1).from_hsv(h, s, v)
-	
+
 	func get_position():
 		return Vector2(x, y)
-	
+
 	func set_value(val):
 		self.v = val
 		self.color = Color(1,1,1).from_hsv(self.h, self.s, self.v)
@@ -51,7 +51,7 @@ func _select_color_at(pos):
 		else:
 			i += 1
 	update()
-		
+
 func _pixel_size():
 	return Vector2(_ring_width + 1, _ring_width + 1)
 
@@ -62,7 +62,7 @@ func _create_points():
 			var rad = deg2rad(float(a))
 			var where = polar2cartesian(r * _ring_width, rad)
 			_points.append(Point.new(where.x, where.y,  float(a)/360.0, float(r)/_radius, _value))
-	
+
 func _init(radius=_radius, ring_width=_ring_width):
 	_radius = radius
 	_ring_width = ring_width
@@ -71,25 +71,53 @@ func _init(radius=_radius, ring_width=_ring_width):
 func _draw_pixel(index, with_border=false):
 	if(with_border):
 		var offset = Vector2(3, 3)
-		draw_rect(Rect2(_points[index].get_position() - offset, _pixel_size() + offset * 2), Color(0, 0, 0))			
+		draw_rect(Rect2(_points[index].get_position() - offset, _pixel_size() + offset * 2), Color(0, 0, 0))
 	draw_rect(Rect2(_points[index].get_position(), _pixel_size()), _points[index].color)
-	
+
 func _draw():
-	for i in range(_points.size()):				
+	for i in range(_points.size()):
 		_draw_pixel(i)
 
-	if(_selected_index != -1):
+	if(_selected_index != -1 and _selected_index != null):
 		_draw_pixel(_selected_index, true)
-		
+
 	draw_circle_arc(Vector2(_ring_width -2, _ring_width -2), _radius * _ring_width + 1, 0, 360, Color(0, 0, 0))
 
-func set_value(val):
+func _set_value(val):
 	for i in range(_points.size()):
 		_points[i].set_value(val)
-	if(_selected_index != -1):
-		emit_signal('selected', _points[_selected_index].color)
 	update()
-			
+	
+func set_value(val):
+	_set_value(val)
+	if(_selected_index != -1 and _selected_index != null):
+		emit_signal('selected', _points[_selected_index].color)
+
+func set_index(idx):
+	_selected_index = idx
+	update()
+
+func set_color(c):
+	var idx = get_closest_color(c)	
+	_selected_index = idx
+	_set_value(c.v)
+	update()
+
+func get_closest_color(color):
+	var min_dist = 20000
+	var index = -1
+	for i in range(_points.size()):
+		var oc = _points[i].color
+		oc.v = color.v
+		var dist = pow(oc.r - color.r, 2) 
+		dist += pow(oc.g - color.g, 2) 
+		dist += pow(oc.b - color.b, 2) 
+		if(dist < min_dist):
+			min_dist = dist
+			index = i
+	return index
+
+
 func draw_circle_arc(center, radius, angle_from, angle_to, color):
     var nb_points = 32
     var points_arc = PoolVector2Array()

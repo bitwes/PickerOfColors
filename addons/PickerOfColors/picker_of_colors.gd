@@ -120,7 +120,7 @@ func _on_done_button_pressed():
 func _on_custom_maker_changed(color):
 	var slot = _custom.get_selected_index()
 	if(slot != -1):
-		_custom.set_color_at(slot, _ctrls.custom_maker.get_selected_color())
+		_custom.set_selected_button_color(_ctrls.custom_maker.get_selected_color())
 		emit_signal('selected', color)
 		emit_signal('customs_changed')
 		_ctrls.clear_button.set_disabled(color == null)
