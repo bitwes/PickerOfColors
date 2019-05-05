@@ -27,6 +27,9 @@ func set_the_color(c):
 	if(c != null):
 		_style_box.set_bg_color(c)
 		_style_box.set_border_color(c)
+	else:
+		_style_box.set_bg_color(Color(1, 1, 1))
+		_style_box.set_border_color(Color(0, 0, 0))
 	
 func get_the_color():
 	return _color

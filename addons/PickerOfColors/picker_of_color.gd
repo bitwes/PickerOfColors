@@ -15,10 +15,14 @@ export(Vector2) var _cell_pad = Vector2(10, 10)
 
 signal selected(color)
 
-func _on_color_button_picked(color, button, index):
+func _set_selected_button(button):
 	if(_selected_button != null):
 		_selected_button.set_selected(false)
 	_selected_button = button
+	button.set_selected(true)
+
+func _on_color_button_picked(color, button, index):
+	_set_selected_button(button)
 	_selected_index = index
 	emit_signal('selected', color)
 
@@ -49,10 +53,10 @@ func add_color(r, g=-1, b=-1):
 	if(g != -1):
 		c = Color(r, g, b)
 	_colors.append(c)
-	
+
 	var button = ColorButton.instance()
 	_buttons.append(button)
-	
+
 	button.set_the_color(c)
 	button.set_custom_minimum_size(_cell_size)
 	add_child(button)
@@ -82,11 +86,13 @@ func get_selected_index():
 	return _selected_index
 
 func set_selected_index(selected_index):
-	if(selected_index < _colors.size()):
-		if(_selected_button != null):
-			_selected_button.set_selected(false)
+	if(selected_index < _colors.size() and selected_index > 0):
+		_set_selected_button(_buttons[selected_index])
 		_selected_index = selected_index
-		_selected_button = _buttons[selected_index]
+	elif(selected_index == -1):
+		if(_selected_index != -1):
+			_buttons[_selected_index].set_selected(false)
+		selected_index = -1
 		#update()
 
 func get_selected_color():
@@ -99,6 +105,7 @@ func set_selected_color(c):
 	var idx = _colors.find(c)
 	if(idx != -1):
 		_selected_index = idx
+		_set_selected_button(_buttons[idx])
 		update()
 
 func get_colors():
@@ -119,9 +126,14 @@ func saveit(path):
 func loadit(path):
 	var f = ConfigFile.new()
 	f.load(path)
+	_colors.clear()
+	_buttons.clear()
 	var colors = f.get_value('colors', 'all_colors', [])
 	for i in range(colors.size()):
 		add_color(colors[i])
 
 func set_selected_button_color(c):
-	_selected_button.set_the_color(c)	
+	var idx = _buttons.find(_selected_button)
+	if(idx != -1):
+		_selected_button.set_the_color(c)
+		_colors[idx] = c

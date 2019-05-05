@@ -108,7 +108,7 @@ func _on_custom_selected(color):
 	_ctrls.clear_button.set_disabled(color == null)
 
 func _on_clear_button_pressed():
-	_custom.set_color_at(_custom.get_selected_index(), null)
+	_custom.set_selected_button_color( null)
 	emit_signal('customs_changed')
 
 func _on_edit_button_pressed():

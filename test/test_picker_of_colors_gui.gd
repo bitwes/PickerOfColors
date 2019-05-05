@@ -97,6 +97,7 @@ func _on_SaveAll_pressed():
 
 func _on_LoadAll_pressed():
 	_picker.loadit(PICKER_FILE)
+	_on_PickerOfColors_selected(_picker.get_selected_color())
 
 func _on_ClearPicker_pressed():
 	var s = _picker.get_size()
