@@ -7,6 +7,14 @@ var _border_color = Color(0, 0, 0)
 
 signal color_picked
 
+
+func _draw():
+	if(_color == null):
+		var center = Vector2(get_size().x / 2, get_size().y / 2)
+		var size = get_size() * .4
+		var rect = Rect2((get_size() - size)/2, size)
+		draw_rect(rect, Color(0, 0, 0))		
+
 func _init(c=null):
 	_color = c
 	_style_box = self.get('custom_styles/normal').duplicate()
@@ -27,10 +35,11 @@ func set_the_color(c):
 	if(c != null):
 		_style_box.set_bg_color(c)
 		_style_box.set_border_color(c)
+		set_selected(_selected)
 	else:
 		_style_box.set_bg_color(Color(1, 1, 1))
-		_style_box.set_border_color(Color(0, 0, 0))
-	
+		_style_box.set_border_color(Color(1, 1, 1))
+
 func get_the_color():
 	return _color
 
@@ -48,7 +57,7 @@ func set_selected(is_it):
 		_style_box.set_border_color(_border_color)
 	else:
 		if(_color == null):
-			_style_box.set_border_color(Color(0, 0, 0))
+			_style_box.set_border_color(Color(1, 1, 1))
 		else:
 			_style_box.set_border_color(_color)
 

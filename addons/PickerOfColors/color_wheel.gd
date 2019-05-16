@@ -1,4 +1,4 @@
-extends Node2D
+extends Control
 # #############################################################################
 # #############################################################################
 class Point:
@@ -34,10 +34,13 @@ var _selected_index = -1
 
 signal selected
 
-func _unhandled_input(event):
+func _input(event):
 	if(event is InputEventMouseButton or event is InputEventScreenTouch):
-		if(event.pressed and event.position.distance_to(global_position) <= _radius * _ring_width):
-			_select_color_at(event.position - global_position)
+		if(event.pressed and event.position.distance_to(rect_global_position) <= _radius * _ring_width):
+			_select_color_at(event.position - rect_global_position)
+
+func _unhandled_input(event):
+	pass
 
 func _select_color_at(pos):
 	var found = false
@@ -87,7 +90,7 @@ func _set_value(val):
 	for i in range(_points.size()):
 		_points[i].set_value(val)
 	update()
-	
+
 func set_value(val):
 	_set_value(val)
 	if(_selected_index != -1 and _selected_index != null):
@@ -98,7 +101,7 @@ func set_index(idx):
 	update()
 
 func set_color(c):
-	var idx = get_closest_color(c)	
+	var idx = get_closest_color(c)
 	_selected_index = idx
 	_set_value(c.v)
 	update()
@@ -109,9 +112,9 @@ func get_closest_color(color):
 	for i in range(_points.size()):
 		var oc = _points[i].color
 		oc.v = color.v
-		var dist = pow(oc.r - color.r, 2) 
-		dist += pow(oc.g - color.g, 2) 
-		dist += pow(oc.b - color.b, 2) 
+		var dist = pow(oc.r - color.r, 2)
+		dist += pow(oc.g - color.g, 2)
+		dist += pow(oc.b - color.b, 2)
 		if(dist < min_dist):
 			min_dist = dist
 			index = i

@@ -1,7 +1,7 @@
 # #############################################################################
 # #############################################################################
 extends Control
-
+tool 
 var ColorWheel = load('res://addons/PickerOfColors/color_wheel.gd')
 var _color = Color(1,1,1)
 var _color_wheel = ColorWheel.new(24, 5)
@@ -18,8 +18,8 @@ func _ready():
 	add_child(_color_wheel)
 	_color_wheel.connect('selected', self, '_on_wheel_selected')
 	_color_wheel.set_index(0)
-	_color_wheel.set_value(.5)
-	$ValueSlider.set_value(.5)
+	_color_wheel.set_value(1)
+	$ValueSlider.set_value(1)
 	update()
 
 func _on_wheel_selected(color):

@@ -249,6 +249,8 @@ func saveit(path):
 	f.save(path)
 
 func loadit(path):
+	_presets.clear()
+	_custom.clear()
 	var f = ConfigFile.new()
 	f.load(path)
 	set_cell_size(f.get_value('settings', 'cell_size', get_cell_size()))

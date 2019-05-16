@@ -113,9 +113,9 @@ func get_colors():
 
 func clear():
 	_colors.clear()
-	var btns = get_children()
-	for i in range(btns.size()):
-		remove_child(btns[i])
+	for i in range(_buttons.size()):
+		remove_child(_buttons[i])
+	_buttons.clear()
 	update()
 
 func saveit(path):
