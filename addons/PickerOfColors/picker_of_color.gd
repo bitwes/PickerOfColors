@@ -2,16 +2,12 @@ tool
 extends GridContainer
 
 var ColorButton = load('res://addons/PickerOfColors/ColorButton.tscn')
-var _num_per_row = 1
 var _colors = []
 var _buttons = []
 var _selected_index = -1
-var _selected_top_left = Vector2(400, 50)
 var _selected_button = null
 
-export(Color) var _background_color = Color(1, 1, 1, 0)
 export(Vector2) var _cell_size = Vector2(30, 30) setget set_cell_size, get_cell_size
-export(Vector2) var _cell_pad = Vector2(10, 10)
 
 signal selected(color)
 
@@ -126,8 +122,7 @@ func saveit(path):
 func loadit(path):
 	var f = ConfigFile.new()
 	f.load(path)
-	_colors.clear()
-	_buttons.clear()
+	clear()
 	var colors = f.get_value('colors', 'all_colors', [])
 	for i in range(colors.size()):
 		add_color(colors[i])

@@ -35,12 +35,10 @@ var _selected_index = -1
 signal selected
 
 func _input(event):
-	if(event is InputEventMouseButton or event is InputEventScreenTouch):
+	if(is_visible_in_tree() and (event is InputEventMouseButton or event is InputEventScreenTouch)):
 		if(event.pressed and event.position.distance_to(rect_global_position) <= _radius * _ring_width):
 			_select_color_at(event.position - rect_global_position)
-
-func _unhandled_input(event):
-	pass
+			get_tree().set_input_as_handled()
 
 func _select_color_at(pos):
 	var found = false

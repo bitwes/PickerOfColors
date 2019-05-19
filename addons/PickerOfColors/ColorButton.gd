@@ -10,7 +10,6 @@ signal color_picked
 
 func _draw():
 	if(_color == null):
-		var center = Vector2(get_size().x / 2, get_size().y / 2)
 		var size = get_size() * .4
 		var rect = Rect2((get_size() - size)/2, size)
 		draw_rect(rect, Color(0, 0, 0))		

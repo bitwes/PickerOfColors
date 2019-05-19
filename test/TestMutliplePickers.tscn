@@ -1,0 +1,64 @@
+[gd_scene load_steps=4 format=2]
+
+[ext_resource path="res://test/TestMutliplePickers.gd" type="Script" id=1]
+[ext_resource path="res://addons/PickerOfColors/picker_of_colors.gd" type="Script" id=2]
+[ext_resource path="res://addons/PickerOfColors/icon.png" type="Texture" id=3]
+
+[node name="TestMutliplePickers" type="Node2D"]
+script = ExtResource( 1 )
+
+[node name="Show1" type="Button" parent="."]
+margin_left = 748.0
+margin_top = 7.0
+margin_right = 977.0
+margin_bottom = 57.0
+text = "Show 1"
+
+[node name="Show2" type="Button" parent="."]
+margin_left = 747.0
+margin_top = 64.0
+margin_right = 976.0
+margin_bottom = 114.0
+text = "Show 2"
+
+[node name="Show3" type="Button" parent="."]
+margin_left = 746.0
+margin_top = 122.0
+margin_right = 975.0
+margin_bottom = 172.0
+text = "Show 3"
+
+[node name="PickerOfColors1" type="Panel" parent="."]
+margin_right = 40.0
+margin_bottom = 40.0
+script = ExtResource( 2 )
+__meta__ = {
+"_editor_icon": ExtResource( 3 )
+}
+
+[node name="PickerOfColors2" type="Panel" parent="."]
+margin_left = 29.0
+margin_top = 57.0
+margin_right = 69.0
+margin_bottom = 97.0
+script = ExtResource( 2 )
+__meta__ = {
+"_editor_icon": ExtResource( 3 )
+}
+
+[node name="PickerOfColors3" type="Panel" parent="."]
+margin_left = 94.0
+margin_top = 122.0
+margin_right = 134.0
+margin_bottom = 162.0
+script = ExtResource( 2 )
+__meta__ = {
+"_editor_icon": ExtResource( 3 )
+}
+
+[connection signal="pressed" from="Show1" to="." method="_on_Show1_pressed"]
+[connection signal="pressed" from="Show2" to="." method="_on_Show2_pressed"]
+[connection signal="pressed" from="Show3" to="." method="_on_Show3_pressed"]
+[connection signal="selected" from="PickerOfColors1" to="." method="_on_PickerOfColors1_selected"]
+[connection signal="selected" from="PickerOfColors2" to="." method="_on_PickerOfColors2_selected"]
+[connection signal="selected" from="PickerOfColors3" to="." method="_on_PickerOfColors3_selected"]
