@@ -33,8 +33,8 @@ func _is_in_editor():
 		to_return = true
 	return to_return
 
-func set_size(s):
-	.set_size(s)
+func set_size(s, keep_margins = false):
+	.set_size(s, keep_margins)
 	# if the minimum size is set in the editor then you can never make it
 	# smaller so we don't set it when in the editor.
 	update()

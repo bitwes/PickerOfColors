@@ -5,6 +5,7 @@ tool
 var ColorWheel = load('res://addons/PickerOfColors/color_wheel.gd')
 var _color = Color(1,1,1)
 var _color_wheel = ColorWheel.new(24, 5)
+export var _show_alpha = true setget set_show_alpha, get_show_alpha
 
 signal value_changed(c)
 
@@ -20,9 +21,11 @@ func _ready():
 	_color_wheel.set_index(0)
 	_color_wheel.set_value(1)
 	$ValueSlider.set_value(1)
+	$AlphaSlider.set_value(1)
 	update()
 
 func _on_wheel_selected(color):
+	color.a = $AlphaSlider.get_value()
 	set_selected_color(color)
 	$DebugColor.set_text(str(color).replace(',', ', '))
 	update()
@@ -32,6 +35,7 @@ func set_selected_color(color):
 	_color = color
 	_color_wheel.set_color(color)
 	$ValueSlider.set_value(color.v)
+	$AlphaSlider.set_value(color.a)
 	update()
 
 func get_selected_color():
@@ -40,31 +44,41 @@ func get_selected_color():
 func _on_ValueSlider_value_changed(value):
 	_color_wheel.set_value(value)
 
-# #############################################################################
-# #############################################################################
-class SuperSlider:
-	var _slider = null
+func set_show_alpha(should):
+	_show_alpha = should
+	$HSlider.visible = should
 	
-	signal value_changed
-	
-	func _init(slider = null):
-		set_slider(slider)
-		slider.get_node('Value').set_text(str(_slider.get_value()))
-		
-	func set_slider(slider):
-		_slider = slider
-		_slider.connect('value_changed', self, '_on_value_changed')
-		
-	func _on_value_changed(value):
-		_slider.get_node('Value').set_text(str(value))
-		emit_signal('value_changed', value)
-	
-	func slider():
-		return _slider
-	
-	func get_value():
-		return _slider.get_value()
-	
+func get_show_alpha():
+	return _show_alpha
 
-	
+func _on_AlphaSlider_value_changed(value):
+	_color.a = value
+	update()
+
+## #############################################################################
+## #############################################################################
+#class SuperSlider:
+#	var _slider = null
+#
+#	signal value_changed
+#
+#	func _init(slider = null):
+#		set_slider(slider)
+#		slider.get_node('Value').set_text(str(_slider.get_value()))
+#
+#	func set_slider(slider):
+#		_slider = slider
+#		_slider.connect('value_changed', self, '_on_value_changed')
+#
+#	func _on_value_changed(value):
+#		_slider.get_node('Value').set_text(str(value))
+#		emit_signal('value_changed', value)
+#
+#	func slider():
+#		return _slider
+#
+#	func get_value():
+#		return _slider.get_value()
+#
+
 

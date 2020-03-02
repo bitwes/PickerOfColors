@@ -12,6 +12,9 @@ value = 50.0
 tick_count = 10
 ticks_on_borders = true
 script = ExtResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
 _grabber_color = Color( 0.921569, 0.027451, 0.027451, 1 )
 
 [node name="Value" type="Label" parent="."]
@@ -19,5 +22,4 @@ margin_left = 10.0
 margin_right = 110.0
 margin_bottom = 31.0
 text = "50"
-
 [connection signal="value_changed" from="." to="." method="_on_VSlider_value_changed"]
